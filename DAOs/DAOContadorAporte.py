@@ -13,7 +13,7 @@ from entidades.ContadorAporte import ContadorAporte
 
 class DAOContadorAporte(DAO):
     def __init__(self):
-        super().__init__("contadorAporte.pkl")
+        pass
 
     def create(self):
         pass

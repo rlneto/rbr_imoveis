@@ -12,14 +12,27 @@ from DAOs.DAO import DAO
 from entidades.ContadorReceita import ContadorReceita
 
 class DAOContadorReceita(DAO):
-    def __init__(self):
-        super().__init__("contadorReceita.pkl")
+    class DAOContadorReceita(DAO):
+        def __init__(self, arquivo: str):
+            self.__arquivo = arquivo
+            self._DAOContadorReceita__conteudo = []
+            try:
+                self._DAOContadorReceita__conteudo = self.__load()
+            except FileNotFoundError:
+                self.__dump()
+                self.__load()
 
-    def create(self):
-        pass
+        def read(self) -> int:
+            pass
 
-    def read(self):
-        pass
+        def update(self):
+            pass
 
-    def update(self):
-        pass
+        def __dump(self):
+            with open(self.__arquivo, 'wb') as arquivo:
+                pickle.dump(self.conteudo, arquivo)
+
+        def __load(self):
+            with open(self.__arquivo, 'rb') as arquivo:
+                self.conteudo = pickle.load(arquivo)
+            return self.conteudo

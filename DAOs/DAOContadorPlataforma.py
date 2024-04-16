@@ -7,15 +7,35 @@
 # Original author: rlnet
 # 
 #######################################################
+import pickle
 from entidades.ContadorPlataforma import ContadorPlataforma
 from DAOs.DAO import DAO
 
 class DAOContadorPlataforma(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self._DAOContadorPlataforma__conteudo = []
+        try:
+            self._DAOContadorPlataforma__conteudo = self.__load()
+        except FileNotFoundError:
+            self._DAOContadorPlataforma__conteudo.append(ContadorPlataforma())
+            self.__dump()
+            self.__load()
 
-    def read(self):
-        pass
+    def read(self) -> int:
+        return self.conteudo[0].valor
 
     def update(self):
-        pass
+        self.conteudo[0].valor += 1
+        self.__dump()
+        self.__load()
+        return self.conteudo[0].valor
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

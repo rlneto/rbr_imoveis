@@ -17,23 +17,24 @@ class TelaMenu(Tela):
     def abrir_menu(self):
         sg.theme('TealMono')
         layout = [
-            [sg.Radio('Menu Imóveis', group_id="RD1" , key='IMOVEIS')],
-            [sg.Radio('Menu Plataformas', group_id="RD1", key='PLATAFORMAS')],
-            [sg.Radio('Alterar Senha', group_id="RD1", key='U_SENHA')],
-            [sg.Button('Prosseguir' , key='PROXIMO'),
-            sg.Button('Sair do Sistema', key='SAIR')]
+            [sg.Text('Menu')],
+            [sg.Button('Cadastrar Imóveis', key='C_IMOVEIS')],
+            [sg.Button('Consultar Imóveis', key='R_IMOVEIS')],
+            [sg.Button('Alterar Imóveis', key='U_IMOVEIS')],
+            [sg.Button('Excluir Imóveis', key='D_IMOVEIS')],
+            [sg.Button('Cadastrar Plataformas', key='C_PLATAFORMAS')],
+            [sg.Button('Consultar Plataformas', key='R_PLATAFORMAS')],
+            [sg.Button('Alterar Plataformas', key='U_PLATAFORMAS')],
+            [sg.Button('Excluir Plataformas', key='D_PLATAFORMAS')],
+            [sg.Button('Alterar Senha', key='U_SENHA')],
+            [sg.Button('Sair', key='SAIR')]
         ]
         self.__window = sg.Window('Menu').Layout(layout)
         button, values = self.__window.Read()
-        for key in values:
-            if values[key]:
-                escolha = key
-                self.__window.Close()
-                print(button, escolha)
-                return button, escolha
         self.__window.Close()
-        print(button)
-        return button, None
+        print(button, values)
+        return button
+
 
 
 

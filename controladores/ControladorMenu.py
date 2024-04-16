@@ -38,15 +38,26 @@ class ControladorMenu:
     def abrir_menu(self):
 
         match self.__tela.abrir_menu():
-            case ControladorMenu.PROXIMO, ControladorMenu.IMOVEIS:
-                self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de imóveis")
+            case self.C_IMOVEIS:
+                return self.C_IMOVEIS
+            case self.R_IMOVEIS:
+                return self.R_IMOVEIS
+            case self.U_IMOVEIS:
+                return self.U_IMOVEIS
+            case self.D_IMOVEIS:
+                return self.D_IMOVEIS
+            case self.C_PLATAFORMAS:
+                return self.C_PLATAFORMAS
+            case self.R_PLATAFORMAS:
+                return self.R_PLATAFORMAS
+            case self.U_PLATAFORMAS:
+                return self.U_PLATAFORMAS
+            case self.D_PLATAFORMAS:
+                return self.D_PLATAFORMAS
+            case self.U_SENHA:
+                return self.U_SENHA
+            case self.PROXIMO:
+                return self.PROXIMO
+            case self.SAIR:
+                return self.SAIR
 
-            case ControladorMenu.PROXIMO, ControladorMenu.PLATAFORMAS:
-                self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de plataformas")
-
-            case ControladorMenu.PROXIMO, ControladorMenu.U_SENHA:
-                return ControladorMenu.U_SENHA
-            case ControladorMenu.SAIR:
-                return ControladorMenu.SAIR
-            case _:
-                pass

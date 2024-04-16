@@ -13,8 +13,7 @@ from entidades.Receita import Receita
 
 class DAOReceita(DAO):
     def __init__(self):
-        super().__init__("receita.pkl")
-        self.__schema = Receita()
+        pass
 
     def create(self):
         pass

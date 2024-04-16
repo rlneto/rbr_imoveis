@@ -13,8 +13,7 @@ from entidades.Saque import Saque
 
 class DAOSaque(DAO):
     def __init__(self):
-        super().__init__("saque.pkl")
-        self.__schema = Saque()
+        pass
 
     def create(self):
         pass

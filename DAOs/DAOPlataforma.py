@@ -50,15 +50,16 @@ class DAOPlataforma(DAO):
     def read(self) -> list:
         return self.conteudo
 
-    def update(self, titulo: str, novo_titulo: str, nova_desc: str) -> bool:
+    def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
         for i in range(len(self.conteudo)):
-            if self.conteudo[i].titulo == titulo:
+            if self.conteudo[i].id == id:
                 self.conteudo[i].titulo = novo_titulo
                 self.conteudo[i].desc = nova_desc
                 self.__dump()
                 self.__load()
                 return True
         return False
+
 
     def __dump(self):
         with open(self.__arquivo, 'wb') as arquivo:
