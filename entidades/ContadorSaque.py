@@ -10,4 +10,13 @@
 from entidades.Contador import Contador
 
 class ContadorSaque(Contador):
-    pass
+    def __init__(self):
+        self.__valor = 100000
+
+    @property
+    def valor(self):
+        return self.__valor
+
+    @valor.setter
+    def valor(self, valor):
+        self.__valor = valor

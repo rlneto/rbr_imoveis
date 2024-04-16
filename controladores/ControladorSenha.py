@@ -11,11 +11,20 @@ from limites.TelaVerificaSenha import TelaVerificaSenha
 from limites.TelaAlteraSenha import TelaAlteraSenha
 from DAOs.DAOSenha import DAOSenha
 
+
 class ControladorSenha:
 
-
-    def alterar_senha(self):
-        pass
+    def __init__(self):
+        self.__dao = DAOSenha("senha.pkl")
 
     def verificar_senha(self):
-        pass
+        tela = TelaVerificaSenha()
+        senha = tela.verifica_senha()
+        return self.__dao.read() == senha
+
+    def alterar_senha(self):
+        tela = TelaAlteraSenha()
+        senha = tela.altera_senha()
+        self.__dao.update(senha)
+        print(self.__dao.read())
+        return True

@@ -8,12 +8,49 @@
 # 
 #######################################################
 from limites.TelaMenu import TelaMenu
+import PySimpleGUI as sg
 
 class ControladorMenu:
 
+    C_IMOVEIS = "C_IMOVEIS"
+    R_IMOVEIS = "R_IMOVEIS"
+    U_IMOVEIS = "U_IMOVEIS"
+    D_IMOVEIS = "D_IMOVEIS"
+    C_PLATAFORMAS = "C_PLATAFORMAS"
+    R_PLATAFORMAS = "R_PLATAFORMAS"
+    U_PLATAFORMAS = "U_PLATAFORMAS"
+    D_PLATAFORMAS = "D_PLATAFORMAS"
+    U_SENHA = "U_SENHA"
+    PROXIMO = "PROXIMO"
+    VOLTAR = "VOLTAR"
+
+
+
+    def __init__(self):
+        self.__tela = TelaMenu()
+
 
     def abrir_menu(self):
-        pass
-
-    def retornar_opcao(self):
-        pass
+        match self.__tela.abrir_menu():
+            case ControladorMenu.C_IMOVEIS:
+                pass
+            case ControladorMenu.R_IMOVEIS:
+                pass
+            case ControladorMenu.U_IMOVEIS:
+                pass
+            case ControladorMenu.D_IMOVEIS:
+                pass
+            case ControladorMenu.C_PLATAFORMAS:
+                pass
+            case ControladorMenu.R_PLATAFORMAS:
+                pass
+            case ControladorMenu.U_PLATAFORMAS:
+                pass
+            case ControladorMenu.D_PLATAFORMAS:
+                pass
+            case ControladorMenu.PROXIMO, ControladorMenu.U_SENHA:
+                return self.U_SENHA
+            case "Sair":
+                pass
+            case _:
+                pass

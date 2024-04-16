@@ -12,7 +12,7 @@ from abc import ABC, abstractmethod
 class DAO(ABC):
 
     @abstractmethod
-    def __init__(self, arquivo:str):
+    def __init__(self):
         pass
 
 

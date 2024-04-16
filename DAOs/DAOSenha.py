@@ -14,22 +14,38 @@ from entidades.Senha import Senha
 class DAOSenha(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
-        if os.path.exists(self.__arquivo):
-            self.__conteudo = pickle.load(open(self.__arquivo, "rb"))
-        else:
-            self.__conteudo = ["abc123"]
-            pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
+        try:
+            self._DAOSenha__conteudo = self.__load()
+        except FileNotFoundError:
+            self._DAOSenha__conteudo.append(Senha("abc123"))
+            self.__dump()
+            self.__load()
 
     @property
     def conteudo(self) -> list:
-        return self.__conteudo
+        return self._DAOSenha__conteudo
+
+    @conteudo.setter
+    def conteudo(self, value):
+        self._DAOSenha__conteudo = value
+
     def read(self) -> str:
-        return self.conteudo[0]
+        return self.conteudo[0].valor
 
     def update(self, nova_senha: str) -> bool:
-        self.conteudo[0] = nova_senha
-        pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
-        if self.conteudo[0] == nova_senha:
+        self.conteudo[0].valor = nova_senha
+        self.__dump()
+        self.__load()
+        if self.conteudo[0].valor == nova_senha:
             return True
         else:
             return False
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

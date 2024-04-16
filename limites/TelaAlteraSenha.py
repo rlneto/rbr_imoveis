@@ -8,6 +8,21 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
+
 
 class TelaAlteraSenha(Tela):
-    pass
+
+    def __init__(self):
+        self.__window = None
+
+    def altera_senha(self):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Nova Senha:'), sg.Input(key='senha', password_char='*')],
+            [sg.Button('Alterar')]
+        ]
+        self.__window = sg.Window('Alterar Senha').Layout(layout)
+        button, values = self.__window.Read()
+        self.__window.Close()
+        return values['senha']

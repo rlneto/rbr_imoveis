@@ -20,6 +20,15 @@ from controladores.ControladorCaixa import ControladorCaixa
 
 class ControladorSistema:
 
+    C_IMOVEIS = "C_IMOVEIS"
+    R_IMOVEIS = "R_IMOVEIS"
+    U_IMOVEIS = "U_IMOVEIS"
+    D_IMOVEIS = "D_IMOVEIS"
+    C_PLATAFORMAS = "C_PLATAFORMAS"
+    R_PLATAFORMAS = "R_PLATAFORMAS"
+    U_PLATAFORMAS = "U_PLATAFORMAS"
+    D_PLATAFORMAS = "D_PLATAFORMAS"
+    U_SENHA = "U_SENHA"
     def __init__(self):
         self.__autenticado = False
         self.__ControladorReceitas= ControladorReceitas()
@@ -35,8 +44,20 @@ class ControladorSistema:
 
     def inicializar(self):
         while not self.__autenticado:
-            self.__ControladorSenha.verificar_senha()
-        self.__ControladorMenu.abrir_menu()
+            self.autenticado = self.__ControladorSenha.verificar_senha()
+        match self.__ControladorMenu.abrir_menu():
+            case self.U_SENHA:
+                self.__ControladorSenha.alterar_senha()
+
+
+
+    @property
+    def autenticado(self):
+        return self.__autenticado
+
+    @autenticado.setter
+    def autenticado(self, autenticado):
+        self.__autenticado = autenticado
 
     def processar_operacao(self):
         pass
