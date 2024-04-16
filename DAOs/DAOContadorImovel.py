@@ -11,6 +11,7 @@ import os, pickle
 from DAOs.DAO import DAO
 from entidades.ContadorImovel import ContadorImovel
 
+
 class DAOContadorImovel(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo

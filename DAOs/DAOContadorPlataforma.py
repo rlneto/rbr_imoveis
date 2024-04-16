@@ -11,6 +11,7 @@ import pickle
 from entidades.ContadorPlataforma import ContadorPlataforma
 from DAOs.DAO import DAO
 
+
 class DAOContadorPlataforma(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
@@ -21,6 +22,13 @@ class DAOContadorPlataforma(DAO):
             self._DAOContadorPlataforma__conteudo.append(ContadorPlataforma())
             self.__dump()
             self.__load()
+
+    @property
+    def conteudo(self) -> list:
+        return self._DAOContadorPlataforma__conteudo
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self._DAOContadorPlataforma__conteudo = valor
 
     def read(self) -> int:
         return self.conteudo[0].valor

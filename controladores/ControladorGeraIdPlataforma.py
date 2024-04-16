@@ -13,7 +13,7 @@ from controladores.ControladorGeradorId import ControladorGeradorId
 class ControladorGeraIdPlataforma(ControladorGeradorId):
 
     def __init__(self):
-        self.__dao = DAOContadorPlataforma('contadorPlataforma.pkl')
+        self.__dao = DAOContadorPlataforma('./contadorPlataforma.pkl')
 
     def gera_id(self) -> int:
         return self.__dao.update()

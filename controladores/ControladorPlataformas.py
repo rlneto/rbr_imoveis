@@ -54,7 +54,9 @@ class ControladorPlataformas:
                           nova_desc=nova_plataforma.descricao)
 
     def cadastrar_plataforma(self):
-        pass
+        titulo, desc = self.__tela_cadastrar.cadastrar_plataforma()
+        self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdPlataforma().gera_id())
+
 
     def excluir_plataforma(self):
         pass

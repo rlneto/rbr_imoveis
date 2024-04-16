@@ -11,12 +11,14 @@ import os, pickle
 from DAOs.DAO import DAO
 from entidades.Plataforma import Plataforma
 
+
 class DAOPlataforma(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
+        self._DAOPlataforma__conteudo = []
         if os.path.exists(self.__arquivo):
             try:
-                self.__conteudo = self.__load()
+                self._DAOPlataforma__conteudo = self.__load()
             except FileNotFoundError:
                 self.__conteudo = []
                 self.__dump()
@@ -24,18 +26,26 @@ class DAOPlataforma(DAO):
 
     @property
     def conteudo(self) -> list:
-        return self.__conteudo
+        return self._DAOPlataforma__conteudo
 
-    def create(self, desc:str, titulo: str, id:int, habilitado = True) -> bool:
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self._DAOPlataforma__conteudo = valor
+
+    def create(self, desc: str, titulo: str, id: int, habilitado=True) -> bool:
         tamanho = len(self.conteudo)
         self.conteudo.append(Plataforma(desc=desc, titulo=titulo, ident=id, habilitado=habilitado))
+        print(self.conteudo)
+        for i in range(len(self.conteudo)):
+            print("ID: ", self.conteudo[i].id)
+            print("Titulo: ", self.conteudo[i].titulo)
+            print("Desc: ", self.conteudo[i].desc)
         self.__dump()
         self.__load()
         if len(self.conteudo) > tamanho:
             return True
         else:
             return False
-
 
     def delete(self, titulo: str) -> bool:
         for i in range(len(self.conteudo)):
@@ -45,7 +55,6 @@ class DAOPlataforma(DAO):
                 self.__load()
                 return True
         return False
-
 
     def read(self) -> list:
         return self.conteudo
@@ -60,13 +69,11 @@ class DAOPlataforma(DAO):
                 return True
         return False
 
-
     def __dump(self):
         with open(self.__arquivo, 'wb') as arquivo:
-            pickle.dump(self.__conteudo, arquivo)
+            pickle.dump(self.conteudo, arquivo)
 
     def __load(self):
         with open(self.__arquivo, 'rb') as arquivo:
-            self.__conteudo = pickle.load(arquivo)
-        return self.__conteudo
-
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo
