@@ -8,6 +8,8 @@
 # 
 #######################################################
 
-
+from abc import ABC, abstractmethod
 class Contador:
-    pass
+    @abstractmethod
+    def __init__(self, valor:int):
+        self.__valor = valor
