@@ -19,29 +19,24 @@ from controladores.ControladorImoveis import ControladorImoveis
 from controladores.ControladorCaixa import ControladorCaixa
 
 class ControladorSistema:
-    __autenticado = False
-    m_ControladorReceitas= ControladorReceitas()
 
-    m_ControladorMenu= ControladorMenu()
-
-    m_ControladorSenha= ControladorSenha()
-
-    m_ControladorDespesas= ControladorDespesas()
-
-    m_ControladorSaques= ControladorSaques()
-
-    m_ControladorAportes= ControladorAportes()
-
-    m_ControladorRelatorios= ControladorRelatorios()
-
-    m_ControladorPlataformas= ControladorPlataformas()
-
-    m_ControladorImoveis= ControladorImoveis()
-
-    m_ControladorCaixa= ControladorCaixa()
+    def __init__(self):
+        self.__autenticado = False
+        self.__ControladorReceitas= ControladorReceitas()
+        self.__ControladorMenu= ControladorMenu()
+        self.__ControladorSenha= ControladorSenha()
+        self.__ControladorDespesas= ControladorDespesas()
+        self.__ControladorSaques= ControladorSaques()
+        self.__ControladorAportes= ControladorAportes()
+        self.__ControladorRelatorios= ControladorRelatorios()
+        self.__ControladorPlataformas= ControladorPlataformas()
+        self.__ControladorImoveis= ControladorImoveis()
+        self.__ControladorCaixa= ControladorCaixa()
 
     def inicializar(self):
-        pass
+        while not self.__autenticado:
+            self.__ControladorSenha.verificar_senha()
+        self.__ControladorMenu.abrir_menu()
 
     def processar_operacao(self):
         pass

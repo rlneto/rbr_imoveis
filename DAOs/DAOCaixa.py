@@ -7,11 +7,21 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from entidades.Caixa import Caixa
 from DAOs.DAO import DAO
 
 class DAOCaixa(DAO):
-    m_Caixa= Caixa()
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        if os.path.exists(self.__arquivo):
+            self.__conteudo = pickle.load(open(self.__arquivo, "rb"))
+        else:
+            self.__conteudo = [Caixa(0)]
+
+    @property
+    def conteudo(self):
+        return self.__conteudo
 
     def create(self):
         pass
@@ -20,7 +30,9 @@ class DAOCaixa(DAO):
         pass
 
     def read(self):
-        pass
+        return self.conteudo[0].saldo
 
-    def update(self):
-        pass
+
+    def update(self, novo_saldo: float):
+        self.conteudo[0].saldo = novo_saldo
+        pickle.dump(self.conteudo, open(self.__arquivo, "wb"))

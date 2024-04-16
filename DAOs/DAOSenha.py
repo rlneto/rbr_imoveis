@@ -7,17 +7,29 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Senha import Senha
 
 class DAOSenha(DAO):
-    m_Senha= Senha()
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        if os.path.exists(self.__arquivo):
+            self.__conteudo = pickle.load(open(self.__arquivo, "rb"))
+        else:
+            self.__conteudo = ["abc123"]
+            pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
 
-    def create(self):
-        pass
+    @property
+    def conteudo(self) -> list:
+        return self.__conteudo
+    def read(self) -> str:
+        return self.conteudo[0]
 
-    def read(self):
-        pass
-
-    def update(self):
-        pass
+    def update(self, nova_senha: str) -> bool:
+        self.conteudo[0] = nova_senha
+        pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
+        if self.conteudo[0] == nova_senha:
+            return True
+        else:
+            return False

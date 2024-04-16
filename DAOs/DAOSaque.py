@@ -7,11 +7,14 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Saque import Saque
 
 class DAOSaque(DAO):
-    m_Saque= Saque()
+    def __init__(self):
+        super().__init__("saque.pkl")
+        self.__schema = Saque()
 
     def create(self):
         pass

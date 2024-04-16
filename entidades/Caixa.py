@@ -10,4 +10,14 @@
 
 
 class Caixa:
-    __valor_atual = 0
+
+    def __init__(self, saldo:float):
+        self.__saldo = saldo
+
+    @property
+    def saldo(self) -> float:
+        return self.__saldo
+
+    @saldo.setter
+    def saldo(self, saldo:float):
+        self.__saldo = saldo

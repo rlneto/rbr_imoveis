@@ -7,20 +7,52 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Imovel import Imovel
 
 class DAOImovel(DAO):
-    m_Imovel= Imovel()
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        if os.path.exists(self.__arquivo):
+            self.__conteudo = pickle.load(open(self.__arquivo, "rb"))
+        else:
+            self.__conteudo = []
+            pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
 
-    def create(self):
-        pass
+    @property
+    def conteudo(self) -> list:
+        return self.__conteudo
 
-    def delete(self):
-        pass
+    def create(self, desc:str, titulo: str, id: int, habilitado = True) -> bool:
+        tamanho = len(self.__conteudo)
+        self.__conteudo.append(Imovel(desc, titulo=titulo, ident=id, habilitado=habilitado))
+        pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
+        if len(self.__conteudo) > tamanho:
+            return True
+        else:
+            return False
+
+    def delete(self, id: int) -> bool:
+        for i in range(len(self.__conteudo)):
+            if self.__conteudo[i].id == id:
+                self.__conteudo[i].habilitado = False
+                pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
+                return True
+        return False
 
     def read(self):
-        pass
+        return self.__conteudo
 
-    def update(self):
-        pass
+    def update(self, **kwargs) -> bool:
+        for i in range(len(self.__conteudo)):
+            if self.__conteudo[i].id == kwargs['id']:
+                if 'titulo' in kwargs:
+                    self.__conteudo[i].titulo = kwargs['titulo']
+                if 'desc' in kwargs:
+                    self.__conteudo[i].desc = kwargs['desc']
+                if 'habilitado' in kwargs:
+                    self.__conteudo[i].habilitado = kwargs['habilitado']
+                pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
+                return True
+        return False

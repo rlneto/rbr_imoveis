@@ -7,11 +7,15 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
+from abc import ABC, abstractmethod
+class DAO(ABC):
 
-
-class DAO:
-    def create(self):
+    @abstractmethod
+    def __init__(self, arquivo:str):
         pass
 
+
+    @abstractmethod
     def read(self):
         pass

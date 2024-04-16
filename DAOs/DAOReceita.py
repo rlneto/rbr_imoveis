@@ -7,11 +7,14 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Receita import Receita
 
 class DAOReceita(DAO):
-    m_Receita= Receita()
+    def __init__(self):
+        super().__init__("receita.pkl")
+        self.__schema = Receita()
 
     def create(self):
         pass

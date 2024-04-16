@@ -7,20 +7,51 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Plataforma import Plataforma
 
 class DAOPlataforma(DAO):
-    m_Plataforma= Plataforma()
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        if os.path.exists(self.__arquivo):
+            self.__conteudo = pickle.load(open(self.__arquivo, "rb"))
+        else:
+            self.__conteudo = []
+            pickle.dump(self.__conteudo, open(self.__arquivo, "wb"))
 
-    def create(self):
-        pass
+    @property
+    def conteudo(self) -> list:
+        return self.__conteudo
 
-    def delete(self):
-        pass
+    def create(self, desc:str, titulo: str, id:int, habilitado = True) -> bool:
+        tamanho = len(self.conteudo)
+        self.conteudo.append(Plataforma(desc=desc, titulo=titulo, ident=id, habilitado=habilitado))
+        pickle.dump(self.conteudo, open(self.__arquivo, "wb"))
+        if len(self.conteudo) > tamanho:
+            return True
+        else:
+            return False
 
-    def read(self):
-        pass
 
-    def update(self):
-        pass
+    def delete(self, titulo: str) -> bool:
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].titulo == titulo:
+                self.conteudo[i].habilitado = False
+                pickle.dump(self.conteudo, open(self.__arquivo, "wb"))
+                return True
+        return False
+
+
+    def read(self) -> list:
+        return self.conteudo
+
+    def update(self, titulo: str, novo_titulo: str, nova_desc: str) -> bool:
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].titulo == titulo:
+                self.conteudo[i].titulo = novo_titulo
+                self.conteudo[i].desc = nova_desc
+                pickle.dump(self.conteudo, open(self.__arquivo, "wb"))
+                return True
+        return False
+

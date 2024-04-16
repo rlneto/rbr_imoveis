@@ -7,11 +7,13 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Despesa import Despesa
 
 class DAODespesa(DAO):
-    m_Despesa= Despesa()
+    def __init__(self):
+        pass
 
     def create(self):
         pass

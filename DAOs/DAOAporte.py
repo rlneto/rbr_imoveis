@@ -7,11 +7,22 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.Aporte import Aporte
 
 class DAOAporte(DAO):
-    m_Aporte= Aporte()
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        if os.path.exists(self.__arquivo):
+            self.__conteudo = pickle.load(open(self.__arquivo, "rb"))
+        else:
+            self.__conteudo = []
+
+    @property
+    def conteudo(self):
+        return self.__conteudo
+
 
     def create(self):
         pass

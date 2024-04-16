@@ -7,11 +7,15 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.ContadorImovel import ContadorImovel
 
 class DAOContadorImovel(DAO):
-    m_ContadorImovel= ContadorImovel()
+
+    def __init__(self):
+        super().__init__("contadorImovel.pkl")
+
 
     def create(self):
         pass

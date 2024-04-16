@@ -7,11 +7,13 @@
 # Original author: rlnet
 # 
 #######################################################
+import os, pickle
 from DAOs.DAO import DAO
 from entidades.ContadorAporte import ContadorAporte
 
 class DAOContadorAporte(DAO):
-    m_ContadorAporte= ContadorAporte()
+    def __init__(self):
+        super().__init__("contadorAporte.pkl")
 
     def create(self):
         pass

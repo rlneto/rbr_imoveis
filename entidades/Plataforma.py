@@ -10,4 +10,36 @@
 
 
 class Plataforma:
-    pass
+    def __init__(self, desc:str, titulo:str, ident:int, habilitado = True):
+        self.__desc = desc
+        self.__titulo = titulo
+        self.__id = ident
+        self.__habilitado = habilitado
+
+    @property
+    def desc(self) -> str:
+        return self.__desc
+
+    @desc.setter
+    def desc(self, desc:str):
+        self.__desc = desc
+
+    @property
+    def titulo(self) -> str:
+        return self.__titulo
+
+    @titulo.setter
+    def titulo(self, titulo:str):
+        self.__titulo = titulo
+
+    @property
+    def id(self) -> int:
+        return self.__id
+
+    @property
+    def habilitado(self) -> bool:
+        return self.__habilitado
+
+    @habilitado.setter
+    def habilitado(self, habilitado:bool):
+        self.__habilitado = habilitado
