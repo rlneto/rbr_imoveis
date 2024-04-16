@@ -27,20 +27,20 @@ class ControladorAportes:
 
     m_ControladorGeraIdAporte= ControladorGeraIdAporte()
 
-    def cadastrar_aporte():
+    def cadastrar_aporte(self):
         pass
 
-    def excluir_aporte():
+    def excluir_aporte(self):
         pass
 
-    def exibir_aporte():
+    def exibir_aporte(self):
         pass
 
-    def find_aporte():
+    def find_aporte(self):
         pass
 
-    def listar_aportes():
+    def listar_aportes(self):
         pass
 
-    def listar_aportes_ano():
+    def listar_aportes_ano(self):
         pass

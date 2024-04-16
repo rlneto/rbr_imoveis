@@ -27,20 +27,20 @@ class ControladorDespesas:
 
     m_ControladorGeraIdDespesa= ControladorGeraIdDespesa()
 
-    def cadastrar_despesa():
+    def cadastrar_despesa(self):
         pass
 
-    def excluir_despesa():
+    def excluir_despesa(self):
         pass
 
-    def exibir_despesa():
+    def exibir_despesa(self):
         pass
 
-    def find_despesa():
+    def find_despesa(self):
         pass
 
-    def listar_despesas_ano():
+    def listar_despesas_ano(self):
         pass
 
-    def listar_despesas_imovel():
+    def listar_despesas_imovel(self):
         pass

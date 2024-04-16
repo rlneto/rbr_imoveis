@@ -15,8 +15,8 @@ class ControladorRelatorios:
 
     m_TelaRelatorioImovel= TelaRelatorioImovel()
 
-    def relatorio_anual():
+    def relatorio_anual(self):
         pass
 
-    def relatorio_imovel():
+    def relatorio_imovel(self):
         pass

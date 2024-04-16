@@ -27,17 +27,17 @@ class ControladorSaques:
 
     m_ControladorGeraIdSaque= ControladorGeraIdSaque()
 
-    def cadastrar_saque():
+    def cadastrar_saque(self):
         pass
 
-    def excluir_saque():
+    def excluir_saque(self):
         pass
 
-    def exibir_saque():
+    def exibir_saque(self):
         pass
 
-    def listar_saques():
+    def listar_saques(self):
         pass
 
-    def listar_saques_ano():
+    def listar_saques_ano(self):
         pass

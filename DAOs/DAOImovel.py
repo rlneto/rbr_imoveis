@@ -13,14 +13,14 @@ from entidades.Imovel import Imovel
 class DAOImovel(DAO):
     m_Imovel= Imovel()
 
-    def create():
+    def create(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
-    def read():
+    def read(self):
         pass
 
-    def update():
+    def update(self):
         pass

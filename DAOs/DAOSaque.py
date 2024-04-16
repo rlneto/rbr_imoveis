@@ -13,11 +13,11 @@ from entidades.Saque import Saque
 class DAOSaque(DAO):
     m_Saque= Saque()
 
-    def create():
+    def create(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
-    def read():
+    def read(self):
         pass

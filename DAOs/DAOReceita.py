@@ -13,11 +13,11 @@ from entidades.Receita import Receita
 class DAOReceita(DAO):
     m_Receita= Receita()
 
-    def create():
+    def create(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
-    def read():
+    def read(self):
         pass

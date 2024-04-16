@@ -13,5 +13,5 @@ from DAOs.DAOContadorAporte import DAOContadorAporte
 class ControladorGeraIdAporte(ControladorGeradorId):
     m_DAOContadorAporte= DAOContadorAporte()
 
-    def gera_id():
+    def gera_id(self):
         pass

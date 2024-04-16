@@ -13,11 +13,11 @@ from entidades.ContadorImovel import ContadorImovel
 class DAOContadorImovel(DAO):
     m_ContadorImovel= ContadorImovel()
 
-    def create():
+    def create(self):
         pass
 
-    def read():
+    def read(self):
         pass
 
-    def update():
+    def update(self):
         pass

@@ -9,5 +9,5 @@
 #######################################################
 from limites.Tela import Tela
 
-class TelaRelatorioAnual(Tela, Tela):
+class TelaRelatorioAnual(Tela):
     pass

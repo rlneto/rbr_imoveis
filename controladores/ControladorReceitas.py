@@ -24,20 +24,20 @@ class ControladorReceitas:
 
     m_DAOReceita= DAOReceita()
 
-    def cadastrar_receita():
+    def cadastrar_receita(self):
         pass
 
-    def excluir_receita():
+    def excluir_receita(self):
         pass
 
-    def exibir_receita():
+    def exibir_receita(self):
         pass
 
-    def find_receita():
+    def find_receita(self):
         pass
 
-    def listar_receitas_ano():
+    def listar_receitas_ano(self):
         pass
 
-    def listar_receitas_imovel():
+    def listar_receitas_imovel(self):
         pass

@@ -10,5 +10,5 @@
 
 
 class ControladorGeradorId:
-    def gera_id():
+    def gera_id(self):
         pass

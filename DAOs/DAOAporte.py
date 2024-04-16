@@ -13,11 +13,11 @@ from entidades.Aporte import Aporte
 class DAOAporte(DAO):
     m_Aporte= Aporte()
 
-    def create():
+    def create(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
-    def read():
+    def read(self):
         pass

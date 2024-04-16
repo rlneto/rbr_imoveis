@@ -18,8 +18,8 @@ class ControladorSenha:
 
     m_DAOSenha= DAOSenha()
 
-    def alterar_senha():
+    def alterar_senha(self):
         pass
 
-    def verificar_senha():
+    def verificar_senha(self):
         pass

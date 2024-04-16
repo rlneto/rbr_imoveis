@@ -27,20 +27,20 @@ class ControladorImoveis:
 
     m_DAOImovel= DAOImovel()
 
-    def alterar_imovel():
+    def alterar_imovel(self):
         pass
 
-    def cadastrar_imovel():
+    def cadastrar_imovel(self):
         pass
 
-    def excluir_imovel():
+    def excluir_imovel(self):
         pass
 
-    def exibir_imovel():
+    def exibir_imovel(self):
         pass
 
-    def find_imovel():
+    def find_imovel(self):
         pass
 
-    def listar_imoveis():
+    def listar_imoveis(self):
         pass

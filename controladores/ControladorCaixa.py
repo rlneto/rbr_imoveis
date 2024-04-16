@@ -12,5 +12,5 @@ from DAOs.DAOCaixa import DAOCaixa
 class ControladorCaixa:
     m_DAOCaixa= DAOCaixa()
 
-    def calcular_valor_atual():
+    def calcular_valor_atual(self):
         pass

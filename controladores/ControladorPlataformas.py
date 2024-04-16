@@ -27,20 +27,20 @@ class ControladorPlataformas:
 
     m_DAOPlataforma= DAOPlataforma()
 
-    def alterar_plataforma():
+    def alterar_plataforma(self):
         pass
 
-    def cadastrar_plataforma():
+    def cadastrar_plataforma(self):
         pass
 
-    def excluir_plataforma():
+    def excluir_plataforma(self):
         pass
 
-    def exibir_plataforma():
+    def exibir_plataforma(self):
         pass
 
-    def find_plataforma():
+    def find_plataforma(self):
         pass
 
-    def listar_plataformas():
+    def listar_plataformas(self):
         pass

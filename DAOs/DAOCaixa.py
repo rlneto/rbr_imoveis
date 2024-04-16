@@ -13,14 +13,14 @@ from DAOs.DAO import DAO
 class DAOCaixa(DAO):
     m_Caixa= Caixa()
 
-    def create():
+    def create(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
-    def read():
+    def read(self):
         pass
 
-    def update():
+    def update(self):
         pass

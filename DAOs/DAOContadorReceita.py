@@ -13,11 +13,11 @@ from entidades.ContadorReceita import ContadorReceita
 class DAOContadorReceita(DAO):
     m_ContadorReceita= ContadorReceita()
 
-    def create():
+    def create(self):
         pass
 
-    def read():
+    def read(self):
         pass
 
-    def update():
+    def update(self):
         pass

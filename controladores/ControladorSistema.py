@@ -40,8 +40,8 @@ class ControladorSistema:
 
     m_ControladorCaixa= ControladorCaixa()
 
-    def inicializar():
+    def inicializar(self):
         pass
 
-    def processar_operacao():
+    def processar_operacao(self):
         pass

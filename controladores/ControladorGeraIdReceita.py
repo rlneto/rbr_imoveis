@@ -13,5 +13,5 @@ from DAOs.DAOContadorReceita import DAOContadorReceita
 class ControladorGeraIdReceita(ControladorGeradorId):
     m_DAOContadorReceita= DAOContadorReceita()
 
-    def gera_id():
+    def gera_id(self):
         pass

@@ -13,14 +13,14 @@ from entidades.Plataforma import Plataforma
 class DAOPlataforma(DAO):
     m_Plataforma= Plataforma()
 
-    def create():
+    def create(self):
         pass
 
-    def delete():
+    def delete(self):
         pass
 
-    def read():
+    def read(self):
         pass
 
-    def update():
+    def update(self):
         pass

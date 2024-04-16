@@ -12,8 +12,8 @@ from limites.TelaMenu import TelaMenu
 class ControladorMenu:
     m_TelaMenu= TelaMenu()
 
-    def abrir_menu():
+    def abrir_menu(self):
         pass
 
-    def retornar_opcao():
+    def retornar_opcao(self):
         pass

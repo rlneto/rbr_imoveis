@@ -13,11 +13,11 @@ from entidades.Senha import Senha
 class DAOSenha(DAO):
     m_Senha= Senha()
 
-    def create():
+    def create(self):
         pass
 
-    def read():
+    def read(self):
         pass
 
-    def update():
+    def update(self):
         pass
