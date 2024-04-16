@@ -22,7 +22,7 @@ class TelaAlteraSenha(Tela):
             [sg.Text('Nova Senha:'), sg.Input(key='senha', password_char='*')],
             [sg.Button('Alterar')]
         ]
-        self.__window = sg.Window('Alterar Senha').Layout(layout)
+        self.__window = sg.Window('Alterar Senha', disable_close=True).Layout(layout)
         button, values = self.__window.Read()
         self.__window.Close()
         return values['senha']

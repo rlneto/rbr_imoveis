@@ -11,21 +11,22 @@ import os, pickle
 from DAOs.DAO import DAO
 from entidades.Imovel import Imovel
 
+
 class DAOImovel(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
         if os.path.exists(self.__arquivo):
             try:
-                self.__conteudo = self.__load()
+                self._DAOImovel__conteudo = self.__load()
             except FileNotFoundError:
-                self.__conteudo = []
+                self._DAOImovel__conteudo = []
                 self.__dump()
 
     @property
     def conteudo(self) -> list:
         return self.__conteudo
 
-    def create(self, desc:str, titulo: str, id: int, habilitado = True) -> bool:
+    def create(self, desc: str, titulo: str, id: int, habilitado=True) -> bool:
         tamanho = len(self.__conteudo)
         self.__conteudo.append(Imovel(desc, titulo=titulo, ident=id, habilitado=habilitado))
         self.__dump()

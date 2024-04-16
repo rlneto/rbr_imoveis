@@ -36,17 +36,17 @@ class ControladorMenu:
 
 
     def abrir_menu(self):
-        while True:
-            match self.__tela.abrir_menu():
-                case ControladorMenu.PROXIMO, ControladorMenu.IMOVEIS:
-                    self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de imóveis")
 
-                case ControladorMenu.PROXIMO, ControladorMenu.PLATAFORMAS:
-                    self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de plataformas")
+        match self.__tela.abrir_menu():
+            case ControladorMenu.PROXIMO, ControladorMenu.IMOVEIS:
+                self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de imóveis")
 
-                case ControladorMenu.PROXIMO, ControladorMenu.U_SENHA:
-                    return self.U_SENHA
-                case ControladorMenu.SAIR:
-                    return self.SAIR
-                case _:
-                    pass
+            case ControladorMenu.PROXIMO, ControladorMenu.PLATAFORMAS:
+                self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de plataformas")
+
+            case ControladorMenu.PROXIMO, ControladorMenu.U_SENHA:
+                return ControladorMenu.U_SENHA
+            case ControladorMenu.SAIR:
+                return ControladorMenu.SAIR
+            case _:
+                pass

@@ -29,7 +29,7 @@ class TelaPlataformas:
             [sg.Button('Prosseguir' , key='PROXIMO')],
             [sg.Button('Retornar', key='VOLTAR')]
         ]
-        self.__window = sg.Window('Menu Plataformas').Layout(layout)
+        self.__window = sg.Window('Menu Plataformas', disable_close=True).Layout(layout)
         button, values = self.__window.Read()
         for key in values:
             if values[key]:

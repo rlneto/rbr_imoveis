@@ -29,8 +29,10 @@ class TelaMenu(Tela):
             if values[key]:
                 escolha = key
                 self.__window.Close()
+                print(button, escolha)
                 return button, escolha
         self.__window.Close()
+        print(button)
         return button, None
 
 

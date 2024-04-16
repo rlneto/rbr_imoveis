@@ -52,7 +52,7 @@ class ControladorSistema:
         while not self.autenticado:
             self.autenticado = self.__ControladorSenha.verificar_senha()
 
-        while self.autenticado:
+        while True:
             match self.__ControladorMenu.abrir_menu():
                 case self.PROSSEGUIR, self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
@@ -78,8 +78,8 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
-                case self.SAIR, None:
-                    self.autenticado = False
+                case self.SAIR:
+                    break
 
 
 

@@ -27,5 +27,4 @@ class ControladorSenha:
         tela = TelaAlteraSenha()
         senha = tela.altera_senha()
         self.__dao.update(senha)
-        print(self.__dao.read())
         return True
