@@ -34,10 +34,6 @@ class DAOImovel(DAO):
     def create(self, desc: str, titulo: str, id: int, habilitado=True) -> bool:
         tamanho = len(self.conteudo)
         self.conteudo.append(Imovel(desc, titulo=titulo, ident=id, habilitado=habilitado))
-        for i in range(len(self.conteudo)):
-            print("ID: ", self.conteudo[i].id)
-            print("Titulo: ", self.conteudo[i].titulo)
-            print("Desc: ", self.conteudo[i].desc)
         self.__dump()
         self.__load()
         if len(self.conteudo) > tamanho:

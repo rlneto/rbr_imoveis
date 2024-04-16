@@ -32,7 +32,6 @@ class TelaMenu(Tela):
         self.__window = sg.Window('Menu').Layout(layout)
         button, values = self.__window.Read()
         self.__window.Close()
-        print(button, values)
         return button
 
 

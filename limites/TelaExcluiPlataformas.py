@@ -26,7 +26,6 @@ class TelaExcluiPlataformas(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == 'Excluir':
-            print(values[0][0].id)
             return values[0][0].id
         else:
             return None

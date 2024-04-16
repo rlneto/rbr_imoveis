@@ -27,7 +27,6 @@ class TelaCadastraPlataformas(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == 'Cadastrar':
-            print(values)
             return values[0], values[1]
         else:
             return None
