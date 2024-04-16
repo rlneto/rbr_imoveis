@@ -16,7 +16,7 @@ from DAOs.DAOSenha import DAOSenha
 class ControladorSenha:
 
     def __init__(self):
-        self.__dao = DAOSenha("senha.pkl")
+        self.__dao = DAOSenha("./senha.pkl")
 
     def verificar_senha(self):
         tela = TelaVerificaSenha()

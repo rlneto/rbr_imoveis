@@ -14,7 +14,7 @@ from DAOs.DAOContadorImovel import DAOContadorImovel
 class ControladorGeraIdImovel(ControladorGeradorId):
 
     def __init__(self):
-        self.__dao = DAOContadorImovel("contadorImovel.pkl")
+        self.__dao = DAOContadorImovel("./contadorImovel.pkl")
 
     def gera_id(self):
         return self.__dao.update()

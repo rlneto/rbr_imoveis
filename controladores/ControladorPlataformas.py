@@ -59,7 +59,8 @@ class ControladorPlataformas:
 
 
     def excluir_plataforma(self):
-        pass
+        id_plataforma = self.__tela_excluir.excluir_plataforma(self.__dao.read())
+        self.__dao.delete(id_plataforma)
 
     def exibir_plataforma(self):
         pass

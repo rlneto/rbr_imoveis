@@ -10,6 +10,7 @@
 from DAOs.DAOContadorPlataforma import DAOContadorPlataforma
 from controladores.ControladorGeradorId import ControladorGeradorId
 
+
 class ControladorGeraIdPlataforma(ControladorGeradorId):
 
     def __init__(self):

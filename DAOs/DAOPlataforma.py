@@ -47,9 +47,9 @@ class DAOPlataforma(DAO):
         else:
             return False
 
-    def delete(self, titulo: str) -> bool:
+    def delete(self, id: int) -> bool:
         for i in range(len(self.conteudo)):
-            if self.conteudo[i].titulo == titulo:
+            if self.conteudo[i].id == id:
                 self.conteudo[i].habilitado = False
                 self.__dump()
                 self.__load()
@@ -57,7 +57,7 @@ class DAOPlataforma(DAO):
         return False
 
     def read(self) -> list:
-        return self.conteudo
+        return [plataforma for plataforma in self.conteudo if plataforma.habilitado]
 
     def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
         for i in range(len(self.conteudo)):

@@ -8,6 +8,29 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaExcluiPlataformas(Tela):
-    pass
+    def __init__(self):
+        self.__window = None
+
+    def excluir_plataforma(self, plataformas):
+
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Excluir Plataforma')],
+            [sg.Listbox(plataformas, size=(20, 5))],
+            [sg.Button('Excluir'), sg.Button('Cancelar')]
+        ]
+        self.__window = sg.Window('Excluir Plataforma').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == 'Excluir':
+            print(values[0][0].id)
+            return values[0][0].id
+        else:
+            return None
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None
