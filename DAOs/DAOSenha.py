@@ -14,6 +14,7 @@ from entidades.Senha import Senha
 class DAOSenha(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
+        self._DAOSenha__conteudo = []
         try:
             self._DAOSenha__conteudo = self.__load()
         except FileNotFoundError:

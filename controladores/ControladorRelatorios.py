@@ -9,6 +9,7 @@
 #######################################################
 from limites.TelaRelatorioAnual import TelaRelatorioAnual
 from limites.TelaRelatorioImovel import TelaRelatorioImovel
+from limites.TelaPopup import TelaPopup
 
 class ControladorRelatorios:
 

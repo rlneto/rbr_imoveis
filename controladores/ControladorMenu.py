@@ -8,10 +8,13 @@
 # 
 #######################################################
 from limites.TelaMenu import TelaMenu
+from limites.TelaPopup import TelaPopup
 import PySimpleGUI as sg
 
 class ControladorMenu:
 
+    IMOVEIS = "IMOVEIS"
+    PLATAFORMAS = "PLATAFORMAS"
     C_IMOVEIS = "C_IMOVEIS"
     R_IMOVEIS = "R_IMOVEIS"
     U_IMOVEIS = "U_IMOVEIS"
@@ -23,34 +26,27 @@ class ControladorMenu:
     U_SENHA = "U_SENHA"
     PROXIMO = "PROXIMO"
     VOLTAR = "VOLTAR"
+    SAIR = "SAIR"
 
 
 
     def __init__(self):
         self.__tela = TelaMenu()
+        self.__tela_popup = TelaPopup()
 
 
     def abrir_menu(self):
-        match self.__tela.abrir_menu():
-            case ControladorMenu.C_IMOVEIS:
-                pass
-            case ControladorMenu.R_IMOVEIS:
-                pass
-            case ControladorMenu.U_IMOVEIS:
-                pass
-            case ControladorMenu.D_IMOVEIS:
-                pass
-            case ControladorMenu.C_PLATAFORMAS:
-                pass
-            case ControladorMenu.R_PLATAFORMAS:
-                pass
-            case ControladorMenu.U_PLATAFORMAS:
-                pass
-            case ControladorMenu.D_PLATAFORMAS:
-                pass
-            case ControladorMenu.PROXIMO, ControladorMenu.U_SENHA:
-                return self.U_SENHA
-            case "Sair":
-                pass
-            case _:
-                pass
+        while True:
+            match self.__tela.abrir_menu():
+                case ControladorMenu.PROXIMO, ControladorMenu.IMOVEIS:
+                    self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de imóveis")
+
+                case ControladorMenu.PROXIMO, ControladorMenu.PLATAFORMAS:
+                    self.__tela_popup.mostra_popup("Aqui vai aparecer o menu de plataformas")
+
+                case ControladorMenu.PROXIMO, ControladorMenu.U_SENHA:
+                    return self.U_SENHA
+                case ControladorMenu.SAIR:
+                    return self.SAIR
+                case _:
+                    pass

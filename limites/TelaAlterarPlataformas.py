@@ -8,6 +8,18 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaAlterarPlataformas(Tela):
-    pass
+
+    def __init__(self):
+        self.__window = None
+
+    def alterar_plataforma(self, plataforma):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Título:'), sg.Input(key='titulo', default_text=plataforma.titulo)],
+            [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=plataforma.descricao)],
+            [sg.Button('Prosseguir')],
+            [sg.Button('Retornar')]
+        ]

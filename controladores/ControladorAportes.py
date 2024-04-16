@@ -11,6 +11,7 @@ from limites.TelaAportes import TelaAportes
 from limites.TelaCadastraAportes import TelaCadastraAportes
 from limites.TelaExibeAportes import TelaExibeAportes
 from limites.TelaExcluiAportes import TelaExcluiAportes
+from limites.TelaPopup import TelaPopup
 from DAOs.DAOAporte import DAOAporte
 from controladores.ControladorGeraIdAporte import ControladorGeraIdAporte
 

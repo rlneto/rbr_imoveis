@@ -17,17 +17,11 @@ class TelaMenu(Tela):
     def abrir_menu(self):
         sg.theme('TealMono')
         layout = [
-            [sg.Radio('Cadastrar Imóvel', group_id="RD1" , key='C_IMOVEIS')],
-            [sg.Radio('Exibir Imóvel', group_id="RD1", key='R_IMOVEIS')],
-            [sg.Radio('Alterar Imóvel', group_id="RD1", key='U_IMOVEIS')],
-            [sg.Radio('Excluir Imóvel', group_id="RD1", key='D_IMOVEIS')],
-            [sg.Radio('Cadastrar Plataforma', group_id="RD1", key='C_PLATAFORMAS')],
-            [sg.Radio('Exibir Plataforma', group_id="RD1", key='R_PLATAFORMAS')],
-            [sg.Radio('Alterar Plataforma', group_id="RD1", key='U_PLATAFORMAS')],
-            [sg.Radio('Excluir Plataforma', group_id="RD1", key='D_PLATAFORMAS')],
+            [sg.Radio('Menu Imóveis', group_id="RD1" , key='IMOVEIS')],
+            [sg.Radio('Menu Plataformas', group_id="RD1", key='PLATAFORMAS')],
             [sg.Radio('Alterar Senha', group_id="RD1", key='U_SENHA')],
-            [sg.Button('Prosseguir' , key='PROXIMO')],
-            [sg.Button('Retornar', key='VOLTAR')]
+            [sg.Button('Prosseguir' , key='PROXIMO'),
+            sg.Button('Sair do Sistema', key='SAIR')]
         ]
         self.__window = sg.Window('Menu').Layout(layout)
         button, values = self.__window.Read()

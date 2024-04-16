@@ -12,6 +12,7 @@ from limites.TelaAlterarImoveis import TelaAlterarImoveis
 from limites.TelaExcluiImoveis import TelaExcluiImoveis
 from limites.TelaExibeImoveis import TelaExibeImoveis
 from limites.TelaCadastraImoveis import TelaCadastraImoveis
+from limites.TelaPopup import TelaPopup
 from DAOs.DAOImovel import DAOImovel
 
 class ControladorImoveis:
