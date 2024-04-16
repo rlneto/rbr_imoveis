@@ -19,7 +19,7 @@ class TelaExcluiPlataformas(Tela):
         sg.theme('TealMono')
         layout = [
             [sg.Text('Excluir Plataforma')],
-            [sg.Listbox(plataformas, size=(20, 5))],
+            [sg.Listbox(values=plataformas, size=(100,6))],
             [sg.Button('Excluir'), sg.Button('Cancelar')]
         ]
         self.__window = sg.Window('Excluir Plataforma').Layout(layout)

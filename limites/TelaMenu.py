@@ -19,11 +19,11 @@ class TelaMenu(Tela):
         layout = [
             [sg.Text('Menu')],
             [sg.Button('Cadastrar Imóveis', key='C_IMOVEIS')],
-            [sg.Button('Consultar Imóveis', key='R_IMOVEIS')],
+            [sg.Button('Exibir Imóveis', key='R_IMOVEIS')],
             [sg.Button('Alterar Imóveis', key='U_IMOVEIS')],
             [sg.Button('Excluir Imóveis', key='D_IMOVEIS')],
             [sg.Button('Cadastrar Plataformas', key='C_PLATAFORMAS')],
-            [sg.Button('Consultar Plataformas', key='R_PLATAFORMAS')],
+            [sg.Button('Exibir Plataformas', key='R_PLATAFORMAS')],
             [sg.Button('Alterar Plataformas', key='U_PLATAFORMAS')],
             [sg.Button('Excluir Plataformas', key='D_PLATAFORMAS')],
             [sg.Button('Alterar Senha', key='U_SENHA')],

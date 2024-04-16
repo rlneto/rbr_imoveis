@@ -15,48 +15,53 @@ from entidades.Imovel import Imovel
 class DAOImovel(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
+        self._DAOImovel__conteudo = []
         if os.path.exists(self.__arquivo):
             try:
                 self._DAOImovel__conteudo = self.__load()
             except FileNotFoundError:
-                self._DAOImovel__conteudo = []
                 self.__dump()
+                self.__load()
 
     @property
     def conteudo(self) -> list:
-        return self.__conteudo
+        return self._DAOImovel__conteudo
+
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self._DAOImovel__conteudo = valor
 
     def create(self, desc: str, titulo: str, id: int, habilitado=True) -> bool:
-        tamanho = len(self.__conteudo)
-        self.__conteudo.append(Imovel(desc, titulo=titulo, ident=id, habilitado=habilitado))
+        tamanho = len(self.conteudo)
+        self.conteudo.append(Imovel(desc, titulo=titulo, ident=id, habilitado=habilitado))
+        for i in range(len(self.conteudo)):
+            print("ID: ", self.conteudo[i].id)
+            print("Titulo: ", self.conteudo[i].titulo)
+            print("Desc: ", self.conteudo[i].desc)
         self.__dump()
         self.__load()
-        if len(self.__conteudo) > tamanho:
+        if len(self.conteudo) > tamanho:
             return True
         else:
             return False
 
     def delete(self, id: int) -> bool:
-        for i in range(len(self.__conteudo)):
-            if self.__conteudo[i].id == id:
-                self.__conteudo[i].habilitado = False
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].id == id:
+                self.conteudo[i].habilitado = False
                 self.__dump()
                 self.__load()
                 return True
         return False
 
-    def read(self):
-        return self.__conteudo
+    def read(self) -> list:
+        return [imovel for imovel in self.conteudo if imovel.habilitado]
 
-    def update(self, **kwargs) -> bool:
-        for i in range(len(self.__conteudo)):
-            if self.__conteudo[i].id == kwargs['id']:
-                if 'titulo' in kwargs:
-                    self.__conteudo[i].titulo = kwargs['titulo']
-                if 'desc' in kwargs:
-                    self.__conteudo[i].desc = kwargs['desc']
-                if 'habilitado' in kwargs:
-                    self.__conteudo[i].habilitado = kwargs['habilitado']
+    def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].id == id:
+                self.conteudo[i].titulo = novo_titulo
+                self.conteudo[i].desc = nova_desc
                 self.__dump()
                 self.__load()
                 return True
@@ -64,9 +69,9 @@ class DAOImovel(DAO):
 
     def __dump(self):
         with open(self.__arquivo, 'wb') as arquivo:
-            pickle.dump(self.__conteudo, arquivo)
+            pickle.dump(self.conteudo, arquivo)
 
     def __load(self):
         with open(self.__arquivo, 'rb') as arquivo:
-            self.__conteudo = pickle.load(arquivo)
-        return self.__conteudo
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

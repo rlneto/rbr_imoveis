@@ -19,7 +19,33 @@ class TelaAlterarPlataformas(Tela):
         sg.theme('TealMono')
         layout = [
             [sg.Text('Título:'), sg.Input(key='titulo', default_text=plataforma.titulo)],
-            [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=plataforma.descricao)],
+            [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=plataforma.desc)],
             [sg.Button('Prosseguir')],
             [sg.Button('Retornar')]
         ]
+        self.__window = sg.Window('Alterar Plataforma').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == 'Prosseguir':
+            return values['titulo'], values['descricao']
+        else:
+            return None, None
+
+    def selecionar_plataforma(self, plataformas):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Selecione a plataforma')],
+            [sg.Listbox(values=plataformas, size=(100,6))],
+            [sg.Button('Selecionar'), sg.Button('Cancelar')]
+        ]
+        self.__window = sg.Window('Selecionar Plataforma').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == 'Selecionar':
+            return values[0][0].id
+        else:
+            return None
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None

@@ -47,11 +47,13 @@ class ControladorPlataformas:
     #             case VOLTAR:
     #                 return
 
-    def alterar_plataforma(self, id_plataforma):
+    def alterar_plataforma(self):
+        id_plataforma = self.__tela_alterar.selecionar_plataforma(self.__dao.read())
+        if id_plataforma is None:
+            return
         plataforma = [plataforma for plataforma in self.__dao.read() if plataforma.id == id_plataforma][0]
         nova_plataforma = self.__tela_alterar.alterar_plataforma(plataforma)
-        self.__dao.update(id=id_plataforma, novo_titulo=nova_plataforma.titulo,
-                          nova_desc=nova_plataforma.descricao)
+        self.__dao.update(id=id_plataforma, novo_titulo=nova_plataforma[0], nova_desc=nova_plataforma[1])
 
     def cadastrar_plataforma(self):
         titulo, desc = self.__tela_cadastrar.cadastrar_plataforma()
@@ -60,7 +62,9 @@ class ControladorPlataformas:
 
     def excluir_plataforma(self):
         id_plataforma = self.__tela_excluir.excluir_plataforma(self.__dao.read())
-        self.__dao.delete(id_plataforma)
+        if id_plataforma is None:
+            return
+        self.__dao.delete(id=id_plataforma)
 
     def exibir_plataforma(self):
         pass
@@ -69,4 +73,4 @@ class ControladorPlataformas:
         return [plataforma for plataforma in self.__dao.read() if plataforma.nome == nome_plataforma][0]
 
     def listar_plataformas(self):
-        pass
+        self.__tela_exibir.exibir_plataformas(self.__dao.read())

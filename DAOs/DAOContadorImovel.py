@@ -23,6 +23,13 @@ class DAOContadorImovel(DAO):
             self.__dump()
             self.__load()
 
+    @property
+    def conteudo(self):
+        return self._DAOContadorImovel__conteudo
+
+    @conteudo.setter
+    def conteudo(self, conteudo):
+        self._DAOContadorImovel__conteudo = conteudo
     def read(self) -> int:
         return self.conteudo[0].valor
 

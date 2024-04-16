@@ -9,6 +9,7 @@
 #######################################################
 from entidades.Contador import Contador
 
+
 class ContadorPlataforma(Contador):
 
     def __init__(self):

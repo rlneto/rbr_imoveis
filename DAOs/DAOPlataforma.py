@@ -20,7 +20,6 @@ class DAOPlataforma(DAO):
             try:
                 self._DAOPlataforma__conteudo = self.__load()
             except FileNotFoundError:
-                self.__conteudo = []
                 self.__dump()
                 self.__load()
 

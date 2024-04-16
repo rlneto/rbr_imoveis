@@ -16,5 +16,5 @@ class ControladorGeraIdImovel(ControladorGeradorId):
     def __init__(self):
         self.__dao = DAOContadorImovel("./contadorImovel.pkl")
 
-    def gera_id(self):
+    def gera_id(self) -> int:
         return self.__dao.update()

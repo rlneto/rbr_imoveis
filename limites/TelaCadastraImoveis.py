@@ -8,6 +8,29 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaCadastraImoveis(Tela):
-    pass
+
+    def __init__(self):
+        self.__window = None
+
+    def cadastrar_imovel(self):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Cadastrar Imóvel')],
+            [sg.Text('Titulo', size=(15, 1)), sg.InputText()],
+            [sg.Text('Descrição', size=(15, 1)), sg.InputText()],
+            [sg.Button('Cadastrar'), sg.Button('Cancelar')]
+        ]
+        self.__window = sg.Window('Cadastrar Imóvel').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == 'Cadastrar':
+            return values[0], values[1]
+        else:
+            return None
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None

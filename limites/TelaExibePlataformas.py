@@ -8,6 +8,25 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaExibePlataformas(Tela):
-    pass
+
+    def __init__(self):
+        self.__window = None
+
+    def exibir_plataformas(self, plataformas):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Plataformas')],
+            [sg.Listbox(values=plataformas, size=(100,6))],
+            [sg.Button('Voltar')]
+        ]
+        self.__window = sg.Window('Plataformas').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        return button
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None

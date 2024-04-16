@@ -8,6 +8,44 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
+
 
 class TelaAlterarImoveis(Tela):
-    pass
+    def __init__(self):
+        self.__window = None
+
+    def alterar_imovel(self, imovel):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Título:'), sg.Input(key='titulo', default_text=imovel.titulo)],
+            [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=imovel.desc)],
+            [sg.Button('Prosseguir')],
+            [sg.Button('Retornar')]
+        ]
+        self.__window = sg.Window('Alterar Plataforma').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == 'Prosseguir':
+            return values['titulo'], values['descricao']
+        else:
+            return None, None
+
+    def selecionar_imovel(self, imoveis):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Text('Selecione o imóvel')],
+            [sg.Listbox(values=imoveis, size=(100,6))],
+            [sg.Button('Selecionar'), sg.Button('Cancelar')]
+        ]
+        self.__window = sg.Window('Selecionar Imóvel').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == 'Selecionar':
+            return values[0][0].id
+        else:
+            return None
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None

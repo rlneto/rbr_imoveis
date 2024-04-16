@@ -13,24 +13,45 @@ from limites.TelaExcluiImoveis import TelaExcluiImoveis
 from limites.TelaExibeImoveis import TelaExibeImoveis
 from limites.TelaCadastraImoveis import TelaCadastraImoveis
 from limites.TelaPopup import TelaPopup
+from controladores.ControladorGeraIdImovel import ControladorGeraIdImovel
 from DAOs.DAOImovel import DAOImovel
 
 class ControladorImoveis:
 
+    def __init__(self):
+        self.__dao = DAOImovel("./imoveis.pkl")
+        self.__tela = TelaImoveis()
+        self.__tela_alterar = TelaAlterarImoveis()
+        self.__tela_excluir = TelaExcluiImoveis()
+        self.__tela_exibir = TelaExibeImoveis()
+        self.__tela_cadastrar = TelaCadastraImoveis()
+        self.__tela_popup = TelaPopup()
+
     def alterar_imovel(self):
-        pass
+        id_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
+        if id_imovel is None:
+            return
+        imovel = [imovel for imovel in self.__dao.read() if imovel.id == id_imovel][0]
+        novo_imovel = self.__tela_alterar.alterar_imovel(imovel)
+        self.__dao.update(id=id_imovel, novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
 
     def cadastrar_imovel(self):
-        pass
+        titulo, desc = self.__tela_cadastrar.cadastrar_imovel()
+        self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
     def excluir_imovel(self):
-        pass
+        id_imovel = self.__tela_excluir.excluir_imovel(self.__dao.read())
+        if id_imovel is None:
+            return
+        self.__dao.delete(id=id_imovel)
 
     def exibir_imovel(self):
         pass
 
-    def find_imovel(self):
-        pass
+    def find_imovel(self, nome_imovel):
+        return [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel][0]
+
 
     def listar_imoveis(self):
-        pass
+        self.__tela_exibir.exibir_imoveis(self.__dao.read())
+

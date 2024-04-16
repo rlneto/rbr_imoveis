@@ -16,6 +16,9 @@ class Plataforma:
         self.__id = ident
         self.__habilitado = habilitado
 
+    def __repr__(self):
+        return f"Título: {self.__titulo} - Descrição: {self.__desc}"
+
     @property
     def desc(self) -> str:
         return self.__desc
