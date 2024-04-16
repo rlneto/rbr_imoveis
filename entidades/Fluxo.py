@@ -9,5 +9,5 @@
 #######################################################
 
 from abc import ABC, abstractmethod
-class Fluxo:
+class Fluxo(ABC):
     pass

@@ -11,7 +11,6 @@ from DAOs.DAOContadorPlataforma import DAOContadorPlataforma
 from controladores.ControladorGeradorId import ControladorGeradorId
 
 class ControladorGeraIdPlataforma(ControladorGeradorId):
-    m_DAOContadorPlataforma= DAOContadorPlataforma()
 
     def gera_id(self):
         pass

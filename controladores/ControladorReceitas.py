@@ -14,15 +14,7 @@ from limites.TelaCadastraReceitas import TelaCadastraReceitas
 from DAOs.DAOReceita import DAOReceita
 
 class ControladorReceitas:
-    m_TelaReceitas= TelaReceitas()
 
-    m_TelaExcluiReceitas= TelaExcluiReceitas()
-
-    m_TelaExibeReceitas= TelaExibeReceitas()
-
-    m_TelaCadastraReceitas= TelaCadastraReceitas()
-
-    m_DAOReceita= DAOReceita()
 
     def cadastrar_receita(self):
         pass

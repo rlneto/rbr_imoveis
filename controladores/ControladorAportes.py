@@ -15,17 +15,7 @@ from DAOs.DAOAporte import DAOAporte
 from controladores.ControladorGeraIdAporte import ControladorGeraIdAporte
 
 class ControladorAportes:
-    m_TelaAportes= TelaAportes()
 
-    m_TelaCadastraAportes= TelaCadastraAportes()
-
-    m_TelaExibeAportes= TelaExibeAportes()
-
-    m_TelaExcluiAportes= TelaExcluiAportes()
-
-    m_DAOAporte= DAOAporte()
-
-    m_ControladorGeraIdAporte= ControladorGeraIdAporte()
 
     def cadastrar_aporte(self):
         pass

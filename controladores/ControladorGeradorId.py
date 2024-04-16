@@ -8,7 +8,8 @@
 # 
 #######################################################
 
-
-class ControladorGeradorId:
+from abc import ABC, abstractmethod
+class ControladorGeradorId(ABC):
+    @abstractmethod
     def gera_id(self):
         pass

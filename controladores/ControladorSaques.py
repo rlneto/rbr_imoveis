@@ -15,17 +15,7 @@ from DAOs.DAOSaque import DAOSaque
 from controladores.ControladorGeraIdSaque import ControladorGeraIdSaque
 
 class ControladorSaques:
-    m_TelaSaques= TelaSaques()
 
-    m_TelaCadastraSaques= TelaCadastraSaques()
-
-    m_TelaExibeSaques= TelaExibeSaques()
-
-    m_TelaExcluiSaques= TelaExcluiSaques()
-
-    m_DAOSaque= DAOSaque()
-
-    m_ControladorGeraIdSaque= ControladorGeraIdSaque()
 
     def cadastrar_saque(self):
         pass

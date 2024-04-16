@@ -11,9 +11,7 @@ from limites.TelaRelatorioAnual import TelaRelatorioAnual
 from limites.TelaRelatorioImovel import TelaRelatorioImovel
 
 class ControladorRelatorios:
-    m_TelaRelatorioAnual= TelaRelatorioAnual()
 
-    m_TelaRelatorioImovel= TelaRelatorioImovel()
 
     def relatorio_anual(self):
         pass

@@ -15,17 +15,7 @@ from DAOs.DAODespesa import DAODespesa
 from controladores.ControladorGeraIdDespesa import ControladorGeraIdDespesa
 
 class ControladorDespesas:
-    m_TelaDespesas= TelaDespesas()
 
-    m_TelaCadastraDespesas= TelaCadastraDespesas()
-
-    m_TelaExibeDespesas= TelaExibeDespesas()
-
-    m_TelaExcluiDespesas= TelaExcluiDespesas()
-
-    m_DAODespesa= DAODespesa()
-
-    m_ControladorGeraIdDespesa= ControladorGeraIdDespesa()
 
     def cadastrar_despesa(self):
         pass

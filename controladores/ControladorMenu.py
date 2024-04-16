@@ -10,7 +10,7 @@
 from limites.TelaMenu import TelaMenu
 
 class ControladorMenu:
-    m_TelaMenu= TelaMenu()
+
 
     def abrir_menu(self):
         pass

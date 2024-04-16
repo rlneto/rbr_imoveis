@@ -9,5 +9,5 @@
 #######################################################
 
 from abc import ABC, abstractmethod
-class Tela:
+class Tela(ABC):
     pass

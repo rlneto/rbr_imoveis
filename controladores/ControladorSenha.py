@@ -12,11 +12,7 @@ from limites.TelaAlteraSenha import TelaAlteraSenha
 from DAOs.DAOSenha import DAOSenha
 
 class ControladorSenha:
-    m_TelaVerificaSenha= TelaVerificaSenha()
 
-    m_TelaAlteraSenha= TelaAlteraSenha()
-
-    m_DAOSenha= DAOSenha()
 
     def alterar_senha(self):
         pass

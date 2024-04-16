@@ -15,17 +15,7 @@ from limites.TelaCadastraPlataformas import TelaCadastraPlataformas
 from DAOs.DAOPlataforma import DAOPlataforma
 
 class ControladorPlataformas:
-    m_TelaPlataformas= TelaPlataformas()
 
-    m_TelaAlterarPlataformas= TelaAlterarPlataformas()
-
-    m_TelaExcluiPlataformas= TelaExcluiPlataformas()
-
-    m_TelaExibePlataformas= TelaExibePlataformas()
-
-    m_TelaCadastraPlataformas= TelaCadastraPlataformas()
-
-    m_DAOPlataforma= DAOPlataforma()
 
     def alterar_plataforma(self):
         pass

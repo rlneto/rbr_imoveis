@@ -15,17 +15,6 @@ from limites.TelaCadastraImoveis import TelaCadastraImoveis
 from DAOs.DAOImovel import DAOImovel
 
 class ControladorImoveis:
-    m_TelaImoveis= TelaImoveis()
-
-    m_TelaAlterarImoveis= TelaAlterarImoveis()
-
-    m_TelaExcluiImoveis= TelaExcluiImoveis()
-
-    m_TelaExibeImoveis= TelaExibeImoveis()
-
-    m_TelaCadastraImoveis= TelaCadastraImoveis()
-
-    m_DAOImovel= DAOImovel()
 
     def alterar_imovel(self):
         pass

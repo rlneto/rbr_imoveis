@@ -11,7 +11,6 @@ from controladores.ControladorGeradorId import ControladorGeradorId
 from DAOs.DAOContadorImovel import DAOContadorImovel
 
 class ControladorGeraIdImovel(ControladorGeradorId):
-    m_DAOContadorImovel= DAOContadorImovel()
 
     def gera_id(self):
         pass
