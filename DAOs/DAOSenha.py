@@ -18,7 +18,7 @@ class DAOSenha(DAO):
         try:
             self._DAOSenha__conteudo = self.__load()
         except FileNotFoundError:
-            self._DAOSenha__conteudo.append(Senha("ABC123"))
+            self._DAOSenha__conteudo.append(Senha('ABC123'))
             self.__dump()
             self.__load()
 

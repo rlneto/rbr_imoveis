@@ -10,13 +10,13 @@
 
 
 class Senha:
-    def __init__(self, valor):
+    def __init__(self, valor) -> None:
         self.__valor = valor
 
     @property
-    def valor(self):
+    def valor(self) -> str:
         return self.__valor
 
     @valor.setter
-    def valor(self, valor):
+    def valor(self, valor) -> None:
         self.__valor = valor
