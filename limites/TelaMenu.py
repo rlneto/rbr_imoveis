@@ -21,13 +21,13 @@ class TelaMenu(Tela):
 
     def abrir_menu(self):
         sg.theme('Reddit')
-        column1 = [[sg.Radio('Imóvel', font=('Helvetica', 15), group_id='menu', key='IMOVEIS')],
+        column1 = [[sg.Radio('Imóveis', font=('Helvetica', 15), group_id='menu', key='IMOVEIS')],
                    [sg.Radio('Receitas', font=('Helvetica', 15), group_id='menu', key='RECEITAS', disabled=True)],
                    [sg.Radio('Despesas', font=('Helvetica', 15), group_id='menu', key='DESPESAS', disabled=True)],
                    [sg.Radio('Relatórios', font=('Helvetica', 15), group_id='menu', key='RELATORIOS', disabled=True)]]
         column2 = [[sg.Radio('Aportes', font=('Helvetica', 15), group_id='menu', key='APORTES', disabled=True)],
                      [sg.Radio('Saques', font=('Helvetica', 15), group_id='menu', key='SAQUES', disabled=True)],
-                     [sg.Radio('Plataforma', font=('Helvetica', 15), group_id='menu', key='PLATAFORMAS')],
+                     [sg.Radio('Plataformas', font=('Helvetica', 15), group_id='menu', key='PLATAFORMAS')],
                      [sg.Radio('Alterar chave de acesso', font=('Helvetica', 15), group_id='menu', key='U_SENHA')]]
         layout = [
             [sg.Text('Sistema de Gerenciamento de Imóveis', justification='center', font=("Helvetica", 20), pad=(20, 20))],

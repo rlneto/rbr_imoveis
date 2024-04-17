@@ -61,7 +61,10 @@ class ControladorImoveis:
 
     def cadastrar_imovel(self):
         titulo, desc = self.__tela_cadastrar.cadastrar_imovel()
-        self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
+        if titulo is None:
+            return
+        else:
+            self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
     def excluir_imovel(self):
         id_imovel = self.__tela_excluir.excluir_imovel(self.__dao.read())
