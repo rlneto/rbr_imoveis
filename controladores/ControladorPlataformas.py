@@ -33,38 +33,41 @@ class ControladorPlataformas:
         self.__tela_exibir = TelaExibePlataformas()
         self.__tela_cadastrar = TelaCadastraPlataformas()
 
-    # def abrir_menu(self):
-    #     while True:
-    #         match self.__tela.abrir_menu():
-    #             case PROXIMO, C_PLATAFORMAS:
-    #                 self.cadastrar_plataforma()
-    #             case PROXIMO, R_PLATAFORMAS:
-    #                 self.listar_plataformas()
-    #             case PROXIMO, U_PLATAFORMAS, nome_plataforma:
-    #                 self.alterar_plataforma(nome_plataforma)
-    #             case PROXIMO, D_PLATAFORMAS:
-    #                 self.excluir_plataforma()
-    #             case VOLTAR:
-    #                 return
+    def abrir_menu(self):
+        while True:
+            match self.__tela.abrir_menu():
+                case self.C_PLATAFORMAS:
+                    self.cadastrar_plataforma()
+                case self.R_PLATAFORMAS:
+                    self.listar_plataformas()
+                case self.U_PLATAFORMAS:
+                    self.alterar_plataforma()
+                case self.D_PLATAFORMAS:
+                    self.excluir_plataforma()
+                case self.VOLTAR:
+                    return
+                case None:
+                    return
 
     def alterar_plataforma(self):
-        id_plataforma = self.__tela_alterar.selecionar_plataforma(self.__dao.read())
-        if id_plataforma is None:
+        nova_plataforma = self.__tela_alterar.selecionar_plataforma(self.__dao.read())
+        if nova_plataforma is None:
             return
-        plataforma = [plataforma for plataforma in self.__dao.read() if plataforma.id == id_plataforma][0]
-        nova_plataforma = self.__tela_alterar.alterar_plataforma(plataforma)
-        self.__dao.update(id=id_plataforma, novo_titulo=nova_plataforma[0], nova_desc=nova_plataforma[1])
+        else:
+            self.__dao.update(id=nova_plataforma[2], novo_titulo=nova_plataforma[0], nova_desc=nova_plataforma[1])
 
     def cadastrar_plataforma(self):
         titulo, desc = self.__tela_cadastrar.cadastrar_plataforma()
-        self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdPlataforma().gera_id())
-
+        if titulo is None or desc is None:
+            return
+        else:
+            self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdPlataforma().gera_id())
 
     def excluir_plataforma(self):
         id_plataforma = self.__tela_excluir.excluir_plataforma(self.__dao.read())
         if id_plataforma is None:
             return
-        self.__dao.delete(id=id_plataforma)
+        self.__dao.delete(id=int(id_plataforma))
 
     def exibir_plataforma(self):
         pass

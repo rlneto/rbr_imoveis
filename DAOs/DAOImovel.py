@@ -47,6 +47,7 @@ class DAOImovel(DAO):
                 self.conteudo[i].habilitado = False
                 self.__dump()
                 self.__load()
+                print(self.conteudo[i].habilitado)
                 return True
         return False
 

@@ -17,7 +17,7 @@ class Imovel:
         self.__habilitado = habilitado
 
     def __repr__(self):
-        return f"Título: {self.__titulo} - Descrição: {self.__desc}"
+        return f"ID - {self.__id} - Título: {self.__titulo} - Descrição: {self.__desc}"
 
     @property
     def desc(self) -> str:

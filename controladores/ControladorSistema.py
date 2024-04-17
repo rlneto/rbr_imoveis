@@ -35,8 +35,8 @@ class ControladorSistema:
     PROSSEGUIR = "PROSSEGUIR"
     SAIR = "SAIR"
     def __init__(self):
-        # self.__autenticado = False
-        self.__autenticado = True # Para testes
+        self.__autenticado = False
+        # self.__autenticado = True # Para testes
         self.__ControladorReceitas= ControladorReceitas()
         self.__ControladorMenu= ControladorMenu()
         self.__ControladorSenha= ControladorSenha()
@@ -53,57 +53,57 @@ class ControladorSistema:
         while not self.autenticado:
             self.autenticado = self.__ControladorSenha.verificar_senha()
 
-        while True:
-            match self.__ControladorMenu.abrir_menu():
-                case self.U_SENHA:
-                    self.__ControladorSenha.alterar_senha()
-                case self.C_IMOVEIS:
-                    self.__ControladorImoveis.cadastrar_imovel()
-                case self.R_IMOVEIS:
-                    self.__ControladorImoveis.listar_imoveis()
-                case self.U_IMOVEIS:
-                    self.__ControladorImoveis.alterar_imovel()
-                case self.D_IMOVEIS:
-                    self.__ControladorImoveis.excluir_imovel()
-                case self.C_PLATAFORMAS:
-                    self.__ControladorPlataformas.cadastrar_plataforma()
-                case self.R_PLATAFORMAS:
-                    self.__ControladorPlataformas.listar_plataformas()
-                case self.U_PLATAFORMAS:
-                    self.__ControladorPlataformas.alterar_plataforma()
-                case self.D_PLATAFORMAS:
-                    self.__ControladorPlataformas.excluir_plataforma()
-                case self.SAIR:
-                    exit()
-
         # while True:
         #     match self.__ControladorMenu.abrir_menu():
-        #         case self.PROSSEGUIR, self.U_SENHA:
+        #         case self.U_SENHA:
         #             self.__ControladorSenha.alterar_senha()
-        #         case self.PROSSEGUIR, self.IMOVEIS:
-        #             self.__tela.mostra_popup("Aqui vai aparecer o menu de imóveis")
-        #             match self.__ControladorImoveis.abrir_menu():
-        #                 case self.C_IMOVEIS:
-        #                     self.__ControladorImoveis.cadastrar_imovel()
-        #                 case self.R_IMOVEIS:
-        #                     self.__ControladorImoveis.listar_imoveis()
-        #                 case self.U_IMOVEIS:
-        #                     self.__ControladorImoveis.alterar_imovel()
-        #                 case self.D_IMOVEIS:
-        #                     self.__ControladorImoveis.excluir_imovel()
-        #         case self.PROSSEGUIR, self .PLATAFORMAS:
-        #             self.__tela.mostra_popup("Aqui vai aparecer o menu de plataformas")
-        #             match self.__ControladorPlataformas.abrir_menu():
-        #                 case self.C_PLATAFORMAS:
-        #                     self.__ControladorPlataformas.cadastrar_plataforma()
-        #                 case self.R_PLATAFORMAS:
-        #                     self.__ControladorPlataformas.listar_plataformas()
-        #                 case self.U_PLATAFORMAS:
-        #                     self.__ControladorPlataformas.alterar_plataforma()
-        #                 case self.D_PLATAFORMAS:
-        #                     self.__ControladorPlataformas.excluir_plataforma()
+        #         case self.C_IMOVEIS:
+        #             self.__ControladorImoveis.cadastrar_imovel()
+        #         case self.R_IMOVEIS:
+        #             self.__ControladorImoveis.listar_imoveis()
+        #         case self.U_IMOVEIS:
+        #             self.__ControladorImoveis.alterar_imovel()
+        #         case self.D_IMOVEIS:
+        #             self.__ControladorImoveis.excluir_imovel()
+        #         case self.C_PLATAFORMAS:
+        #             self.__ControladorPlataformas.cadastrar_plataforma()
+        #         case self.R_PLATAFORMAS:
+        #             self.__ControladorPlataformas.listar_plataformas()
+        #         case self.U_PLATAFORMAS:
+        #             self.__ControladorPlataformas.alterar_plataforma()
+        #         case self.D_PLATAFORMAS:
+        #             self.__ControladorPlataformas.excluir_plataforma()
         #         case self.SAIR:
-        #             break
+        #             exit()
+
+        while True:
+            match self.__ControladorMenu.abrir_menu():
+                case self.PROSSEGUIR, self.U_SENHA:
+                    self.__ControladorSenha.alterar_senha()
+                case self.IMOVEIS:
+                    match self.__ControladorImoveis.abrir_menu():
+                        case self.C_IMOVEIS:
+                            self.__ControladorImoveis.cadastrar_imovel()
+                        case self.R_IMOVEIS:
+                            self.__ControladorImoveis.listar_imoveis()
+                        case self.U_IMOVEIS:
+                            self.__ControladorImoveis.alterar_imovel()
+                        case self.D_IMOVEIS:
+                            self.__ControladorImoveis.excluir_imovel()
+                case self .PLATAFORMAS:
+                    match self.__ControladorPlataformas.abrir_menu():
+                        case self.C_PLATAFORMAS:
+                            self.__ControladorPlataformas.cadastrar_plataforma()
+                        case self.R_PLATAFORMAS:
+                            self.__ControladorPlataformas.listar_plataformas()
+                        case self.U_PLATAFORMAS:
+                            self.__ControladorPlataformas.alterar_plataforma()
+                        case self.D_PLATAFORMAS:
+                            self.__ControladorPlataformas.excluir_plataforma()
+                case self.U_SENHA:
+                    self.__ControladorSenha.alterar_senha()
+                case self.SAIR:
+                    exit()
 
 
 

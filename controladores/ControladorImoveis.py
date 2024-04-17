@@ -17,6 +17,13 @@ from controladores.ControladorGeraIdImovel import ControladorGeraIdImovel
 from DAOs.DAOImovel import DAOImovel
 
 class ControladorImoveis:
+    C_IMOVEIS = "C_IMOVEIS"
+    R_IMOVEIS = "R_IMOVEIS"
+    U_IMOVEIS = "U_IMOVEIS"
+    D_IMOVEIS = "D_IMOVEIS"
+    PROSSEGUIR = "PROSSEGUIR"
+    VOLTAR = "VOLTAR"
+    SAIR = "SAIR"
 
     def __init__(self):
         self.__dao = DAOImovel("./imoveis.pkl")
@@ -27,23 +34,44 @@ class ControladorImoveis:
         self.__tela_cadastrar = TelaCadastraImoveis()
         self.__tela_popup = TelaPopup()
 
+    def abrir_menu(self):
+        match self.__tela.abrir_menu():
+            case self.C_IMOVEIS:
+                self.cadastrar_imovel()
+            case self.R_IMOVEIS:
+                self.listar_imoveis()
+            case self.U_IMOVEIS:
+                self.alterar_imovel()
+            case self.D_IMOVEIS:
+                self.excluir_imovel()
+            case self.PROSSEGUIR:
+                return self.PROSSEGUIR
+            case self.VOLTAR:
+                return self.VOLTAR
+            case self.SAIR:
+                return self.SAIR
+
     def alterar_imovel(self):
-        id_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
-        if id_imovel is None:
+        novo_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
+        print(novo_imovel)
+        if novo_imovel is None:
             return
-        imovel = [imovel for imovel in self.__dao.read() if imovel.id == id_imovel][0]
-        novo_imovel = self.__tela_alterar.alterar_imovel(imovel)
-        self.__dao.update(id=id_imovel, novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
+        else:
+            self.__dao.update(id=novo_imovel[2], novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
 
     def cadastrar_imovel(self):
         titulo, desc = self.__tela_cadastrar.cadastrar_imovel()
-        self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
+        if titulo is None:
+            return
+        else:
+            self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
     def excluir_imovel(self):
         id_imovel = self.__tela_excluir.excluir_imovel(self.__dao.read())
         if id_imovel is None:
             return
-        self.__dao.delete(id=id_imovel)
+        else:
+            self.__dao.delete(int(id_imovel))
 
     def exibir_imovel(self):
         pass

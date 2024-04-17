@@ -15,16 +15,8 @@ class ControladorMenu:
 
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
-    C_IMOVEIS = "C_IMOVEIS"
-    R_IMOVEIS = "R_IMOVEIS"
-    U_IMOVEIS = "U_IMOVEIS"
-    D_IMOVEIS = "D_IMOVEIS"
-    C_PLATAFORMAS = "C_PLATAFORMAS"
-    R_PLATAFORMAS = "R_PLATAFORMAS"
-    U_PLATAFORMAS = "U_PLATAFORMAS"
-    D_PLATAFORMAS = "D_PLATAFORMAS"
     U_SENHA = "U_SENHA"
-    PROXIMO = "PROXIMO"
+    PROSSEGUIR = "PROSSEGUIR"
     VOLTAR = "VOLTAR"
     SAIR = "SAIR"
 
@@ -38,26 +30,14 @@ class ControladorMenu:
     def abrir_menu(self):
 
         match self.__tela.abrir_menu():
-            case self.C_IMOVEIS:
-                return self.C_IMOVEIS
-            case self.R_IMOVEIS:
-                return self.R_IMOVEIS
-            case self.U_IMOVEIS:
-                return self.U_IMOVEIS
-            case self.D_IMOVEIS:
-                return self.D_IMOVEIS
-            case self.C_PLATAFORMAS:
-                return self.C_PLATAFORMAS
-            case self.R_PLATAFORMAS:
-                return self.R_PLATAFORMAS
-            case self.U_PLATAFORMAS:
-                return self.U_PLATAFORMAS
-            case self.D_PLATAFORMAS:
-                return self.D_PLATAFORMAS
+            case self.IMOVEIS:
+                return self.IMOVEIS
+            case self.PLATAFORMAS:
+                return self.PLATAFORMAS
             case self.U_SENHA:
                 return self.U_SENHA
-            case self.PROXIMO:
-                return self.PROXIMO
+            case self.PROSSEGUIR:
+                return self.PROSSEGUIR
             case self.SAIR:
                 return self.SAIR
 

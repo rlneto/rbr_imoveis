@@ -10,41 +10,54 @@
 from limites.Tela import Tela
 import PySimpleGUI as sg
 
+
 class TelaAlterarPlataformas(Tela):
 
     def __init__(self):
         self.__window = None
 
-    def alterar_plataforma(self, plataforma):
-        sg.theme('Reddit')
-        layout = [
-            [sg.Text('Título:'), sg.Input(key='titulo', default_text=plataforma.titulo)],
-            [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=plataforma.desc)],
-            [sg.Button('Prosseguir')],
-            [sg.Button('Retornar')]
-        ]
-        self.__window = sg.Window('Alterar Plataforma').Layout(layout)
-        button, values = self.__window.Read()
-        self.close()
-        if button == 'Prosseguir':
-            return values['titulo'], values['descricao']
-        else:
-            return None, None
-
     def selecionar_plataforma(self, plataformas):
         sg.theme('Reddit')
+
+        dados = [[plataforma.titulo, plataforma.desc, plataforma.id] for plataforma in plataformas]
+
+        colunas = ['Título', 'Descrição', 'ID']
+
         layout = [
-            [sg.Text('Selecione a plataforma')],
-            [sg.Listbox(values=plataformas, size=(100,6))],
-            [sg.Button('Selecionar'), sg.Button('Cancelar')]
+            [sg.Text('Lista Plataformas:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10])],
+            [sg.Text('Digite o ID da plataforma que deseja alterar:', pad=(30, 20))],
+            [[sg.Text('ID:', pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
         ]
-        self.__window = sg.Window('Selecionar Plataforma').Layout(layout)
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button is None or button == 'Voltar':
+            self.__window.Close()
+            return None
+        else:
+            self.__window.Close()
+            for item in plataformas:
+                if item.id == int(values['id']):
+                    return self.alterar_plataforma(item)
+
+    def alterar_plataforma(self, plataforma_selec):
+        sg.theme('Reddit')
+        layout = [
+            [sg.Text('Alterar Plataforma:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Text('Título:', font=("Helvetica", 15), ), sg.Input(key='titulo', pad=(45, 0), default_text=plataforma_selec.titulo)],
+            [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', default_text=plataforma_selec.desc)],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+        ]
+        self.__window = sg.Window('Alterar plataforma:').Layout(layout)
         button, values = self.__window.Read()
         self.close()
-        if button == 'Selecionar':
-            return values[0][0].id
+        if button == 'Confirmar':
+            return values['titulo'], values['descricao'], plataforma_selec.id
         else:
-            return None
+            return None, None
 
     def close(self):
         self.__window.Close()

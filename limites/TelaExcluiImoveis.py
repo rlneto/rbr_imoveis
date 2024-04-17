@@ -17,18 +17,28 @@ class TelaExcluiImoveis(Tela):
 
     def excluir_imovel(self, imoveis):
         sg.theme('Reddit')
+
+        dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis if imovel.habilitado]
+
+        colunas = ['Título', 'Descrição', 'ID']
+
         layout = [
-            [sg.Text('Excluir Imóvel')],
-            [sg.Listbox(values=imoveis, size=(100,6))],
-            [sg.Button('Excluir'), sg.Button('Cancelar')]
+            [sg.Text('Lista Imóveis:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5])],
+            [sg.Text('Digite o ID do imóvel que deseja excluir:',font=("Helvetica", 15), pad=(30, 20))],
+            [[sg.Text('ID:',font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Excluir', pad=(0, 30))]
         ]
-        self.__window = sg.Window('Excluir Imóvel').Layout(layout)
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
         button, values = self.__window.Read()
-        self.close()
-        if button == 'Excluir':
-            return values[0][0].id
-        else:
+        if button is None or button == 'Voltar':
+            self.__window.Close()
             return None
+        else:
+            self.__window.Close()
+            return values['id']
 
 
     def close(self):

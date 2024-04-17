@@ -15,36 +15,48 @@ class TelaAlterarImoveis(Tela):
     def __init__(self):
         self.__window = None
 
-    def alterar_imovel(self, imovel):
-        sg.theme('Reddit')
-        layout = [
-            [sg.Text('Título:'), sg.Input(key='titulo', default_text=imovel.titulo)],
-            [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=imovel.desc)],
-            [sg.Button('Prosseguir')],
-            [sg.Button('Retornar')]
-        ]
-        self.__window = sg.Window('Alterar Plataforma').Layout(layout)
-        button, values = self.__window.Read()
-        self.close()
-        if button == 'Prosseguir':
-            return values['titulo'], values['descricao']
-        else:
-            return None, None
 
     def selecionar_imovel(self, imoveis):
         sg.theme('Reddit')
+
+        dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis]
+
+        colunas = ['Título', 'Descrição', 'ID']
+
         layout = [
-            [sg.Text('Selecione o imóvel')],
-            [sg.Listbox(values=imoveis, size=(100,6))],
-            [sg.Button('Selecionar'), sg.Button('Cancelar')]
+            [sg.Text('Lista Imóveis:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5])],
+            [sg.Text('Digite o ID do imóvel que deseja alterar:', font=("Helvetica", 15),pad=(30, 20))],
+            [[sg.Text('ID:',font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
         ]
-        self.__window = sg.Window('Selecionar Imóvel').Layout(layout)
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button is None or button == 'Voltar':
+            self.__window.Close()
+            return None
+        else:
+            self.__window.Close()
+            for item in imoveis:
+                if item.id == int(values['id']):
+                    return self.alterar_imovel(item)
+    def alterar_imovel(self, imovel_selec):
+        sg.theme('Reddit')
+        layout = [
+            [sg.Text('Alterar Imóvel:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Text('Título:', font=("Helvetica", 15), ), sg.Input(key='titulo', pad=(45, 0), default_text=imovel_selec.titulo)],
+            [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', default_text=imovel_selec.desc)],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+        ]
+        self.__window = sg.Window('Alterar imóvel:').Layout(layout)
         button, values = self.__window.Read()
         self.close()
-        if button == 'Selecionar':
-            return values[0][0].id
+        if button == 'Confirmar':
+            return values['titulo'], values['descricao'], imovel_selec.id
         else:
-            return None
+            return None, None
 
     def close(self):
         self.__window.Close()

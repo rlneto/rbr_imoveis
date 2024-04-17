@@ -17,15 +17,25 @@ class TelaExibePlataformas(Tela):
 
     def exibir_plataformas(self, plataformas):
         sg.theme('Reddit')
+
+        dados = [[plataforma.titulo, plataforma.desc, plataforma.id] for plataforma in plataformas]
+
+        colunas = ['Título', 'Descrição', 'ID']
+
         layout = [
-            [sg.Text('Plataformas')],
-            [sg.Listbox(values=plataformas, size=(100,6))],
-            [sg.Button('Voltar')]
+            [sg.Text('Lista Plataformas:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10])],
+            [sg.Button('Ok', pad=(30, 30))]
         ]
-        self.__window = sg.Window('Plataformas').Layout(layout)
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
         button, values = self.__window.Read()
-        self.close()
-        return button
+        if button is None or button == 'Ok':
+            self.__window.Close()
+            return None
+        self.__window.Close()
+        return None
 
     def close(self):
         self.__window.Close()

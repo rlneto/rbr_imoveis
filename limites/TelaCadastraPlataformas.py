@@ -11,25 +11,30 @@ from limites.Tela import Tela
 import PySimpleGUI as sg
 
 class TelaCadastraPlataformas(Tela):
+    PROSSEGUIR = "PROSSEGUIR"
+    VOLTAR = "VOLTAR"
 
     def __init__(self):
         self.__window = None
 
     def cadastrar_plataforma(self):
         sg.theme('Reddit')
+        column1 = [[sg.Text('Titulo:', font=("Helvetica", 15), ), sg.Input(key='titulo', pad=(45, 0) )],
+                   [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', )]]
         layout = [
-            [sg.Text('Cadastrar Plataforma')],
-            [sg.Text('Titulo', size=(15, 1)), sg.InputText()],
-            [sg.Text('Descrição', size=(15, 1)), sg.InputText()],
-            [sg.Button('Cadastrar'), sg.Button('Cancelar')]
+            [sg.Column([[sg.Text('Cadastrar Plataforma:', font=("Helvetica", 20))]],
+                       pad=(30, 20))],
+            [sg.Column(column1, pad=(30, 30))],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'), key=self.VOLTAR),
+             sg.Button('Confirmar', pad=(0, 30), key=self.PROSSEGUIR)]
         ]
         self.__window = sg.Window('Cadastrar Plataforma').Layout(layout)
         button, values = self.__window.Read()
         self.close()
-        if button == 'Cadastrar':
-            return values[0], values[1]
+        if button == self.PROSSEGUIR:
+            return values['titulo'], values['descricao']
         else:
-            return None
+            return None, None
 
     def close(self):
         self.__window.Close()

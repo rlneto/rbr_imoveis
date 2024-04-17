@@ -11,29 +11,39 @@ from limites.Tela import Tela
 import PySimpleGUI as sg
 
 class TelaMenu(Tela):
+    IMOVEIS = "IMOVEIS"
+    PLATAFORMAS = "PLATAFORMAS"
+    U_SENHA = "U_SENHA"
+    PROSSEGUIR = "PROSSEGUIR"
+    SAIR = "SAIR"
     def __init__(self):
         self.__window = None
 
     def abrir_menu(self):
         sg.theme('Reddit')
+        column1 = [[sg.Radio('Imóveis', font=('Helvetica', 15), group_id='menu', key='IMOVEIS')],
+                   [sg.Radio('Receitas', font=('Helvetica', 15), group_id='menu', key='RECEITAS', disabled=True)],
+                   [sg.Radio('Despesas', font=('Helvetica', 15), group_id='menu', key='DESPESAS', disabled=True)],
+                   [sg.Radio('Relatórios', font=('Helvetica', 15), group_id='menu', key='RELATORIOS', disabled=True)]]
+        column2 = [[sg.Radio('Aportes', font=('Helvetica', 15), group_id='menu', key='APORTES', disabled=True)],
+                     [sg.Radio('Saques', font=('Helvetica', 15), group_id='menu', key='SAQUES', disabled=True)],
+                     [sg.Radio('Plataformas', font=('Helvetica', 15), group_id='menu', key='PLATAFORMAS')],
+                     [sg.Radio('Alterar chave de acesso', font=('Helvetica', 15), group_id='menu', key='U_SENHA')]]
         layout = [
-            [sg.Text('Menu')],
-            [sg.Button('Cadastrar Imóveis', key='C_IMOVEIS')],
-            [sg.Button('Exibir Imóveis', key='R_IMOVEIS')],
-            [sg.Button('Alterar Imóveis', key='U_IMOVEIS')],
-            [sg.Button('Excluir Imóveis', key='D_IMOVEIS')],
-            [sg.Button('Cadastrar Plataformas', key='C_PLATAFORMAS')],
-            [sg.Button('Exibir Plataformas', key='R_PLATAFORMAS')],
-            [sg.Button('Alterar Plataformas', key='U_PLATAFORMAS')],
-            [sg.Button('Excluir Plataformas', key='D_PLATAFORMAS')],
-            [sg.Button('Alterar Senha', key='U_SENHA')],
-            [sg.Button('Sair', key='SAIR')]
+            [sg.Text('Sistema de Gerenciamento de Imóveis', justification='center', font=("Helvetica", 20), pad=(20, 20))],
+            [sg.Column(column1, pad=(30, 30)), sg.Column(column2, pad=(30, 30) )],
+            [sg.Text('Caixa = 0 R$', font=('Helvetica', 15), pad=(40, 15))],
+            [[sg.Button(button_text=('Sair'), key='SAIR', pad=(20, 20), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 20), key='PROSSEGUIR')]]
         ]
-        self.__window = sg.Window('Menu').Layout(layout)
+        self.__window = sg.Window('RBR Imóveis', layout)
         button, values = self.__window.Read()
-        self.__window.Close()
-        return button
-
-
-
-
+        if button is None or button == 'SAIR':
+            exit()
+        else:
+            for key in values:
+                if values[key]:
+                    escolha = key
+                    self.__window.Close()
+                    return escolha
+            self.__window.Close()
+            return None

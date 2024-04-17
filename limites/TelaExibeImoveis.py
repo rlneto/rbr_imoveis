@@ -15,17 +15,49 @@ class TelaExibeImoveis(Tela):
         def __init__(self):
             self.__window = None
 
+        # def exibir_imoveis(self, imoveis):
+        #     sg.theme('Reddit')
+        #     column1 = [[sg.Text('Lista Imóveis:', font=("Helvetica", 15))]]
+        #
+        #     for imovel in imoveis:
+        #         column1.append([sg.Text(f'{imovel}', font=("Helvetica", 15))])
+        #
+        #     layout = [
+        #         [sg.Column([[sg.Text('Imóveis cadastrados:', font=("Helvetica", 20))]],
+        #                     pad=(30, 20))],
+        #         [sg.Column(column1, pad=(30, 30))],
+        #         [sg.Button('Voltar', pad=(30, 30))]
+        #     ]
+        #
+        #     self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        #     button, values = self.__window.Read()
+        #     if button is None or button == 'Voltar':
+        #         self.__window.Close()
+        #         return None
+        #     self.__window.Close()
+        #     return None
+
         def exibir_imoveis(self, imoveis):
             sg.theme('Reddit')
+
+            dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis]
+
+            colunas = ['Título', 'Descrição', 'ID']
+
             layout = [
-                [sg.Text('Imóveis')],
-                [sg.Listbox(values=imoveis, size=(100,6))],
-                [sg.Button('Voltar')]
+                [sg.Text('Lista Imóveis:', font=("Helvetica", 20), pad=(30, 20))],
+                [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                          auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5])],
+                [sg.Button('Ok', pad=(30, 30))]
             ]
-            self.__window = sg.Window('Imóveis').Layout(layout)
+
+            self.__window = sg.Window('RBR Imóveis').Layout(layout)
             button, values = self.__window.Read()
-            self.close()
-            return button
+            if button is None or button == 'Ok':
+                self.__window.Close()
+                return None
+            self.__window.Close()
+            return None
 
         def close(self):
             self.__window.Close()
