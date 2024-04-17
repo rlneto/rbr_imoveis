@@ -15,25 +15,10 @@ class TelaExcluiImoveis(Tela):
     def __init__(self):
         self.__window = None
 
-    # def excluir_imovel(self, imoveis):
-    #     sg.theme('Reddit')
-    #     layout = [
-    #         [sg.Text('Excluir Imóvel')],
-    #         [sg.Listbox(values=imoveis, size=(100,6))],
-    #         [sg.Button('Excluir'), sg.Button('Cancelar')]
-    #     ]
-    #     self.__window = sg.Window('Excluir Imóvel').Layout(layout)
-    #     button, values = self.__window.Read()
-    #     self.close()
-    #     if button == 'Excluir':
-    #         return values[0][0].id
-    #     else:
-    #         return None
-
     def excluir_imovel(self, imoveis):
         sg.theme('Reddit')
 
-        dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis]
+        dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis if imovel.habilitado]
 
         colunas = ['Título', 'Descrição', 'ID']
 
@@ -51,8 +36,9 @@ class TelaExcluiImoveis(Tela):
         if button is None or button == 'Voltar':
             self.__window.Close()
             return None
-        self.__window.Close()
-        return values['id']
+        else:
+            self.__window.Close()
+            return values['id']
 
 
     def close(self):
