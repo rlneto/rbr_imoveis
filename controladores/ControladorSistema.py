@@ -36,7 +36,7 @@ class ControladorSistema:
     SAIR = "SAIR"
     def __init__(self):
         self.__autenticado = False
-        self.__autenticado = True # Para testes
+        # self.__autenticado = True # Para testes
         self.__ControladorReceitas= ControladorReceitas()
         self.__ControladorMenu= ControladorMenu()
         self.__ControladorSenha= ControladorSenha()
