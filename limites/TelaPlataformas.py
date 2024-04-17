@@ -15,22 +15,25 @@ class TelaPlataformas:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    PROSSEGUIR = "PROSSEGUIR"
+    VOLTAR = "VOLTAR"
     def __init__(self):
         self.__window = None
 
     def abrir_menu(self):
         sg.theme('Reddit')
-        layout = [
-            [sg.Radio('Cadastrar Plataforma', group_id="plataformas" , key='C_PLATAFORMAS')],
-            [sg.Radio('Listar Plataformas', group_id="plataformas", key='R_PLATAFORMAS')],
-            [sg.Radio('Alterar Plataforma', group_id="plataformas", key='U_PLATAFORMAS')],
-            [sg.Radio('Excluir Plataforma', group_id="plataformas", key='D_PLATAFORMAS')],
-            [sg.Button('Prosseguir' , key='PROXIMO')],
-            [sg.Button('Retornar', key='VOLTAR')]
-        ]
-        self.__window = sg.Window('Menu Plataformas').Layout(layout)
+        column1 = [[sg.Radio('Cadastrar plataformas', group_id='Plataformas',font=("Helvetica", 15), key=self.C_PLATAFORMAS)],
+                     [sg.Radio('Exibir plataformas', group_id='Plataformas',font=("Helvetica", 15), key=self.R_PLATAFORMAS)],
+                     [sg.Radio('Alterar plataformas', group_id='Plataformas',font=("Helvetica", 15), key=self.U_PLATAFORMAS)],
+                     [sg.Radio('Excluir plataformas', group_id='Plataformas',font=("Helvetica", 15), key=self.D_PLATAFORMAS)]]
+
+        layout = [[sg.Text('Sobre Plataformas', font=("Helvetica", 20), pad=((50,200),(30,30)))],
+                    [sg.Column(column1, pad=(30, 30))],
+                    [[sg.Button(button_text=('Voltar'), key=self.VOLTAR, pad=(20, 20), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 20), key='PROSSEGUIR')]]
+                  ]
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
         button, values = self.__window.Read()
-        if button == 'VOLTAR':
+        if button == 'VOLTAR' or button is None:
             self.__window.Close()
             return None
         else:
