@@ -16,7 +16,7 @@ class TelaCadastraPlataformas(Tela):
         self.__window = None
 
     def cadastrar_plataforma(self):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Cadastrar Plataforma')],
             [sg.Text('Titulo', size=(15, 1)), sg.InputText()],

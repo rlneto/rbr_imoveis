@@ -16,7 +16,7 @@ class TelaExibeImoveis(Tela):
             self.__window = None
 
         def exibir_imoveis(self, imoveis):
-            sg.theme('TealMono')
+            sg.theme('Reddit')
             layout = [
                 [sg.Text('Imóveis')],
                 [sg.Listbox(values=imoveis, size=(100,6))],

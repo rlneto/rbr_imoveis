@@ -15,7 +15,7 @@ class TelaMenu(Tela):
         self.__window = None
 
     def abrir_menu(self):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Menu')],
             [sg.Button('Cadastrar Imóveis', key='C_IMOVEIS')],

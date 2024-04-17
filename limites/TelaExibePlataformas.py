@@ -16,7 +16,7 @@ class TelaExibePlataformas(Tela):
         self.__window = None
 
     def exibir_plataformas(self, plataformas):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Plataformas')],
             [sg.Listbox(values=plataformas, size=(100,6))],

@@ -16,7 +16,7 @@ class TelaAlterarPlataformas(Tela):
         self.__window = None
 
     def alterar_plataforma(self, plataforma):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Título:'), sg.Input(key='titulo', default_text=plataforma.titulo)],
             [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=plataforma.desc)],
@@ -32,7 +32,7 @@ class TelaAlterarPlataformas(Tela):
             return None, None
 
     def selecionar_plataforma(self, plataformas):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Selecione a plataforma')],
             [sg.Listbox(values=plataformas, size=(100,6))],
