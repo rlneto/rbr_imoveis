@@ -19,11 +19,17 @@ class TelaVerificaSenha(Tela):
     def verifica_senha(self):
         sg.theme('Reddit')
         layout = [
-            [sg.Text('Lembrete: A senha padrão é "abc123"')],
-            [sg.Text('Senha:'), sg.Input(key='senha', password_char='*')],
-            [sg.Button('Verificar')]
+            [sg.Column([[sg.Text('Bem-Vindo', justification='center', font=("Helvetica", 25))]],
+                       justification='center')],
+            [sg.Text('Chave de acesso:', font=("Helvetica", 15)), sg.Input(key='senha', password_char='*')],
+            [sg.Column([[sg.Text('A senha padrão é ABC123', justification='center', font=("Helvetica", 15))]],
+                       justification='center')],
+            [sg.Button('Confirmar')]
         ]
-        self.__window = sg.Window('Verificar Senha').Layout(layout)
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
         button, values = self.__window.Read()
+        if button is None:
+            exit()
         self.__window.Close()
         return values['senha']
