@@ -100,6 +100,8 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.U_SENHA:
+                    self.__ControladorSenha.alterar_senha()
                 case self.SAIR:
                     exit()
 

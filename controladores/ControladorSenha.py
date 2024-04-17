@@ -26,5 +26,7 @@ class ControladorSenha:
     def alterar_senha(self):
         tela = TelaAlteraSenha()
         senha = tela.altera_senha()
-        self.__dao.update(senha)
-        return True
+        if senha is not None:
+            self.__dao.update(senha)
+            return True
+        return False

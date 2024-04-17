@@ -30,9 +30,10 @@ class TelaMenu(Tela):
                      [sg.Radio('Plataforma', font=('Helvetica', 15), group_id='menu', key='PLATAFORMAS')],
                      [sg.Radio('Alterar chave de acesso', font=('Helvetica', 15), group_id='menu', key='U_SENHA')]]
         layout = [
-            [sg.Text('Sistema de Gerenciamento de Imóveis', justification='center', font=("Helvetica", 20))],
-            [sg.Column(column1), sg.Column(column2,)],
-            [[sg.Button('Sair', key='SAIR', button_color=('white', 'red')), sg.Button('Confirmar', key='PROSSEGUIR')]]
+            [sg.Text('Sistema de Gerenciamento de Imóveis', justification='center', font=("Helvetica", 20), pad=(20, 20))],
+            [sg.Column(column1, pad=(30, 30)), sg.Column(column2, pad=(30, 30) )],
+            [sg.Text('Caixa = 0 R$', font=('Helvetica', 15), pad=(40, 15))],
+            [[sg.Button(button_text=('Sair'), key='SAIR', pad=(20, 20), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 20), key='PROSSEGUIR')]]
         ]
         self.__window = sg.Window('RBR Imóveis', layout)
         button, values = self.__window.Read()
@@ -46,6 +47,3 @@ class TelaMenu(Tela):
                     return escolha
             self.__window.Close()
             return None
-
-
-

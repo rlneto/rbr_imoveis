@@ -18,11 +18,19 @@ class TelaAlteraSenha(Tela):
 
     def altera_senha(self):
         sg.theme('Reddit')
+        column1 = [[sg.Text('Chave de acesso:', font=("Helvetica", 15), ), sg.Input(key='senha', password_char='*', )]]
         layout = [
-            [sg.Text('Nova Senha:'), sg.Input(key='senha', password_char='*')],
-            [sg.Button('Alterar')]
+            [sg.Column([[sg.Text('Alterar chave de acesso!', font=("Helvetica", 20))]],
+                        pad=(30, 20))],
+            [sg.Column(column1, pad=(30, 30))],
+            [sg.Button('Confirmar', pad=(30, 30))]
         ]
-        self.__window = sg.Window('Alterar Senha', disable_close=True).Layout(layout)
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
         button, values = self.__window.Read()
+        if button is None:
+            self.__window.Close()
+            return None
         self.__window.Close()
         return values['senha']
+
