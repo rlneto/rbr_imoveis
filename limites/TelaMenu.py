@@ -11,6 +11,11 @@ from limites.Tela import Tela
 import PySimpleGUI as sg
 
 class TelaMenu(Tela):
+    IMOVEIS = "IMOVEIS"
+    PLATAFORMAS = "PLATAFORMAS"
+    U_SENHA = "U_SENHA"
+    PROSSEGUIR = "PROSSEGUIR"
+    SAIR = "SAIR"
     def __init__(self):
         self.__window = None
 
@@ -18,22 +23,25 @@ class TelaMenu(Tela):
         sg.theme('TealMono')
         layout = [
             [sg.Text('Menu')],
-            [sg.Button('Cadastrar Imóveis', key='C_IMOVEIS')],
-            [sg.Button('Exibir Imóveis', key='R_IMOVEIS')],
-            [sg.Button('Alterar Imóveis', key='U_IMOVEIS')],
-            [sg.Button('Excluir Imóveis', key='D_IMOVEIS')],
-            [sg.Button('Cadastrar Plataformas', key='C_PLATAFORMAS')],
-            [sg.Button('Exibir Plataformas', key='R_PLATAFORMAS')],
-            [sg.Button('Alterar Plataformas', key='U_PLATAFORMAS')],
-            [sg.Button('Excluir Plataformas', key='D_PLATAFORMAS')],
-            [sg.Button('Alterar Senha', key='U_SENHA')],
+            [sg.Radio('Imóveis', group_id='menu', key='IMOVEIS')],
+            [sg.Radio('Plataformas', group_id='menu', key='PLATAFORMAS')],
+            [sg.Radio('Alterar Senha', group_id='menu', key='U_SENHA')],
+            [sg.Button('Prosseguir', key='PROSSEGUIR')],
             [sg.Button('Sair', key='SAIR')]
         ]
-        self.__window = sg.Window('Menu').Layout(layout)
+        self.__window = sg.Window('Menu Principal').Layout(layout)
         button, values = self.__window.Read()
-        self.__window.Close()
-        return button
-
+        if button == 'SAIR':
+            self.__window.Close()
+            return None
+        else:
+            for key in values:
+                if values[key]:
+                    escolha = key
+                    self.__window.Close()
+                    return escolha
+            self.__window.Close()
+            return None
 
 
 

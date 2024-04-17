@@ -8,6 +8,38 @@
 # 
 #######################################################
 from limites.Tela import Tela
-
+import PySimpleGUI as sg
 class TelaImoveis(Tela):
-    pass
+
+    C_IMOVEIS = "C_IMOVEIS"
+    R_IMOVEIS = "R_IMOVEIS"
+    U_IMOVEIS = "U_IMOVEIS"
+    D_IMOVEIS = "D_IMOVEIS"
+    PROSSEGUIR = "PROSSEGUIR"
+    SAIR = "SAIR"
+    def __init__(self):
+        self.__window = None
+
+    def abrir_menu(self):
+        sg.theme('TealMono')
+        layout = [
+            [sg.Radio(text='Cadastrar Imóveis', group_id='imoveis', key='C_IMOVEIS')],
+            [sg.Radio(text='Listar Imóveis', group_id='imoveis', key='R_IMOVEIS')],
+            [sg.Radio(text='Alterar Imóveis', group_id='imoveis', key='U_IMOVEIS')],
+            [sg.Radio(text='Excluir Imóveis', group_id='imoveis', key='D_IMOVEIS')],
+            [sg.Button('Prosseguir', key='PROSSEGUIR')],
+            [sg.Button('Retornar', key='VOLTAR')]
+        ]
+        self.__window = sg.Window('Menu Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button == 'VOLTAR':
+            self.__window.Close()
+            return None
+        else:
+            for key in values:
+                if values[key]:
+                    escolha = key
+                    self.__window.Close()
+                    return escolha
+            self.__window.Close()
+            return None

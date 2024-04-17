@@ -17,6 +17,13 @@ from controladores.ControladorGeraIdImovel import ControladorGeraIdImovel
 from DAOs.DAOImovel import DAOImovel
 
 class ControladorImoveis:
+    C_IMOVEIS = "C_IMOVEIS"
+    R_IMOVEIS = "R_IMOVEIS"
+    U_IMOVEIS = "U_IMOVEIS"
+    D_IMOVEIS = "D_IMOVEIS"
+    PROSSEGUIR = "PROSSEGUIR"
+    VOLTAR = "VOLTAR"
+    SAIR = "SAIR"
 
     def __init__(self):
         self.__dao = DAOImovel("./imoveis.pkl")
@@ -26,6 +33,23 @@ class ControladorImoveis:
         self.__tela_exibir = TelaExibeImoveis()
         self.__tela_cadastrar = TelaCadastraImoveis()
         self.__tela_popup = TelaPopup()
+
+    def abrir_menu(self):
+        match self.__tela.abrir_menu():
+            case self.C_IMOVEIS:
+                self.cadastrar_imovel()
+            case self.R_IMOVEIS:
+                self.listar_imoveis()
+            case self.U_IMOVEIS:
+                self.alterar_imovel()
+            case self.D_IMOVEIS:
+                self.excluir_imovel()
+            case self.PROSSEGUIR:
+                return self.PROSSEGUIR
+            case self.VOLTAR:
+                return self.VOLTAR
+            case self.SAIR:
+                return self.SAIR
 
     def alterar_imovel(self):
         id_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())

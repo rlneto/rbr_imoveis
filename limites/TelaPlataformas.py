@@ -21,21 +21,23 @@ class TelaPlataformas:
     def abrir_menu(self):
         sg.theme('TealMono')
         layout = [
-            [sg.Radio('Cadastrar Plataforma', group_id="RD1" , key='C_PLATAFORMAS')],
-            [sg.Radio('Listar Plataformas', group_id="RD1", key='R_PLATAFORMAS')],
-            [sg.Radio('Alterar Plataforma', group_id="RD1", key='U_PLATAFORMAS')],
-            [sg.InputText('Nome da plataforma que gostaria de alterar', key='nome_plataforma') ],
-            [sg.Radio('Excluir Plataforma', group_id="RD1", key='D_PLATAFORMAS')],
+            [sg.Radio('Cadastrar Plataforma', group_id="plataformas" , key='C_PLATAFORMAS')],
+            [sg.Radio('Listar Plataformas', group_id="plataformas", key='R_PLATAFORMAS')],
+            [sg.Radio('Alterar Plataforma', group_id="plataformas", key='U_PLATAFORMAS')],
+            [sg.Radio('Excluir Plataforma', group_id="plataformas", key='D_PLATAFORMAS')],
             [sg.Button('Prosseguir' , key='PROXIMO')],
             [sg.Button('Retornar', key='VOLTAR')]
         ]
-        self.__window = sg.Window('Menu Plataformas', disable_close=True).Layout(layout)
+        self.__window = sg.Window('Menu Plataformas').Layout(layout)
         button, values = self.__window.Read()
-        for key in values:
-            if values[key]:
-                escolha = key
-                self.__window.Close()
-                return button, escolha, values['nome_plataforma']
-        self.__window.Close()
-        return button, None
-
+        if button == 'VOLTAR':
+            self.__window.Close()
+            return None
+        else:
+            for key in values:
+                if values[key]:
+                    escolha = key
+                    self.__window.Close()
+                    return escolha
+            self.__window.Close()
+            return None
