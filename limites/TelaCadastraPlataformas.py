@@ -32,7 +32,6 @@ class TelaCadastraPlataformas(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == self.PROSSEGUIR:
-            print(values)
             return values['titulo'], values['descricao']
         else:
             return None, None

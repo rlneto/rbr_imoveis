@@ -18,6 +18,7 @@ class TelaVerificaSenha(Tela):
 
     def verifica_senha(self):
         sg.theme('Reddit')
+
         layout = [
             [sg.Column([[sg.Text('Bem-Vindo', justification='center', font=("Helvetica", 25))]],
                        justification='center')],
@@ -27,9 +28,12 @@ class TelaVerificaSenha(Tela):
             [sg.Button('Confirmar')]
         ]
 
-        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        self.__window = sg.Window('RBR Imóveis', layout, finalize=True)
+        self.__window['senha'].bind('<Return>', '_Enter')
+        self.__window['senha'].bind('<KP_Enter>', '_Enter')
         button, values = self.__window.Read()
         if button is None:
             exit()
-        self.__window.Close()
-        return values['senha']
+        else:
+            self.__window.Close()
+            return values['senha']

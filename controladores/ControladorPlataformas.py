@@ -41,7 +41,7 @@ class ControladorPlataformas:
                 case self.R_PLATAFORMAS:
                     self.listar_plataformas()
                 case self.U_PLATAFORMAS:
-                    self.alterar_plataforma(nome_plataforma)
+                    self.alterar_plataforma()
                 case self.D_PLATAFORMAS:
                     self.excluir_plataforma()
                 case self.VOLTAR:
@@ -51,7 +51,6 @@ class ControladorPlataformas:
 
     def alterar_plataforma(self):
         nova_plataforma = self.__tela_alterar.selecionar_plataforma(self.__dao.read())
-        print(nova_plataforma)
         if nova_plataforma is None:
             return
         else:
@@ -68,7 +67,7 @@ class ControladorPlataformas:
         id_plataforma = self.__tela_excluir.excluir_plataforma(self.__dao.read())
         if id_plataforma is None:
             return
-        self.__dao.delete(id=id_plataforma)
+        self.__dao.delete(id=int(id_plataforma))
 
     def exibir_plataforma(self):
         pass

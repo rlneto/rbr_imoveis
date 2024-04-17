@@ -26,7 +26,7 @@ class TelaAlterarPlataformas(Tela):
         layout = [
             [sg.Text('Lista Plataformas:', font=("Helvetica", 20), pad=(30, 20))],
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5])],
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10])],
             [sg.Text('Digite o ID da plataforma que deseja alterar:', pad=(30, 20))],
             [[sg.Text('ID:', pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]

@@ -70,7 +70,8 @@ class ControladorImoveis:
         id_imovel = self.__tela_excluir.excluir_imovel(self.__dao.read())
         if id_imovel is None:
             return
-        self.__dao.delete(id=id_imovel)
+        else:
+            self.__dao.delete(int(id_imovel))
 
     def exibir_imovel(self):
         pass
