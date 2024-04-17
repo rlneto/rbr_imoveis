@@ -52,12 +52,12 @@ class ControladorImoveis:
                 return self.SAIR
 
     def alterar_imovel(self):
-        id_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
-        if id_imovel is None:
+        novo_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
+        print(novo_imovel)
+        if novo_imovel is None:
             return
-        imovel = [imovel for imovel in self.__dao.read() if imovel.id == id_imovel][0]
-        novo_imovel = self.__tela_alterar.alterar_imovel(imovel)
-        self.__dao.update(id=id_imovel, novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
+        else:
+            self.__dao.update(id=novo_imovel[2], novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
 
     def cadastrar_imovel(self):
         titulo, desc = self.__tela_cadastrar.cadastrar_imovel()
