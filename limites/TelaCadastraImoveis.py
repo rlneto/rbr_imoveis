@@ -36,7 +36,8 @@ class TelaCadastraImoveis(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == self.PROSSEGUIR:
-            return values[0], values[1]
+            print(values)
+            return values['titulo'], values['descricao']
         else:
             return None, None
 
