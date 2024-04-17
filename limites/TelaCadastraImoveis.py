@@ -16,7 +16,7 @@ class TelaCadastraImoveis(Tela):
         self.__window = None
 
     def cadastrar_imovel(self):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Cadastrar Imóvel')],
             [sg.Text('Titulo', size=(15, 1)), sg.InputText()],

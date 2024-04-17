@@ -17,7 +17,7 @@ class TelaAlteraSenha(Tela):
         self.__window = None
 
     def altera_senha(self):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Nova Senha:'), sg.Input(key='senha', password_char='*')],
             [sg.Button('Alterar')]

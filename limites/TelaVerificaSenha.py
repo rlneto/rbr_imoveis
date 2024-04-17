@@ -17,7 +17,7 @@ class TelaVerificaSenha(Tela):
         self.__window = None
 
     def verifica_senha(self):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Lembrete: A senha padrão é "abc123"')],
             [sg.Text('Senha:'), sg.Input(key='senha', password_char='*')],

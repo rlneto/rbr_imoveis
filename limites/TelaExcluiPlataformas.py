@@ -16,7 +16,7 @@ class TelaExcluiPlataformas(Tela):
 
     def excluir_plataforma(self, plataformas):
 
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Excluir Plataforma')],
             [sg.Listbox(values=plataformas, size=(100,6))],

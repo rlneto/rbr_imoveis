@@ -19,3 +19,4 @@ class DAO(ABC):
     @abstractmethod
     def read(self):
         pass
+

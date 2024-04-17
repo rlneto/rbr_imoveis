@@ -16,7 +16,7 @@ class TelaExcluiImoveis(Tela):
         self.__window = None
 
     def excluir_imovel(self, imoveis):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Excluir Imóvel')],
             [sg.Listbox(values=imoveis, size=(100,6))],

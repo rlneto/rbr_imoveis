@@ -19,7 +19,7 @@ class TelaPlataformas:
         self.__window = None
 
     def abrir_menu(self):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Radio('Cadastrar Plataforma', group_id="plataformas" , key='C_PLATAFORMAS')],
             [sg.Radio('Listar Plataformas', group_id="plataformas", key='R_PLATAFORMAS')],

@@ -16,7 +16,7 @@ class TelaAlterarImoveis(Tela):
         self.__window = None
 
     def alterar_imovel(self, imovel):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Título:'), sg.Input(key='titulo', default_text=imovel.titulo)],
             [sg.Text('Descrição:'), sg.Input(key='descricao', default_text=imovel.desc)],
@@ -32,7 +32,7 @@ class TelaAlterarImoveis(Tela):
             return None, None
 
     def selecionar_imovel(self, imoveis):
-        sg.theme('TealMono')
+        sg.theme('Reddit')
         layout = [
             [sg.Text('Selecione o imóvel')],
             [sg.Listbox(values=imoveis, size=(100,6))],
