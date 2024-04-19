@@ -23,7 +23,7 @@ class TelaVerificaSenha(Tela):
             [sg.Column([[sg.Text('Bem-Vindo', justification='center', font=("Helvetica", 25))]],
                        justification='center')],
             [sg.Text('Chave de acesso:', font=("Helvetica", 15)), sg.Input(key='senha', password_char='*')],
-            [sg.Column([[sg.Text('A senha padrão é ABC123', justification='center', font=("Helvetica", 15))]],
+            [sg.Column([[sg.Text('A chave padrão é rbr_imoveis', justification='center', font=("Helvetica", 15))]],
                        justification='center')],
             [sg.Button('Confirmar')]
         ]
