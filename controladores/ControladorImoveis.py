@@ -53,7 +53,6 @@ class ControladorImoveis:
 
     def alterar_imovel(self):
         novo_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
-        print(novo_imovel)
         if novo_imovel is None:
             return
         else:
