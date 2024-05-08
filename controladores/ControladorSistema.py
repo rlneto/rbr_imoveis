@@ -31,6 +31,10 @@ class ControladorSistema:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    # U_RECEITAS = "U_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
     U_SENHA = "U_SENHA"
     PROSSEGUIR = "PROSSEGUIR"
     SAIR = "SAIR"
@@ -90,7 +94,7 @@ class ControladorSistema:
                             self.__ControladorImoveis.alterar_imovel()
                         case self.D_IMOVEIS:
                             self.__ControladorImoveis.excluir_imovel()
-                case self .PLATAFORMAS:
+                case self.PLATAFORMAS:
                     match self.__ControladorPlataformas.abrir_menu():
                         case self.C_PLATAFORMAS:
                             self.__ControladorPlataformas.cadastrar_plataforma()
@@ -100,6 +104,14 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.RECEITAS:
+                    match self.__ControladorReceitas.abrir_menu():
+                        case self.C_RECEITAS:
+                            self.__ControladorReceitas.cadastrar_receita()
+                        case self.R_RECEITAS:
+                            self.__ControladorReceitas.listar_receitas()
+                        case self.D_RECEITAS:
+                            self.__ControladorReceitas.excluir_receita()
                 case self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
                 case self.SAIR:

@@ -13,24 +13,80 @@ from limites.TelaExibeReceitas import TelaExibeReceitas
 from limites.TelaCadastraReceitas import TelaCadastraReceitas
 from limites.TelaPopup import TelaPopup
 from DAOs.DAOReceita import DAOReceita
+from controladores.ControladorGeraIdReceita import ControladorGeraIdReceita
+
 
 class ControladorReceitas:
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
+    PROXIMO = "PROXIMO"
+    VOLTAR = "VOLTAR"
 
+    def __init__(self):
+        self.__dao = DAOReceita("receitas.pkl")
+        self.__tela = TelaReceitas()
+        self.__tela_excluir = TelaExcluiReceitas()
+        self.__tela_exibir = TelaExibeReceitas()
+        self.__tela_cadastrar = TelaCadastraReceitas()
+
+    def abrir_menu(self):
+        while True:
+            match self.__tela.abrir_menu():
+                case self.C_RECEITAS:
+                    self.cadastrar_receita()
+                case self.R_RECEITAS:
+                    self.listar_receitas()
+                case self.D_RECEITAS:
+                    self.excluir_receita()
+                case self.VOLTAR:
+                    return
+                case None:
+                    return
 
     def cadastrar_receita(self):
-        pass
+        self.__controlador_sistema.controlador_plataforma.lista_plataformas()
+        self.__controlador_sistema.controlador_imovel.lista_imoveis()
+        valor, obs, data, id_imovel, id_plataforma, tags = self.__tela_cadastrar.cadastrar_receita()
+        imovel = self.__controlador_sistema.controlador_imovel.pega_imovel_por_id(int(id_imovel))
+        plataforma = self.__controlador_sistema.controlador_plataforma.pega_plataforma_por_id(int(id_plataforma))
+        if valor is None or obs is None or data is None or id_imovel is None or id_plataforma is None or tags is None:
+            return
+        else:
+            self.__dao.create(id=ControladorGeraIdReceita().gera_id(), obs: obs, valor: valor, data: data, imovel: imovel, plataforma: plataforma, tags: tags)
 
     def excluir_receita(self):
-        pass
+        id_receita = self.__tela_excluir.excluir_receita(self.__dao.read())
+        if id_receita is None:
+            return
+        self.__dao.delete(id=int(id_receita))
 
     def exibir_receita(self):
         pass
 
-    def find_receita(self):
-        pass
+    # def find_receita(self, nome_plataforma):
+    #     return [plataforma for plataforma in self.__dao.read() if plataforma.nome == nome_plataforma][0]
 
-    def listar_receitas_ano(self):
-        pass
+    def listar_receitas(self):
+        self.__tela_exibir.exibir_plataformas(self.__dao.read())
 
-    def listar_receitas_imovel(self):
-        pass
+    # -------------
+
+
+    # def cadastrar_receita(self):
+    #     pass
+
+    # def excluir_receita(self):
+    #     pass
+
+    # def exibir_receita(self):
+    #     pass
+
+    # def find_receita(self):
+    #     pass
+
+    # def listar_receitas_ano(self):
+    #     pass
+
+    # def listar_receitas_imovel(self):
+    #     pass

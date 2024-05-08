@@ -12,8 +12,23 @@ from DAOs.DAO import DAO
 from entidades.Receita import Receita
 
 class DAOReceita(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self._DAOReceita__conteudo = []
+        if os.path.exists(self.__arquivo):
+            try:
+                self._DAOReceita__conteudo = self.__load()
+            except FileNotFoundError:
+                self.__dump()
+                self.__load()
+
+    @property
+    def conteudo(self) -> list:
+        return self._DAOReceita__conteudo
+
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self._DAOReceita__conteudo = valor
 
     def create(self):
         pass
@@ -23,3 +38,73 @@ class DAOReceita(DAO):
 
     def read(self):
         pass
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo
+
+
+# class DAOImovel(DAO):
+#     def __init__(self, arquivo: str):
+#         self.__arquivo = arquivo
+#         self._DAOImovel__conteudo = []
+#         if os.path.exists(self.__arquivo):
+#             try:
+#                 self._DAOImovel__conteudo = self.__load()
+#             except FileNotFoundError:
+#                 self.__dump()
+#                 self.__load()
+
+#     @property
+#     def conteudo(self) -> list:
+#         return self._DAOImovel__conteudo
+
+#     @conteudo.setter
+#     def conteudo(self, valor: list):
+#         self._DAOImovel__conteudo = valor
+
+#     def create(self, desc: str, titulo: str, id: int, habilitado=True) -> bool:
+#         tamanho = len(self.conteudo)
+#         self.conteudo.append(Imovel(desc, titulo=titulo, ident=id, habilitado=habilitado))
+#         self.__dump()
+#         self.__load()
+#         if len(self.conteudo) > tamanho:
+#             return True
+#         else:
+#             return False
+
+#     def delete(self, id: int) -> bool:
+#         for i in range(len(self.conteudo)):
+#             if self.conteudo[i].id == id:
+#                 self.conteudo[i].habilitado = False
+#                 self.__dump()
+#                 self.__load()
+#                 return True
+#         return False
+
+#     def read(self) -> list:
+#         return [imovel for imovel in self.conteudo if imovel.habilitado]
+
+#     def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
+#         for i in range(len(self.conteudo)):
+#             if self.conteudo[i].id == id:
+#                 self.conteudo[i].titulo = novo_titulo
+#                 self.conteudo[i].desc = nova_desc
+#                 self.__dump()
+#                 self.__load()
+#                 return True
+#         return False
+
+#     def __dump(self):
+#         with open(self.__arquivo, 'wb') as arquivo:
+#             pickle.dump(self.conteudo, arquivo)
+
+#     def __load(self):
+#         with open(self.__arquivo, 'rb') as arquivo:
+#             self.conteudo = pickle.load(arquivo)
+#         return self.conteudo

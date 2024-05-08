@@ -10,6 +10,35 @@
 from entidades.Imovel import Imovel
 from entidades.Plataforma import Plataforma
 from entidades.Fluxo import Fluxo
+from datetime import date
 
 class Receita(Fluxo):
-    pass
+    def __init__(self, ident: int, obs: str, valor: float, data: date, imovel: Imovel, plataforma: Plataforma, tags: list[str]):
+        super().__init__(ident, obs, valor, data)
+        self.__imovel = imovel
+        self.__plataforma = plataforma
+        self.__tags = tags
+
+    @property
+    def imovel(self) -> Imovel:
+        return self.__imovel
+
+    @imovel.setter
+    def imovel(self, imovel:Imovel):
+        self.__imovel = imovel
+
+    @property
+    def plataforma(self) -> Plataforma:
+        return self.__plataforma
+
+    @plataforma.setter
+    def plataforma(self, plataforma:Plataforma):
+        self.__plataforma = plataforma
+
+    @property
+    def tags(self) -> list[str]:
+        return self.__tags
+
+    @tags.setter
+    def tags(self, tags: list[str]):
+        self.__tags = tags

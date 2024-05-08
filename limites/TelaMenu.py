@@ -22,7 +22,7 @@ class TelaMenu(Tela):
     def abrir_menu(self):
         sg.theme('Reddit')
         column1 = [[sg.Radio('Imóveis', font=('Helvetica', 15), group_id='menu', key='IMOVEIS')],
-                   [sg.Radio('Receitas', font=('Helvetica', 15), group_id='menu', key='RECEITAS', disabled=True)],
+                   [sg.Radio('Receitas', font=('Helvetica', 15), group_id='menu', key='RECEITAS')],
                    [sg.Radio('Despesas', font=('Helvetica', 15), group_id='menu', key='DESPESAS', disabled=True)],
                    [sg.Radio('Relatórios', font=('Helvetica', 15), group_id='menu', key='RELATORIOS', disabled=True)]]
         column2 = [[sg.Radio('Aportes', font=('Helvetica', 15), group_id='menu', key='APORTES', disabled=True)],

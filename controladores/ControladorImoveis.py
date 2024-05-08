@@ -35,21 +35,22 @@ class ControladorImoveis:
         self.__tela_popup = TelaPopup()
 
     def abrir_menu(self):
-        match self.__tela.abrir_menu():
-            case self.C_IMOVEIS:
-                self.cadastrar_imovel()
-            case self.R_IMOVEIS:
-                self.listar_imoveis()
-            case self.U_IMOVEIS:
-                self.alterar_imovel()
-            case self.D_IMOVEIS:
-                self.excluir_imovel()
-            case self.PROSSEGUIR:
-                return self.PROSSEGUIR
-            case self.VOLTAR:
-                return self.VOLTAR
-            case self.SAIR:
-                return self.SAIR
+        while True:
+            match self.__tela.abrir_menu():
+                case self.C_IMOVEIS:
+                    self.cadastrar_imovel()
+                case self.R_IMOVEIS:
+                    self.listar_imoveis()
+                case self.U_IMOVEIS:
+                    self.alterar_imovel()
+                case self.D_IMOVEIS:
+                    self.excluir_imovel()
+                # case self.PROSSEGUIR:
+                #     return self.PROSSEGUIR
+                case self.VOLTAR:
+                    return
+                case None:
+                    return
 
     def alterar_imovel(self):
         novo_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())

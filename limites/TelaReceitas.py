@@ -8,6 +8,40 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaReceitas(Tela):
-    pass
+    
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    U_RECEITAS = "U_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
+    PROSSEGUIR = "PROSSEGUIR"
+    VOLTAR = "VOLTAR"
+    def __init__(self):
+        self.__window = None
+
+    def abrir_menu(self):
+        sg.theme('Reddit')
+        column1 = [[sg.Radio('Cadastrar receitas', group_id='Receitas',font=("Helvetica", 15), key=self.C_RECEITAS)],
+                     [sg.Radio('Exibir receitas', group_id='Receitas',font=("Helvetica", 15), key=self.R_RECEITAS)],
+                     [sg.Radio('Alterar receitas', group_id='Receitas',font=("Helvetica", 15), key=self.U_RECEITAS)],
+                     [sg.Radio('Excluir receitas', group_id='Receitas',font=("Helvetica", 15), key=self.D_RECEITAS)]]
+
+        layout = [[sg.Text('Sobre Receitas', font=("Helvetica", 20), pad=((50,200),(30,30)))],
+                    [sg.Column(column1, pad=(30, 30))],
+                    [[sg.Button(button_text=('Voltar'), key=self.VOLTAR, pad=(20, 20), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 20), key='PROSSEGUIR')]]
+                  ]
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button == 'VOLTAR' or button is None:
+            self.__window.Close()
+            return None
+        else:
+            for key in values:
+                if values[key]:
+                    escolha = key
+                    self.__window.Close()
+                    return escolha
+            self.__window.Close()
+            return None
