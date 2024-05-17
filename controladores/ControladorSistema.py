@@ -17,7 +17,6 @@ from controladores.ControladorRelatorios import ControladorRelatorios
 from controladores.ControladorPlataformas import ControladorPlataformas
 from controladores.ControladorImoveis import ControladorImoveis
 from controladores.ControladorCaixa import ControladorCaixa
-from limites.TelaPopup import TelaPopup
 
 class ControladorSistema:
 
@@ -47,7 +46,6 @@ class ControladorSistema:
         self.__ControladorPlataformas= ControladorPlataformas()
         self.__ControladorImoveis= ControladorImoveis()
         self.__ControladorCaixa= ControladorCaixa()
-        self.__tela = TelaPopup()
 
     def inicializar(self):
         while not self.autenticado:

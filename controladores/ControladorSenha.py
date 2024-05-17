@@ -9,7 +9,6 @@
 #######################################################
 from limites.TelaVerificaSenha import TelaVerificaSenha
 from limites.TelaAlteraSenha import TelaAlteraSenha
-from limites.TelaPopup import TelaPopup
 from DAOs.DAOSenha import DAOSenha
 
 

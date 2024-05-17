@@ -9,5 +9,15 @@
 #######################################################
 
 from abc import ABC, abstractmethod
+import PySimpleGUI as sg
 class Tela(ABC):
-    pass
+
+    def __init__(self):
+        self.__window = None
+
+    def mostra_popup(self, mensagem):
+        sg.popup(mensagem)
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None

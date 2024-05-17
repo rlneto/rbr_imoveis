@@ -8,10 +8,6 @@
 # 
 #######################################################
 from limites.TelaDespesas import TelaDespesas
-from limites.TelaCadastraDespesas import TelaCadastraDespesas
-from limites.TelaExibeDespesas import TelaExibeDespesas
-from limites.TelaExcluiDespesas import TelaExcluiDespesas
-from limites.TelaPopup import TelaPopup
 from DAOs.DAODespesa import DAODespesa
 from controladores.ControladorGeraIdDespesa import ControladorGeraIdDespesa
 
