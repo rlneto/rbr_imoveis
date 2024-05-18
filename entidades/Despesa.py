@@ -7,8 +7,28 @@
 # Original author: rlnet
 # 
 #######################################################
+from datetime import date
 from entidades.Imovel import Imovel
 from entidades.Fluxo import Fluxo
 
 class Despesa(Fluxo):
-    pass
+    def __init__(self, ident: int, obs: str, valor: float, data: date, imovel: Imovel, tags: list[str]):
+        super().__init__(ident, obs, valor, data)
+        self.__imovel = imovel
+        self.__tags = tags
+
+    @property
+    def imovel(self) -> Imovel:
+        return self.__imovel
+
+    @imovel.setter
+    def imovel(self, imovel:Imovel):
+        self.__imovel = imovel
+
+    @property
+    def tags(self) -> list[str]:
+        return self.__tags
+
+    @tags.setter
+    def tags(self, tags: list[str]):
+        self.__tags = tags
