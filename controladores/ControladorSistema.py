@@ -22,6 +22,7 @@ class ControladorSistema:
 
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
+    DESPESAS = "DESPESAS"
     C_IMOVEIS = "C_IMOVEIS"
     R_IMOVEIS = "R_IMOVEIS"
     U_IMOVEIS = "U_IMOVEIS"
@@ -104,6 +105,14 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.DESPESAS:
+                    match self.__ControladorDespesas.abrir_menu():
+                        case self.C_DESPESAS:
+                            self.__ControladorDespesas.cadastrar_despesa()
+                        case self.R_DESPESAS:
+                            self.__ControladorDespesas.listar_despesas()
+                        case self.D_DESPESAS:
+                            self.__ControladorDespesas.excluir_despesa()
                 case self.CAIXA:
                     self.__ControladorCaixa.exibir_caixa()
                 case self.U_SENHA:
