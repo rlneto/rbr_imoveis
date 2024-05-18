@@ -40,7 +40,13 @@ class ControladorDespesas:
 
 
     def cadastrar_despesa(self):
-        pass
+        # self.__controlador_sistema.controlador_imovel.lista_imoveis()
+        valor, obs, data, id_imovel, tags = self.__tela.cadastrar_despesa()
+        # imovel = self.__controlador_sistema.controlador_imovel.pega_imovel_por_id(int(id_imovel))
+        if valor is None or obs is None or data is None or id_imovel is None or tags is None:
+            return
+        else:
+            self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), obs= obs, valor= valor, data= data, imovel= imovel, tags= tags)
 
     def excluir_despesa(self):
         pass
