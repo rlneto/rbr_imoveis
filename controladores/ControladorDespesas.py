@@ -32,7 +32,7 @@ class ControladorDespesas:
                 case self.R_DESPESAS:
                     self.listar_despesas()
                 case self.D_DESPESAS:
-                    self.exclui_despesa()
+                    self.excluir_despesa()
                 case self.VOLTAR:
                     return
                 case None:

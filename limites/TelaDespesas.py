@@ -44,6 +44,7 @@ class TelaDespesas(Tela):
             self.__window.Close()
             return None
         
+        
 
     # def selecionar_imovel(self, imoveis):
     #     sg.theme('Reddit')
