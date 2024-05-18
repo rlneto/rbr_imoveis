@@ -8,6 +8,66 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaDespesas(Tela):
-    pass
+    C_DESPESAS = "C_DESPESAS"
+    R_DESPESAS = "R_DESPESAS"
+    D_DESPESAS = "D_DESPESAS"
+    PROSSEGUIR = "PROSSEGUIR"
+    VOLTAR = "VOLTAR"
+    def __init__(self):
+        super().__init__()
+        self.__window = None
+
+    def abrir_menu(self):
+        sg.theme('Reddit')
+        column1 = [[sg.Radio('Cadastrar despesas', group_id='Despesas',font=("Helvetica", 15), key=self.C_DESPESAS)],
+                     [sg.Radio('Exibir despesas', group_id='Despesas',font=("Helvetica", 15), key=self.R_DESPESAS)],
+                     [sg.Radio('Excluir despesas', group_id='Despesas',font=("Helvetica", 15), key=self.D_DESPESAS)]]
+
+        layout = [[sg.Text('Sobre Despesas', font=("Helvetica", 20), pad=((50,200),(30,30)))],
+                    [sg.Column(column1, pad=(30, 30))],
+                    [[sg.Button(button_text=('Voltar'), key=self.VOLTAR, pad=(20, 20), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 20), key='PROSSEGUIR')]]
+                  ]
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button == 'VOLTAR' or button is None:
+            self.__window.Close()
+            return None
+        else:
+            for key in values:
+                if values[key]:
+                    escolha = key
+                    self.__window.Close()
+                    return escolha
+            self.__window.Close()
+            return None
+        
+
+    # def selecionar_imovel(self, imoveis):
+    #     sg.theme('Reddit')
+
+    #     dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis]
+
+    #     colunas = ['Título', 'Descrição', 'ID']
+
+    #     layout = [
+    #         [sg.Text('Lista Imóveis:', font=("Helvetica", 20), pad=(30, 20))],
+    #         [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+    #                   auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5])],
+    #         [sg.Text('Digite o ID do imóvel que deseja alterar:', font=("Helvetica", 15),pad=(30, 20))],
+    #         [[sg.Text('ID:',font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
+    #         [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+    #     ]
+
+    #     self.__window = sg.Window('RBR Imóveis').Layout(layout)
+    #     button, values = self.__window.Read()
+    #     if button is None or button == 'Voltar':
+    #         self.__window.Close()
+    #         return None
+    #     else:
+    #         self.__window.Close()
+    #         for item in imoveis:
+    #             if item.id == int(values['id']):
+    #                 return self.alterar_imovel(item)
