@@ -8,10 +8,6 @@
 # 
 #######################################################
 from limites.TelaReceitas import TelaReceitas
-from limites.TelaExcluiReceitas import TelaExcluiReceitas
-from limites.TelaExibeReceitas import TelaExibeReceitas
-from limites.TelaCadastraReceitas import TelaCadastraReceitas
-from limites.TelaPopup import TelaPopup
 from DAOs.DAOReceita import DAOReceita
 
 class ControladorReceitas:

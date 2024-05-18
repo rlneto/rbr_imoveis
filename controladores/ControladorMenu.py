@@ -8,7 +8,6 @@
 # 
 #######################################################
 from limites.TelaMenu import TelaMenu
-from limites.TelaPopup import TelaPopup
 import PySimpleGUI as sg
 
 class ControladorMenu:
@@ -19,12 +18,12 @@ class ControladorMenu:
     PROSSEGUIR = "PROSSEGUIR"
     VOLTAR = "VOLTAR"
     SAIR = "SAIR"
+    CAIXA = "CAIXA"
 
 
 
     def __init__(self):
         self.__tela = TelaMenu()
-        self.__tela_popup = TelaPopup()
 
 
     def abrir_menu(self):
@@ -34,6 +33,8 @@ class ControladorMenu:
                 return self.IMOVEIS
             case self.PLATAFORMAS:
                 return self.PLATAFORMAS
+            case self.CAIXA:
+                return self.CAIXA
             case self.U_SENHA:
                 return self.U_SENHA
             case self.PROSSEGUIR:

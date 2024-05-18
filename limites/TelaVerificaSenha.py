@@ -14,6 +14,7 @@ import PySimpleGUI as sg
 class TelaVerificaSenha(Tela):
 
     def __init__(self):
+        super().__init__()
         self.__window = None
 
     def verifica_senha(self):

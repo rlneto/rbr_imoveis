@@ -8,11 +8,7 @@
 # 
 #######################################################
 from limites.TelaImoveis import TelaImoveis
-from limites.TelaAlterarImoveis import TelaAlterarImoveis
-from limites.TelaExcluiImoveis import TelaExcluiImoveis
-from limites.TelaExibeImoveis import TelaExibeImoveis
-from limites.TelaCadastraImoveis import TelaCadastraImoveis
-from limites.TelaPopup import TelaPopup
+
 from controladores.ControladorGeraIdImovel import ControladorGeraIdImovel
 from DAOs.DAOImovel import DAOImovel
 
@@ -28,11 +24,6 @@ class ControladorImoveis:
     def __init__(self):
         self.__dao = DAOImovel("./imoveis.pkl")
         self.__tela = TelaImoveis()
-        self.__tela_alterar = TelaAlterarImoveis()
-        self.__tela_excluir = TelaExcluiImoveis()
-        self.__tela_exibir = TelaExibeImoveis()
-        self.__tela_cadastrar = TelaCadastraImoveis()
-        self.__tela_popup = TelaPopup()
 
     def abrir_menu(self):
         match self.__tela.abrir_menu():
@@ -52,21 +43,21 @@ class ControladorImoveis:
                 return self.SAIR
 
     def alterar_imovel(self):
-        novo_imovel = self.__tela_alterar.selecionar_imovel(self.__dao.read())
+        novo_imovel = self.__tela.selecionar_imovel(self.__dao.read())
         if novo_imovel is None:
             return
         else:
             self.__dao.update(id=novo_imovel[2], novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
 
     def cadastrar_imovel(self):
-        titulo, desc = self.__tela_cadastrar.cadastrar_imovel()
+        titulo, desc = self.__tela.cadastrar_imovel()
         if titulo is None:
             return
         else:
             self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
     def excluir_imovel(self):
-        id_imovel = self.__tela_excluir.excluir_imovel(self.__dao.read())
+        id_imovel = self.__tela.excluir_imovel(self.__dao.read())
         if id_imovel is None:
             return
         else:
@@ -80,5 +71,5 @@ class ControladorImoveis:
 
 
     def listar_imoveis(self):
-        self.__tela_exibir.exibir_imoveis(self.__dao.read())
+        self.__tela.exibir_imoveis(self.__dao.read())
 

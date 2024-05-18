@@ -17,7 +17,6 @@ from controladores.ControladorRelatorios import ControladorRelatorios
 from controladores.ControladorPlataformas import ControladorPlataformas
 from controladores.ControladorImoveis import ControladorImoveis
 from controladores.ControladorCaixa import ControladorCaixa
-from limites.TelaPopup import TelaPopup
 
 class ControladorSistema:
 
@@ -31,6 +30,7 @@ class ControladorSistema:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    CAIXA = "CAIXA"
     U_SENHA = "U_SENHA"
     PROSSEGUIR = "PROSSEGUIR"
     SAIR = "SAIR"
@@ -47,11 +47,12 @@ class ControladorSistema:
         self.__ControladorPlataformas= ControladorPlataformas()
         self.__ControladorImoveis= ControladorImoveis()
         self.__ControladorCaixa= ControladorCaixa()
-        self.__tela = TelaPopup()
 
     def inicializar(self):
         while not self.autenticado:
             self.autenticado = self.__ControladorSenha.verificar_senha()
+            if not self.autenticado:
+                self.__ControladorSenha.erro_senha()
 
         # while True:
         #     match self.__ControladorMenu.abrir_menu():
@@ -90,7 +91,7 @@ class ControladorSistema:
                             self.__ControladorImoveis.alterar_imovel()
                         case self.D_IMOVEIS:
                             self.__ControladorImoveis.excluir_imovel()
-                case self .PLATAFORMAS:
+                case self.PLATAFORMAS:
                     match self.__ControladorPlataformas.abrir_menu():
                         case self.C_PLATAFORMAS:
                             self.__ControladorPlataformas.cadastrar_plataforma()
@@ -100,6 +101,8 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.CAIXA:
+                    self.__ControladorCaixa.exibir_caixa()
                 case self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
                 case self.SAIR:

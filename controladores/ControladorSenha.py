@@ -9,7 +9,6 @@
 #######################################################
 from limites.TelaVerificaSenha import TelaVerificaSenha
 from limites.TelaAlteraSenha import TelaAlteraSenha
-from limites.TelaPopup import TelaPopup
 from DAOs.DAOSenha import DAOSenha
 
 
@@ -30,3 +29,8 @@ class ControladorSenha:
             self.__dao.update(senha)
             return True
         return False
+
+    def erro_senha(self):
+        tela = TelaVerificaSenha()
+        tela.mostra_popup("Senha incorreta!")
+

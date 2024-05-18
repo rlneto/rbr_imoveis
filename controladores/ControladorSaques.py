@@ -8,10 +8,6 @@
 # 
 #######################################################
 from limites.TelaSaques import TelaSaques
-from limites.TelaCadastraSaques import TelaCadastraSaques
-from limites.TelaExibeSaques import TelaExibeSaques
-from limites.TelaExcluiSaques import TelaExcluiSaques
-from limites.TelaPopup import TelaPopup
 from DAOs.DAOSaque import DAOSaque
 from controladores.ControladorGeraIdSaque import ControladorGeraIdSaque
 
