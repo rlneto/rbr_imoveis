@@ -7,9 +7,10 @@
 # Original author: rlnet
 # 
 #######################################################
+from limites.Tela import Tela
 import PySimpleGUI as sg
 
-class TelaPlataformas:
+class TelaPlataformas(Tela):
 
     C_PLATAFORMAS = "C_PLATAFORMAS"
     R_PLATAFORMAS = "R_PLATAFORMAS"
@@ -18,6 +19,7 @@ class TelaPlataformas:
     PROSSEGUIR = "PROSSEGUIR"
     VOLTAR = "VOLTAR"
     def __init__(self):
+        super().__init__()
         self.__window = None
 
     def abrir_menu(self):

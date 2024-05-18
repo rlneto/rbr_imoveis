@@ -29,3 +29,8 @@ class ControladorSenha:
             self.__dao.update(senha)
             return True
         return False
+
+    def erro_senha(self):
+        tela = TelaVerificaSenha()
+        tela.mostra_popup("Senha incorreta!")
+

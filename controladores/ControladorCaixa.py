@@ -8,12 +8,14 @@
 # 
 #######################################################
 from DAOs.DAOCaixa import DAOCaixa
+from limites.TelaCaixa import TelaCaixa
 
 class ControladorCaixa:
 
     def __init__(self):
         self.__dao_caixa = DAOCaixa("caixa.pkl")
         self.__caixa = self.__dao_caixa.read()
+        self.__tela = TelaCaixa()
 
     def atualizar_caixa(self, despesas:list, receitas:list, aportes:list, saques:list):
         total = 0
@@ -27,6 +29,14 @@ class ControladorCaixa:
             total -= saque.valor
         self.__dao_caixa.update(total)
 
+    def exibir_caixa(self):
+        self.__tela.exibir_caixa()
+
+
     @property
     def caixa(self):
         return self.__caixa
+
+    @property
+    def tela(self):
+        return self.__tela

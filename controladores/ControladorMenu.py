@@ -18,6 +18,7 @@ class ControladorMenu:
     PROSSEGUIR = "PROSSEGUIR"
     VOLTAR = "VOLTAR"
     SAIR = "SAIR"
+    CAIXA = "CAIXA"
 
 
 
@@ -32,6 +33,8 @@ class ControladorMenu:
                 return self.IMOVEIS
             case self.PLATAFORMAS:
                 return self.PLATAFORMAS
+            case self.CAIXA:
+                return self.CAIXA
             case self.U_SENHA:
                 return self.U_SENHA
             case self.PROSSEGUIR:
