@@ -12,8 +12,23 @@ from DAOs.DAO import DAO
 from entidades.Despesa import Despesa
 
 class DAODespesa(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self._DAODespesa__conteudo = []
+        if os.path.exists(self.__arquivo):
+            try:
+                self._DAODespesa__conteudo = self.__load()
+            except FileNotFoundError:
+                self.__dump()
+                self.__load()
+
+    @property
+    def conteudo(self) -> list:
+        return self._DAODespesa__conteudo
+
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self._DAODespesa__conteudo = valor
 
     def create(self):
         pass
