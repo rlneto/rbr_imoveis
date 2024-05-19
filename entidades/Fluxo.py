@@ -11,14 +11,14 @@ from abc import ABC, abstractmethod
 from datetime import date
 class Fluxo(ABC):
     @abstractmethod
-    def __init__(self, ident: int, obs: str, valor: float, data: date):
+    def __init__(self, ident: int, obs: str, valor: float, data: str):
         self.__id = ident
         self.__obs = obs
         self.__valor = valor
         self.__data = data
 
-    def __repr__(self):
-        return f"Data: {self.__data} - Valor: {self.__valor} - Observação: {self.__obs}"
+    # def __repr__(self):
+    #     return f"Data: {self.__data} - Valor: {self.__valor} - Observação: {self.__obs} - Id:{self.__id}"
 
     @property
     def obs(self) -> str:

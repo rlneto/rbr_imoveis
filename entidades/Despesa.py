@@ -12,7 +12,7 @@ from entidades.Imovel import Imovel
 from entidades.Fluxo import Fluxo
 
 class Despesa(Fluxo):
-    def __init__(self, ident: int, obs: str, valor: float, data: date, imovel: Imovel, tags: list[str]):
+    def __init__(self, ident: int, obs: str, valor: float, data: str, imovel: Imovel, tags: list[str]):
         super().__init__(ident, obs, valor, data)
         self.__imovel = imovel
         self.__tags = tags
@@ -32,3 +32,6 @@ class Despesa(Fluxo):
     @tags.setter
     def tags(self, tags: list[str]):
         self.__tags = tags
+
+    # def __repr__(self):
+    #     return f"Data: {self.data} - Valor: {self.valor} - Observação: {self.obs} - Id: {self.id} - Imóvel: {self.imovel}"

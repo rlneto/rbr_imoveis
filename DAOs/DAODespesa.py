@@ -30,11 +30,56 @@ class DAODespesa(DAO):
     def conteudo(self, valor: list):
         self._DAODespesa__conteudo = valor
 
-    def create(self):
-        pass
+    # tipos?
+    def create(self, id: int, obs: str, valor: float, data: str, imovel, tags: list[str]) -> bool:
+        tamanho = len(self.conteudo)
+        nova_despesa = Despesa(ident=id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
+        self.conteudo.append(nova_despesa)
+        print("Despesa criada com sucesso:")
+        print(f"ID: {nova_despesa.id}")
+        print(f"Observação: {nova_despesa.obs}")
+        print(f"Valor: {nova_despesa.valor}")
+        print(f"Data: {nova_despesa.data}")
+        print(f"Imóvel: {nova_despesa.imovel}")
+        print(f"Tags: {nova_despesa.tags}")
+        self.__dump()
+        self.__load()
+        if len(self.conteudo) > tamanho:
+            return True
+        else:
+            return False
 
-    def delete(self):
-        pass
+    # ?? habilitado
+    def delete(self, id: int) -> bool:
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].id == id:
+                del self.conteudo[i]
+                self.__dump()
+                self.__load()
+                return True
+        return False
 
-    def read(self):
-        pass
+    def read(self) -> list:
+        return [despesa for despesa in self.conteudo]
+
+    def update(self, id: int, nova_obs: str, novo_valor: float, nova_data: str, novo_imovel, nova_tags: list[str]) -> bool:
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].id == id:
+                self.conteudo[i].obs = nova_obs
+                self.conteudo[i].valor = novo_valor
+                self.conteudo[i].data = nova_data
+                self.conteudo[i].imovel = novo_imovel
+                self.conteudo[i].tags = nova_tags
+                self.__dump()
+                self.__load()
+                return True
+        return False
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

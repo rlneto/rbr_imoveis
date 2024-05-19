@@ -12,5 +12,8 @@ from DAOs.DAOContadorDespesa import DAOContadorDespesa
 
 class ControladorGeraIdDespesa(ControladorGeradorId):
 
-    def gera_id(self):
-        pass
+    def __init__(self):
+        self.__dao = DAOContadorDespesa("./contadorDespesa.pkl")
+
+    def gera_id(self) -> int:
+        return self.__dao.update()

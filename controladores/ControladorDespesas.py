@@ -7,6 +7,7 @@
 # Original author: rlnet
 # 
 #######################################################
+import datetime
 from limites.TelaDespesas import TelaDespesas
 from limites.TelaDespesas import TelaDespesas
 from DAOs.DAODespesa import DAODespesa
@@ -38,46 +39,119 @@ class ControladorDespesas:
                     return
 
 
-    # def cadastrar_despesa(self, controlador_imovel):
-    #     # self.__controlador_sistema.controlador_imovel.lista_imoveis()
-    #     valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa()
-    #     # imovel = self.__controlador_sistema.controlador_imovel.pega_imovel_por_id(int(id_imovel))
-    #     if valor is None or obs is None or data is None or id_imovel is None or tags is None:
-    #         return
-    #     else:
-    #         self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), obs= obs, valor= valor, data= data, imovel= imovel, tags= tags)
-
     def cadastrar_despesa(self, controlador_imovel):
-        valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa()
+        imoveis = controlador_imovel.pegar_todos_imoveis()
+        valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa(imoveis)
         
-        if valor is None or obs is None or data is None or id_imovel is None or tags is None:
+        if valor is None and id_imovel is None and obs is None and data is None and tags is None:
             return
-        else:
-            # Buscar o imóvel usando o controlador de imóveis
-            imovel = controlador_imovel.get_imovel_by_id(id_imovel)
+
+        if self.campos_vazios(valor, obs, data, id_imovel, tags):
+            return
+        
+        if not self.validar_valor(valor):
+            return
+        
+        if not self.validar_existencia_imovel(id_imovel, imoveis):
+            return
+    
+        if not self.validar_tags(tags):
+            return
+        
+        imovel = controlador_imovel.find_imovel_por_id(id_imovel)
+        if imovel is None:
+            self.__tela.mostra_popup("Imóvel com ID {id_imovel} não encontrado.")
+            return
             
-            if imovel is not None:
-                # Criar a despesa usando as informações obtidas
-                self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), 
-                                obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
-            else:
-                self.__tela.mostra_popup("Imóvel com ID {id_imovel} não encontrado.")
+        self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), 
+                        obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
+
 
     def excluir_despesa(self):
         id_despesa = self.__tela.excluir_despesa(self.__dao.read())
         if id_despesa is None:
             return
-        else:
-            self.__dao.delete(int(id_despesa))
+
+        if not self.validar_id_nao_vazio(id_despesa):
+            return
+    
+        if not self.validar_id_inteiro(id_despesa):
+            return
+
+        if not self.validar_existencia_id_despesa(id_despesa):
+            return
+        
+        self.__dao.delete(int(id_despesa))
 
     def listar_despesas(self):
         self.__tela.exibir_despesas(self.__dao.read())
 
-    def exibir_despesa(self):
-        pass
-
     def find_despesa(self, id):
         return [despesa for despesa in self.__dao.read() if despesa.id == id][0]
+
+    # Validações cadastrar Despesa
+    def campos_vazios(self, valor, obs, data, id_imovel, tags):
+        if (valor is None or 
+            obs is None or 
+            data is None or 
+            id_imovel is None or 
+            tags is None or
+            data.strip() == "" or 
+            valor.strip() == "" or 
+            obs.strip() == "" or 
+            len(tags) == 0):
+            
+            self.__tela.mostra_popup("Todos os campos devem ser preenchidos.")
+            return True
+        return False
+    
+
+    def validar_valor(self, valor):
+        try:
+            valor = float(valor)
+            if valor <= 0:
+                self.__tela.mostra_popup("O valor da despesa deve ser um número maior que zero.")
+                return False
+            return True
+        except ValueError:
+            self.__tela.mostra_popup("O valor da despesa deve ser um número.")
+            return False
+
+    def validar_existencia_imovel(self, id_imovel, imoveis):
+        if id_imovel not in [imovel.id for imovel in imoveis]:
+            self.__tela.mostra_popup("Imóvel selecionado não encontrado.")
+            return False
+        return True
+
+
+    def validar_tags(self, tags):
+        if not isinstance(tags, list):
+            self.__tela.mostra_popup("As tags da despesa devem ser uma lista.")
+            return False
+        return True
+    
+    # Validações excluir Despesa
+    def validar_id_nao_vazio(self, id_despesa):
+        if not id_despesa.strip():
+            self.__tela.mostra_popup("O campo ID não pode estar vazio.")
+            return False
+        return True
+
+    def validar_id_inteiro(self, id_despesa):
+        try:
+            int(id_despesa)
+            return True
+        except ValueError:
+            self.__tela.mostra_popup("O ID da despesa deve ser um número inteiro.")
+            return False
+
+    def validar_existencia_id_despesa(self, id_despesa):
+        id_despesa = int(id_despesa)
+        if not any(despesa.id == id_despesa for despesa in self.__dao.read()):
+            self.__tela.mostra_popup(f"Despesa com ID {id_despesa} não encontrada.")
+            return False
+        return True
+
 
     def listar_despesas_ano(self):
         pass

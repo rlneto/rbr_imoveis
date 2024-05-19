@@ -136,9 +136,21 @@ class ControladorImoveis:
     def find_imovel(self, nome_imovel):
         encontrados = [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel]
         return encontrados[0] if encontrados else None
+    
+    def find_imovel_por_id(self, id_imovel):
+        try:
+            id_imovel = int(id_imovel)
+        except ValueError:
+            return None
+        encontrados = [imovel for imovel in self.__dao.read() if imovel.id == id_imovel]
+        return encontrados[0] if encontrados else None
 
     def listar_imoveis(self):
         self.__tela.exibir_imoveis(self.__dao.read())
+
+    def pegar_todos_imoveis(self):
+        imoveis = [imovel for imovel in self.__dao.read()]
+        return imoveis
 
     
     

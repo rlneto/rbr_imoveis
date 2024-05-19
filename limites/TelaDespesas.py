@@ -45,15 +45,17 @@ class TelaDespesas(Tela):
             return None
         
 
-    def cadastrar_despesa(self):
+    def cadastrar_despesa(self, imoveis):
         sg.theme('Reddit')
 
+        opcoes_imoveis = [f'{imovel.id} - {imovel.titulo}' for imovel in imoveis]
+
         column1 = [
-            [sg.Text('Valor:', font=("Helvetica", 15)), sg.Input(key='valor', pad=(67, 0))],
-            [sg.Text('Id do Imóvel associado:', font=("Helvetica", 15)), sg.Input(key='id_imovel')],
-            [sg.Text('Observação:', font=("Helvetica", 15)), sg.Input(key='obs')],
-            [sg.Text('Data:', font=("Helvetica", 15)), sg.InputText('', key="data", pad=((68, 0), 0), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
-            [sg.Text('Tags:', font=("Helvetica", 15)), sg.Input(key='tags', pad=(67, 0))],
+            [sg.Text('Valor: R$ ', font=("Helvetica", 15)), sg.Input(key='valor', size=(56, 1))],
+            [sg.Text('Imóvel associado:', font=("Helvetica", 15)), sg.Combo(opcoes_imoveis, key='id_imovel', size=(44, 1))],
+            [sg.Text('Observação:', font=("Helvetica", 15)), sg.Input(key='obs', size=(52, 1))],
+            [sg.Text('Data:', font=("Helvetica", 15)), sg.InputText('', key="data", size=(61, 1), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
+            [sg.Text('Tags:', font=("Helvetica", 15)), sg.Text('(separadas por vírgula)', font=("Helvetica", 10)), sg.Input(key='tags', size=(40, 1))],
         ]
         
         layout = [
@@ -67,7 +69,11 @@ class TelaDespesas(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == self.PROSSEGUIR:
-            return values['valor'], values['id_imovel'], values['obs'], values['data'], values['tags']
+            id_imovel = values['id_imovel'].split(' - ')[0] if values['id_imovel'] else None
+            id_imovel = int(id_imovel) if values['id_imovel'] else None
+            data = str(values['data'])
+            tags_list = [tag.strip() for tag in values['tags'].split(',') if tag.strip()]
+            return values['valor'], id_imovel, values['obs'], data, tags_list
         else:
             return None, None, None, None, None
 
@@ -75,14 +81,14 @@ class TelaDespesas(Tela):
     def exibir_despesas(self, despesas):
         sg.theme('Reddit')
 
-        dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+        dados = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
 
-        colunas = ['Valor', 'Id do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
+        colunas = ['Valor', 'Título do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
 
         layout = [
             [sg.Text('Lista Despesas:', font=("Helvetica", 20), pad=(30, 20))],
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 15, 30, 15, 15, 5])],
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[10, 20, 20, 15, 15, 15])],
             [sg.Button('Ok', pad=(30, 30))]
         ]
 
@@ -98,60 +104,37 @@ class TelaDespesas(Tela):
     def excluir_despesa(self, despesas):
         sg.theme('Reddit')
 
-        dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+        dados = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
 
-        colunas = ['Valor', 'Id do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
-
-        # dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis if imovel.habilitado]
-
+        colunas = ['Valor', 'Título do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
 
         layout = [
             [sg.Text('Lista Despesas:', font=("Helvetica", 20), pad=(30, 20))],
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 15, 15, 15, 15, 5])],
-            [sg.Text('Digite o ID da despesa que deseja excluir:',font=("Helvetica", 15), pad=(30, 20))],
-            [[sg.Text('ID:',font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
+                    auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30),
+                    col_widths=[10, 20, 20, 15, 15, 15], key='-TABLE-', enable_events=True)],
+            [sg.Text('Digite o ID da despesa que deseja excluir:', font=("Helvetica", 15), pad=(30, 20))],
+            [sg.Text('ID:', font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Excluir', pad=(0, 30))]
         ]
 
         self.__window = sg.Window('RBR Imóveis').Layout(layout)
-        button, values = self.__window.Read()
-        if button is None or button == 'Voltar':
-            self.__window.Close()
-            return None
-        else:
-            self.__window.Close()
-            return values['id']
-    
+        
+        while True:
+            event, values = self.__window.Read()
+            if event is None or event == 'Voltar':
+                self.__window.Close()
+                return None
+            elif event == '-TABLE-':  # When a row is selected in the table
+                selected_row_index = values['-TABLE-'][0]  # Get the first selected row
+                selected_despesa_id = dados[selected_row_index][5]  # Get the ID from the selected row
+                self.__window['id'].update(selected_despesa_id)  # Update the input field with the selected ID
+            elif event == 'Excluir':
+                self.__window.Close()
+                return values['id']
+
 
     def close(self):
         self.__window.Close()
         self.__window = None
         
-
-    # def selecionar_despesa(self, despesas):
-    #     sg.theme('Reddit')
-
-    #     dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
-
-    #     colunas = ['Valor', 'Id do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
-
-    #     layout = [
-    #         [sg.Text('Lista Imóveis:', font=("Helvetica", 20), pad=(30, 20))],
-    #         [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-    #                   auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5])],
-    #         [sg.Text('Digite o ID do imóvel que deseja alterar:', font=("Helvetica", 15),pad=(30, 20))],
-    #         [[sg.Text('ID:',font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
-    #         [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
-    #     ]
-
-    #     self.__window = sg.Window('RBR Imóveis').Layout(layout)
-    #     button, values = self.__window.Read()
-    #     if button is None or button == 'Voltar':
-    #         self.__window.Close()
-    #         return None
-    #     else:
-    #         self.__window.Close()
-    #         for item in imoveis:
-    #             if item.id == int(values['id']):
-    #                 return self.alterar_imovel(item)
