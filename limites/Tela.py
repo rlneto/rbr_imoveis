@@ -16,7 +16,7 @@ class Tela(ABC):
         self.__window = None
 
     def mostra_popup(self, mensagem):
-        sg.popup(mensagem)
+        sg.popup(mensagem, title="ERRO")
 
     def close(self):
         self.__window.Close()

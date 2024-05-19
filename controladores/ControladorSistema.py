@@ -106,9 +106,9 @@ class ControladorSistema:
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
                 case self.DESPESAS:
-                    match self.__ControladorDespesas.abrir_menu():
+                    match self.__ControladorDespesas.abrir_menu(self.__ControladorImoveis):
                         case self.C_DESPESAS:
-                            self.__ControladorDespesas.cadastrar_despesa()
+                            self.__ControladorDespesas.cadastrar_despesa(self.__ControladorImoveis)
                         case self.R_DESPESAS:
                             self.__ControladorDespesas.listar_despesas()
                         case self.D_DESPESAS:

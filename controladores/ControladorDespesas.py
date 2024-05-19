@@ -23,11 +23,11 @@ class ControladorDespesas:
         self.__dao = DAODespesa("despesas.pkl")
         self.__tela = TelaDespesas()
 
-    def abrir_menu(self):
+    def abrir_menu(self, controladorimoveis):
         while True:
             match self.__tela.abrir_menu():
                 case self.C_DESPESAS:
-                    self.cadastrar_despesa()
+                    self.cadastrar_despesa(controladorimoveis)
                 case self.R_DESPESAS:
                     self.listar_despesas()
                 case self.D_DESPESAS:
@@ -38,14 +38,30 @@ class ControladorDespesas:
                     return
 
 
-    def cadastrar_despesa(self):
-        # self.__controlador_sistema.controlador_imovel.lista_imoveis()
+    # def cadastrar_despesa(self, controlador_imovel):
+    #     # self.__controlador_sistema.controlador_imovel.lista_imoveis()
+    #     valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa()
+    #     # imovel = self.__controlador_sistema.controlador_imovel.pega_imovel_por_id(int(id_imovel))
+    #     if valor is None or obs is None or data is None or id_imovel is None or tags is None:
+    #         return
+    #     else:
+    #         self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), obs= obs, valor= valor, data= data, imovel= imovel, tags= tags)
+
+    def cadastrar_despesa(self, controlador_imovel):
         valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa()
-        # imovel = self.__controlador_sistema.controlador_imovel.pega_imovel_por_id(int(id_imovel))
+        
         if valor is None or obs is None or data is None or id_imovel is None or tags is None:
             return
         else:
-            self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), obs= obs, valor= valor, data= data, imovel= imovel, tags= tags)
+            # Buscar o imóvel usando o controlador de imóveis
+            imovel = controlador_imovel.get_imovel_by_id(id_imovel)
+            
+            if imovel is not None:
+                # Criar a despesa usando as informações obtidas
+                self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), 
+                                obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
+            else:
+                self.__tela.mostra_popup("Imóvel com ID {id_imovel} não encontrado.")
 
     def excluir_despesa(self):
         id_despesa = self.__tela.excluir_despesa(self.__dao.read())
