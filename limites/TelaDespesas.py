@@ -72,7 +72,7 @@ class TelaDespesas(Tela):
             return None, None, None, None, None
 
 
-    def exibir_despesas(self, imoveis):
+    def exibir_despesas(self, despesas):
         sg.theme('Reddit')
 
         dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
