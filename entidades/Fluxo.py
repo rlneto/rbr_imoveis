@@ -17,8 +17,8 @@ class Fluxo(ABC):
         self.__valor = valor
         self.__data = data
 
-    # def __repr__(self):
-    #     return f"Data: {self.__data} - Valor: {self.__valor} - Observação: {self.__obs} - Id:{self.__id}"
+    def __repr__(self):
+        return f"Data: {self.__data} - Valor: {self.__valor} - Observação: {self.__obs} - Id:{self.__id}"
 
     @property
     def obs(self) -> str:

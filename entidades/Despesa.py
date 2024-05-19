@@ -32,6 +32,3 @@ class Despesa(Fluxo):
     @tags.setter
     def tags(self, tags: list[str]):
         self.__tags = tags
-
-    # def __repr__(self):
-    #     return f"Data: {self.data} - Valor: {self.valor} - Observação: {self.obs} - Id: {self.id} - Imóvel: {self.imovel}"

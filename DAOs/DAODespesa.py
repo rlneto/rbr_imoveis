@@ -30,18 +30,10 @@ class DAODespesa(DAO):
     def conteudo(self, valor: list):
         self._DAODespesa__conteudo = valor
 
-    # tipos?
     def create(self, id: int, obs: str, valor: float, data: str, imovel, tags: list[str]) -> bool:
         tamanho = len(self.conteudo)
         nova_despesa = Despesa(ident=id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
         self.conteudo.append(nova_despesa)
-        print("Despesa criada com sucesso:")
-        print(f"ID: {nova_despesa.id}")
-        print(f"Observação: {nova_despesa.obs}")
-        print(f"Valor: {nova_despesa.valor}")
-        print(f"Data: {nova_despesa.data}")
-        print(f"Imóvel: {nova_despesa.imovel}")
-        print(f"Tags: {nova_despesa.tags}")
         self.__dump()
         self.__load()
         if len(self.conteudo) > tamanho:
@@ -49,7 +41,6 @@ class DAODespesa(DAO):
         else:
             return False
 
-    # ?? habilitado
     def delete(self, id: int) -> bool:
         for i in range(len(self.conteudo)):
             if self.conteudo[i].id == id:

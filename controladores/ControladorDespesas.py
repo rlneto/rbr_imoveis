@@ -41,6 +41,10 @@ class ControladorDespesas:
 
     def cadastrar_despesa(self, controlador_imovel):
         imoveis = controlador_imovel.pegar_todos_imoveis()
+        if not imoveis:
+            self.__tela.mostra_popup("Você deve possuir imóveis cadastrados para prosseguir!")
+            return
+
         valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa(imoveis)
         
         if valor is None and id_imovel is None and obs is None and data is None and tags is None:
@@ -153,8 +157,22 @@ class ControladorDespesas:
         return True
 
 
-    def listar_despesas_ano(self):
-        pass
+    # Utilizar para os relatórios depois
+    def listar_despesas_ano(self, ano):
+        despesas = self.__dao.read()
+        despesas_ano = [despesa for despesa in despesas if datetime.datetime.strptime(despesa.data, '%d/%m/%Y').year == ano]
+        if despesas_ano:
+            print(f"Despesas do ano {ano}:")
+            for despesa in despesas_ano:
+                print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data} - Imóvel: {despesa.imovel.titulo}")
+        else:
+            print(f"Não há despesas registradas para o ano {ano}.")
 
-    def listar_despesas_imovel(self):
-        pass
+    def listar_despesas_imovel(self, id_imovel):
+        despesas_imovel = [despesa for despesa in self.__dao.read() if despesa.imovel.id == id_imovel]
+        if despesas_imovel:
+            print(f"Despesas do imóvel ID {id_imovel}:")
+            for despesa in despesas_imovel:
+                print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data}")
+        else:
+            print(f"Não há despesas registradas para o imóvel ID {id_imovel}.")

@@ -125,10 +125,10 @@ class TelaDespesas(Tela):
             if event is None or event == 'Voltar':
                 self.__window.Close()
                 return None
-            elif event == '-TABLE-':  # When a row is selected in the table
-                selected_row_index = values['-TABLE-'][0]  # Get the first selected row
-                selected_despesa_id = dados[selected_row_index][5]  # Get the ID from the selected row
-                self.__window['id'].update(selected_despesa_id)  # Update the input field with the selected ID
+            elif event == '-TABLE-':  
+                selected_row_index = values['-TABLE-'][0]  
+                selected_despesa_id = dados[selected_row_index][5]  
+                self.__window['id'].update(selected_despesa_id)  
             elif event == 'Excluir':
                 self.__window.Close()
                 return values['id']
