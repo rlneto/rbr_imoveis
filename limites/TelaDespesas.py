@@ -44,6 +44,34 @@ class TelaDespesas(Tela):
             self.__window.Close()
             return None
         
+
+    def cadastrar_despesa(self):
+        sg.theme('Reddit')
+
+        column1 = [
+            [sg.Text('Valor:', font=("Helvetica", 15)), sg.Input(key='valor', pad=(67, 0))],
+            [sg.Text('Id do Imóvel:', font=("Helvetica", 15)), sg.Input(key='id_imovel')],
+            [sg.Text('Observação:', font=("Helvetica", 15)), sg.Input(key='observacao')],
+            [sg.Text("Data:", font=("Helvetica", 15)), sg.InputText('', key="data", pad=(68, 0), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
+            [sg.Text('Tags:', font=("Helvetica", 15)), sg.Input(key='tags', pad=(67, 0))],
+        ]
+        
+        layout = [
+            [sg.Column([[sg.Text('Cadastrar Despesa:', font=("Helvetica", 20))]], pad=(30, 20))],
+            [sg.Column(column1, pad=(30, 30))],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'), key=self.VOLTAR),
+            sg.Button('Confirmar', pad=(0, 30), key=self.PROSSEGUIR)]
+        ]
+
+        self.__window = sg.Window('Cadastrar Despesa').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == self.PROSSEGUIR:
+            return values['valor'], values['id_imovel'], values['observacao'], values['data'], values['tags']
+        else:
+            return None, None, None, None, None
+
+        
         
 
     # def selecionar_imovel(self, imoveis):

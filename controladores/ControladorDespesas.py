@@ -9,7 +9,6 @@
 #######################################################
 from limites.TelaDespesas import TelaDespesas
 from limites.TelaDespesas import TelaDespesas
-# from limites.TelaPopup import TelaPopup 
 from DAOs.DAODespesa import DAODespesa
 from controladores.ControladorGeraIdDespesa import ControladorGeraIdDespesa
 
@@ -49,13 +48,20 @@ class ControladorDespesas:
             self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), obs= obs, valor= valor, data= data, imovel= imovel, tags= tags)
 
     def excluir_despesa(self):
-        pass
+        id_despesa = self.__tela.excluir_despesa(self.__dao.read())
+        if id_despesa is None:
+            return
+        else:
+            self.__dao.delete(int(id_despesa))
+
+    def listar_despesas(self):
+        self.__tela.exibir_despesas(self.__dao.read())
 
     def exibir_despesa(self):
         pass
 
-    def find_despesa(self):
-        pass
+    def find_despesa(self, id):
+        return [despesa for despesa in self.__dao.read() if despesa.id == id][0]
 
     def listar_despesas_ano(self):
         pass
