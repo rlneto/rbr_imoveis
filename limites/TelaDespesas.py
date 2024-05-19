@@ -50,9 +50,9 @@ class TelaDespesas(Tela):
 
         column1 = [
             [sg.Text('Valor:', font=("Helvetica", 15)), sg.Input(key='valor', pad=(67, 0))],
-            [sg.Text('Id do Imóvel:', font=("Helvetica", 15)), sg.Input(key='id_imovel')],
-            [sg.Text('Observação:', font=("Helvetica", 15)), sg.Input(key='observacao')],
-            [sg.Text("Data:", font=("Helvetica", 15)), sg.InputText('', key="data", pad=(68, 0), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
+            [sg.Text('Id do Imóvel associado:', font=("Helvetica", 15)), sg.Input(key='id_imovel')],
+            [sg.Text('Observação:', font=("Helvetica", 15)), sg.Input(key='obs')],
+            [sg.Text('Data:', font=("Helvetica", 15)), sg.InputText('', key="data", pad=((68, 0), 0), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
             [sg.Text('Tags:', font=("Helvetica", 15)), sg.Input(key='tags', pad=(67, 0))],
         ]
         
@@ -67,19 +67,74 @@ class TelaDespesas(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == self.PROSSEGUIR:
-            return values['valor'], values['id_imovel'], values['observacao'], values['data'], values['tags']
+            return values['valor'], values['id_imovel'], values['obs'], values['data'], values['tags']
         else:
             return None, None, None, None, None
 
-        
+
+    def exibir_despesas(self, imoveis):
+        sg.theme('Reddit')
+
+        dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+
+        colunas = ['Valor', 'Id do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
+
+        layout = [
+            [sg.Text('Lista Despesas:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 15, 30, 15, 15, 5])],
+            [sg.Button('Ok', pad=(30, 30))]
+        ]
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button is None or button == 'Ok':
+            self.__window.Close()
+            return None
+        self.__window.Close()
+        return None
+    
+
+    def excluir_despesa(self, despesas):
+        sg.theme('Reddit')
+
+        dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+
+        colunas = ['Valor', 'Id do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
+
+        # dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis if imovel.habilitado]
+
+
+        layout = [
+            [sg.Text('Lista Despesas:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 15, 15, 15, 15, 5])],
+            [sg.Text('Digite o ID da despesa que deseja excluir:',font=("Helvetica", 15), pad=(30, 20))],
+            [[sg.Text('ID:',font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Excluir', pad=(0, 30))]
+        ]
+
+        self.__window = sg.Window('RBR Imóveis').Layout(layout)
+        button, values = self.__window.Read()
+        if button is None or button == 'Voltar':
+            self.__window.Close()
+            return None
+        else:
+            self.__window.Close()
+            return values['id']
+    
+
+    def close(self):
+        self.__window.Close()
+        self.__window = None
         
 
-    # def selecionar_imovel(self, imoveis):
+    # def selecionar_despesa(self, despesas):
     #     sg.theme('Reddit')
 
-    #     dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis]
+    #     dados = [[despesa.valor, despesa.id_imovel, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
 
-    #     colunas = ['Título', 'Descrição', 'ID']
+    #     colunas = ['Valor', 'Id do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
 
     #     layout = [
     #         [sg.Text('Lista Imóveis:', font=("Helvetica", 20), pad=(30, 20))],

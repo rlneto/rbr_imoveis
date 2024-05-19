@@ -40,7 +40,7 @@ class ControladorDespesas:
 
     def cadastrar_despesa(self):
         # self.__controlador_sistema.controlador_imovel.lista_imoveis()
-        valor, obs, data, id_imovel, tags = self.__tela.cadastrar_despesa()
+        valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa()
         # imovel = self.__controlador_sistema.controlador_imovel.pega_imovel_por_id(int(id_imovel))
         if valor is None or obs is None or data is None or id_imovel is None or tags is None:
             return
