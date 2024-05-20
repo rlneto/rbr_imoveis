@@ -58,29 +58,6 @@ class ControladorSistema:
             if not self.autenticado:
                 self.__ControladorSenha.erro_senha()
 
-        # while True:
-        #     match self.__ControladorMenu.abrir_menu():
-        #         case self.U_SENHA:
-        #             self.__ControladorSenha.alterar_senha()
-        #         case self.C_IMOVEIS:
-        #             self.__ControladorImoveis.cadastrar_imovel()
-        #         case self.R_IMOVEIS:
-        #             self.__ControladorImoveis.listar_imoveis()
-        #         case self.U_IMOVEIS:
-        #             self.__ControladorImoveis.alterar_imovel()
-        #         case self.D_IMOVEIS:
-        #             self.__ControladorImoveis.excluir_imovel()
-        #         case self.C_PLATAFORMAS:
-        #             self.__ControladorPlataformas.cadastrar_plataforma()
-        #         case self.R_PLATAFORMAS:
-        #             self.__ControladorPlataformas.listar_plataformas()
-        #         case self.U_PLATAFORMAS:
-        #             self.__ControladorPlataformas.alterar_plataforma()
-        #         case self.D_PLATAFORMAS:
-        #             self.__ControladorPlataformas.excluir_plataforma()
-        #         case self.SAIR:
-        #             exit()
-
         while True:
             match self.__ControladorMenu.abrir_menu():
                 case self.PROSSEGUIR, self.U_SENHA:
