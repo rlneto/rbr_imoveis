@@ -52,7 +52,7 @@ class TelaDespesas(Tela):
 
         column1 = [
             [sg.Text('Valor: R$ ', font=("Helvetica", 15)), sg.Input(key='valor', size=(56, 1))],
-            [sg.Text('Imóvel associado:', font=("Helvetica", 15)), sg.Combo(opcoes_imoveis, key='id_imovel', size=(44, 1))],
+            [sg.Text('Imóvel associado:', font=("Helvetica", 15)), sg.Combo(opcoes_imoveis, key='id_imovel', size=(44, 1), readonly=True)],
             [sg.Text('Observação:', font=("Helvetica", 15)), sg.Input(key='obs', size=(52, 1))],
             [sg.Text('Data:', font=("Helvetica", 15)), sg.InputText('', key="data", size=(61, 1), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
             [sg.Text('Tags:', font=("Helvetica", 15)), sg.Text('(separadas por vírgula)', font=("Helvetica", 10)), sg.Input(key='tags', size=(40, 1))],
@@ -73,7 +73,9 @@ class TelaDespesas(Tela):
             id_imovel = int(id_imovel) if values['id_imovel'] else None
             data = str(values['data'])
             tags_list = [tag.strip() for tag in values['tags'].split(',') if tag.strip()]
-            return values['valor'], id_imovel, values['obs'], data, tags_list
+            valor = values['valor'].replace(',', '.') if values['valor'] else None
+            obs = values["obs"]
+            return valor, id_imovel, obs, data, tags_list
         else:
             return None, None, None, None, None
 
