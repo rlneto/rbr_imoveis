@@ -9,7 +9,6 @@
 #######################################################
 import datetime
 from limites.TelaDespesas import TelaDespesas
-from limites.TelaDespesas import TelaDespesas
 from DAOs.DAODespesa import DAODespesa
 from controladores.ControladorGeraIdDespesa import ControladorGeraIdDespesa
 

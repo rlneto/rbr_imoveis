@@ -7,26 +7,81 @@
 # Original author: rlnet
 # 
 #######################################################
+import datetime
 from limites.TelaReceitas import TelaReceitas
 from DAOs.DAOReceita import DAOReceita
+from controladores.ControladorGeraIdReceita import ControladorGeraIdReceita
 
 class ControladorReceitas:
 
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
+    PROXIMO = "PROXIMO"
+    VOLTAR = "VOLTAR"
 
-    def cadastrar_receita(self):
+    def __init__(self):
+        self.__dao = DAOReceita("receitas.pkl")
+        self.__tela = TelaReceitas()
+
+    def abrir_menu(self, ControladorImoveis, ControladorPlataformas):
+        while True:
+            match self.__tela.abrir_menu():
+                case self.C_RECEITAS:
+                    self.cadastrar_receita(ControladorImoveis, ControladorPlataformas)
+                case self.R_RECEITAS:
+                    self.listar_receitas(ControladorImoveis, ControladorPlataformas)
+                case self.D_RECEITAS:
+                    self.excluir_receita(ControladorImoveis, ControladorPlataformas)
+                case self.VOLTAR:
+                    return
+                case None:
+                    return
+
+
+
+    def cadastrar_receita(self, ControladorImoveis, ControladorPlataformas):
+        imoveis = ControladorImoveis.pegar_todos_imoveis()
+        plataformas = ControladorPlataformas.pegar_todas_plataformas()
+        if not self.validar_existencia_imoveis(imoveis):
+            return
+
+        valor, id_imovel, obs, data, tags = self.__tela.cadastrar_receita(imoveis, plataformas)
+
+        if valor is None and id_imovel is None and obs is None and data is None and tags is None:
+            return
+
+        if self.validar_campos_vazios(valor, obs, data, id_imovel, tags):
+            return
+
+        if not self.validar_valor(valor):
+            return
+
+        if not self.validar_existencia_imovel(id_imovel, imoveis):
+            return
+
+        if not self.validar_tags(tags):
+            return
+
+        id_receita = ControladorGeraIdReceita.gera_id_receita()
+        receita = Receita(id_receita, valor, id_imovel, obs, data, tags)
+        self.__dao.add(receita)
+        self.__dao.save()
+
+    def validar_existencia_imoveis(self, imoveis):
+        if imoveis == []:
+            self.__tela.mostra_popup("Não há imóveis cadastrados.")
+            return False
+        return True
+
+    def validar_existencia_plataformas(self, plataformas):
+        if plataformas == []:
+            self.__tela.mostra_popup("Não há plataformas cadastradas.")
+            return False
+        return True
+
+    def excluir_receita(self, ControladorImoveis, ControladorPlataformas):
         pass
 
-    def excluir_receita(self):
-        pass
-
-    def exibir_receita(self):
-        pass
-
-    def find_receita(self):
-        pass
-
-    def listar_receitas_ano(self):
-        pass
-
-    def listar_receitas_imovel(self):
+    def listar_receitas(self, ControladorImoveis, ControladorPlataformas):
         pass
