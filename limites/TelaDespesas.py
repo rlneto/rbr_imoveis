@@ -8,6 +8,43 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
+
 
 class TelaDespesas(Tela):
-    pass
+    C_DESPESA = "C_DESPESA"
+    R_DESPESA = "R_DESPESA"
+    D_DESPESA = "D_DESPESA"
+    def __init__(self, imoveis: list, plataformas: list):
+        super().__init__()
+        self.__imoveis = imoveis
+        self.__plataformas = plataformas
+        self.__window = None
+
+    def abrir_menu(self):
+        layout = [
+            [sg.Button("Cadastrar Despesa", key=self.C_DESPESA)],
+            [sg.Button("Listar Despesas", key=self.R_DESPESA)],
+            [sg.Button("Excluir Despesa", key=self.D_DESPESA)],
+            [sg.Button("Voltar", key=self.VOLTAR)]
+        ]
+        self.__window = sg.Window("Menu Despesas").Layout(layout)
+        return self.__window.Read()
+
+    def cadastrar_despesa(self, imoveis: list, plataformas: list):
+        layout = [
+            [sg.Text("Cadastrar Despesa")],
+            [sg.Text("Imovel"), sg.InputCombo(imoveis, key="imovel")],
+            [sg.Text("Plataforma"), sg.InputCombo(plataformas, key="plataforma")],
+            [sg.Text("Valor"), sg.InputText(key="valor")],
+            [sg.Text("Data"), sg.InputText(key="data")],
+            sg.Text("Tags"), sg.InputText(key="tags"),
+            [sg.Button("Cadastrar", key="Cadastrar")],
+            [sg.Button("Voltar", key="Voltar")]
+        ]
+
+    def listar_despesas(self, despesas: list):
+        pass
+
+    def excluir_despesa(self, despesas: list):
+        pass

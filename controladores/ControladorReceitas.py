@@ -20,12 +20,13 @@ class ControladorReceitas:
 
 
     def __init__(self, imoveis: list, plataformas: list):
-        self.__tela = TelaReceitas()
+        self.__tela = TelaReceitas(imoveis, plataformas)
         self.__gera_id = ControladorGeraIdReceita()
         self.__dao = DAOReceita("receitas.pkl")
         self.__receitas = self.__dao.get_all()
         self.__imoveis = imoveis
         self.__plataformas = plataformas
+        self.__gera_id = ControladorGeraIdReceita()
 
     @property
     def tela(self):
@@ -55,25 +56,34 @@ class ControladorReceitas:
                 case self.R_RECEITAS:
                     self.listar_receitas(imoveis, plataformas)
                 case self.D_RECEITAS:
-                    self.excluir_receita()
+                    self.excluir_receita(imoveis, plataformas)
                 case self.VOLTAR:
                     return
                 case None:
                     return
     def cadastrar_receita(self, imoveis, plataformas):
-        pass
+        data, obs, valor, imovel, tags, plataforma = self.__tela.cadastrar_receita(imoveis, plataformas)
+        if data is None:
+            return
+        elif (self.__dao.create(data=data, obs=obs, valor=valor, imovel=imovel, plataforma=plataforma, id=self.__gera_id.gera_id(), tags=tags)):
+            self.__tela.cadastrar_sucesso()
+            return
+        else:
+            self.__tela.cadastrar_erro()
 
-    def excluir_receita(self, imoveis, plataformas):
-        pass
+    def excluir_receita(self):
+        receita = self.__tela.excluir_receita(self.__dao.get_all())
+        if receita is None:
+            return
+        elif self.__dao.delete(receita):
+            self.__tela.excluir_sucesso()
+            return
+        else:
+            self.__tela.excluir_erro()
 
-    def exibir_receita(self, imoveis, plataformas):
-        pass
+    def listar_receitas(self):
+        self.__tela.listar_receitas(self.__dao.get_all())
 
-    def find_receita(self, imoveis, plataformas):
-        pass
-
-    def listar_receitas(self, imoveis, plataformas):
-        pass
 
     def get_all(self):
         return self.__receitas

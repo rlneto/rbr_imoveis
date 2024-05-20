@@ -35,7 +35,7 @@ class DAOReceita(DAO):
         self.__conteudo = valor
 
 
-    def create(self, imovel: Imovel, plataforma: Plataforma, valor: float, data: str, tags: list(str), ) -> bool:
+    def create(self, imovel: Imovel, plataforma: Plataforma, valor: float, data: str, obs: str, id: int, tags: list(str), ) -> bool:
         tamanho = len(self.__conteudo)
         self.__conteudo.append(Receita(imovel, plataforma, valor, data, tags))
         self.__dump()
