@@ -41,16 +41,15 @@ class ControladorDespesas:
 
     def cadastrar_despesa(self, controlador_imovel):
         imoveis = controlador_imovel.pegar_todos_imoveis()
-        if not imoveis:
-            self.__tela.mostra_popup("Você deve possuir imóveis cadastrados para prosseguir!")
-            return
+        if not self.validar_existencia_imoveis(imoveis):
+            return 
 
         valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa(imoveis)
         
         if valor is None and id_imovel is None and obs is None and data is None and tags is None:
             return
 
-        if self.campos_vazios(valor, obs, data, id_imovel, tags):
+        if self.validar_campos_vazios(valor, obs, data, id_imovel, tags):
             return
         
         if not self.validar_valor(valor):
@@ -64,25 +63,19 @@ class ControladorDespesas:
         
         imovel = controlador_imovel.find_imovel_por_id(id_imovel)
         if imovel is None:
-            self.__tela.mostra_popup("Imóvel com ID {id_imovel} não encontrado.")
+            self.__tela.mostra_popup("Imóvel não encontrado.")
             return
-            
-        self.__dao.create(id=ControladorGeraIdDespesa().gera_id(), 
-                        obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
+        
+        id = ControladorGeraIdDespesa().gera_id()
+        self.__dao.create(id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
 
 
     def excluir_despesa(self):
         id_despesa = self.__tela.excluir_despesa(self.__dao.read())
         if id_despesa is None:
             return
-
-        if not self.validar_id_nao_vazio(id_despesa):
-            return
-    
-        if not self.validar_id_inteiro(id_despesa):
-            return
-
-        if not self.validar_existencia_id_despesa(id_despesa):
+        
+        if not self.validar_id(id_despesa):
             return
         
         self.__dao.delete(int(id_despesa))
@@ -94,7 +87,7 @@ class ControladorDespesas:
         return [despesa for despesa in self.__dao.read() if despesa.id == id][0]
 
     # Validações cadastrar Despesa
-    def campos_vazios(self, valor, obs, data, id_imovel, tags):
+    def validar_campos_vazios(self, valor, obs, data, id_imovel, tags):
         if (valor is None or 
             obs is None or 
             data is None or 
@@ -109,6 +102,11 @@ class ControladorDespesas:
             return True
         return False
     
+    def validar_existencia_imoveis(self, imoveis):
+        if not imoveis:
+            self.__tela.mostra_popup("Você deve possuir imóveis cadastrados para prosseguir!")
+            return False
+        return True
 
     def validar_valor(self, valor):
         try:
@@ -134,26 +132,23 @@ class ControladorDespesas:
             return False
         return True
     
-    # Validações excluir Despesa
-    def validar_id_nao_vazio(self, id_despesa):
+    
+    # Validação excluir Despesa
+    def validar_id(self, id_despesa):
         if not id_despesa.strip():
             self.__tela.mostra_popup("O campo ID não pode estar vazio.")
             return False
-        return True
 
-    def validar_id_inteiro(self, id_despesa):
         try:
-            int(id_despesa)
-            return True
+            id_despesa = int(id_despesa)
         except ValueError:
             self.__tela.mostra_popup("O ID da despesa deve ser um número inteiro.")
             return False
 
-    def validar_existencia_id_despesa(self, id_despesa):
-        id_despesa = int(id_despesa)
         if not any(despesa.id == id_despesa for despesa in self.__dao.read()):
             self.__tela.mostra_popup(f"Despesa com ID {id_despesa} não encontrada.")
             return False
+
         return True
 
 

@@ -29,6 +29,7 @@ class DAOContadorDespesa(DAO):
     @conteudo.setter
     def conteudo(self, conteudo):
         self._DAOContadorDespesa__conteudo = conteudo
+        
     def read(self) -> int:
         return self.conteudo[0].valor
 

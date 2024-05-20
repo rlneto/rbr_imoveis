@@ -28,7 +28,6 @@ class ControladorMenu:
 
 
     def abrir_menu(self):
-
         match self.__tela.abrir_menu():
             case self.IMOVEIS:
                 return self.IMOVEIS
