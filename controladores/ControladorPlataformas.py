@@ -68,3 +68,6 @@ class ControladorPlataformas:
 
     def listar_plataformas(self):
         self.__tela.exibir_plataformas(self.__dao.read())
+
+    def get_all(self):
+        return self.__dao.get_all()

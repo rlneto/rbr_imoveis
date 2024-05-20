@@ -73,3 +73,6 @@ class ControladorImoveis:
     def listar_imoveis(self):
         self.__tela.exibir_imoveis(self.__dao.read())
 
+    def get_all(self):
+        self.__dao.get_all()
+

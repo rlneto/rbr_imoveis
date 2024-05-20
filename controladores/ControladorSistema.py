@@ -18,10 +18,11 @@ from controladores.ControladorPlataformas import ControladorPlataformas
 from controladores.ControladorImoveis import ControladorImoveis
 from controladores.ControladorCaixa import ControladorCaixa
 
-class ControladorSistema:
 
+class ControladorSistema:
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
+    RECEITAS = "RECEITAS"
     C_IMOVEIS = "C_IMOVEIS"
     R_IMOVEIS = "R_IMOVEIS"
     U_IMOVEIS = "U_IMOVEIS"
@@ -30,23 +31,29 @@ class ControladorSistema:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
     CAIXA = "CAIXA"
     U_SENHA = "U_SENHA"
     PROSSEGUIR = "PROSSEGUIR"
     SAIR = "SAIR"
+
     def __init__(self):
         self.__autenticado = False
+        self.__ControladorSenha = ControladorSenha()
+        self.__ControladorImoveis = ControladorImoveis()
+        self.__ControladorPlataformas = ControladorPlataformas()
+        self.__ControladorSaques = ControladorSaques()
+        self.__ControladorAportes = ControladorAportes()
         # self.__autenticado = True # Para testes
-        self.__ControladorReceitas= ControladorReceitas()
-        self.__ControladorMenu= ControladorMenu()
-        self.__ControladorSenha= ControladorSenha()
-        self.__ControladorDespesas= ControladorDespesas()
-        self.__ControladorSaques= ControladorSaques()
-        self.__ControladorAportes= ControladorAportes()
-        self.__ControladorRelatorios= ControladorRelatorios()
-        self.__ControladorPlataformas= ControladorPlataformas()
-        self.__ControladorImoveis= ControladorImoveis()
-        self.__ControladorCaixa= ControladorCaixa()
+        self.__ControladorReceitas = ControladorReceitas(imoveis=self.__ControladorImoveis.get_all(), plataformas=self.__ControladorReceitas.get_all())
+        self.__ControladorDespesas = ControladorDespesas(imoveis=self.__ControladorImoveis.get_all())
+        self.__ControladorCaixa = ControladorCaixa(receitas=self.__ControladorReceitas.get_all(), despesas=self.__ControladorDespesas.get_all(), saques=self.__ControladorSaques.get_all(), aportes=self.__ControladorAportes.get_all())
+        self.__ControladorRelatorios = ControladorRelatorios()
+
+
+        self.__ControladorMenu = ControladorMenu(imoveis=self.__ControladorImoveis.get_all(), plataformas=self.__ControladorReceitas.get_all())
 
     def inicializar(self):
         while not self.autenticado:
@@ -78,6 +85,7 @@ class ControladorSistema:
         #             exit()
 
         while True:
+            self.__ControladorMenu = ControladorMenu(imoveis = self.__ControladorImoveis.get_all(), plataformas = self.__ControladorPlataformas.get_all())
             match self.__ControladorMenu.abrir_menu():
                 case self.PROSSEGUIR, self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
@@ -101,15 +109,24 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.RECEITAS:
+                    if self.__ControladorImoveis.get_all() == [] or self.__ControladorPlataformas.get_all() == []:
+                        self.__ControladorMenu.erro_imoveis_plataformas()
+                    else:
+                        match self.__ControladorReceitas.abrir_menu(imoveis=self.__ControladorImoveis.get_all(),
+                                                                    plataformas=self.__ControladorPlataformas.get_all()):
+                            case self.C_RECEITAS:
+                                self.__ControladorReceitas.cadastrar_receita()
+                            case self.R_RECEITAS:
+                                self.__ControladorReceitas.listar_receitas()
+                            case self.D_RECEITAS:
+                                self.__ControladorReceitas.excluir_receita()
                 case self.CAIXA:
                     self.__ControladorCaixa.exibir_caixa()
                 case self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
                 case self.SAIR:
                     exit()
-
-
-
 
     @property
     def autenticado(self):

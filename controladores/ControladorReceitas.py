@@ -8,25 +8,72 @@
 # 
 #######################################################
 from limites.TelaReceitas import TelaReceitas
+from controladores.ControladorGeraIdReceita import ControladorGeraIdReceita
 from DAOs.DAOReceita import DAOReceita
 
 class ControladorReceitas:
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
+    PROXIMO = "PROXIMO"
+    VOLTAR = "VOLTAR"
 
 
-    def cadastrar_receita(self):
+    def __init__(self, imoveis: list, plataformas: list):
+        self.__tela = TelaReceitas()
+        self.__gera_id = ControladorGeraIdReceita()
+        self.__dao = DAOReceita("receitas.pkl")
+        self.__receitas = self.__dao.get_all()
+        self.__imoveis = imoveis
+        self.__plataformas = plataformas
+
+    @property
+    def tela(self):
+        return self.__tela
+
+    @property
+    def dao(self):
+        return self.__dao
+
+    @property
+    def receitas(self):
+        return self.__receitas
+
+    @property
+    def imoveis(self):
+        return self.__imoveis
+
+    @property
+    def plataformas(self):
+        return self.__plataformas
+
+    def abrir_menu(self, imoveis, plataformas):
+        while True:
+            match self.__tela.abrir_menu():
+                case self.C_RECEITAS:
+                    self.cadastrar_receita(imoveis, plataformas)
+                case self.R_RECEITAS:
+                    self.listar_receitas(imoveis, plataformas)
+                case self.D_RECEITAS:
+                    self.excluir_receita()
+                case self.VOLTAR:
+                    return
+                case None:
+                    return
+    def cadastrar_receita(self, imoveis, plataformas):
         pass
 
-    def excluir_receita(self):
+    def excluir_receita(self, imoveis, plataformas):
         pass
 
-    def exibir_receita(self):
+    def exibir_receita(self, imoveis, plataformas):
         pass
 
-    def find_receita(self):
+    def find_receita(self, imoveis, plataformas):
         pass
 
-    def listar_receitas_ano(self):
+    def listar_receitas(self, imoveis, plataformas):
         pass
 
-    def listar_receitas_imovel(self):
-        pass
+    def get_all(self):
+        return self.__receitas

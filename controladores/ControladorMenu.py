@@ -10,8 +10,8 @@
 from limites.TelaMenu import TelaMenu
 import PySimpleGUI as sg
 
-class ControladorMenu:
 
+class ControladorMenu:
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
     U_SENHA = "U_SENHA"
@@ -20,15 +20,40 @@ class ControladorMenu:
     SAIR = "SAIR"
     CAIXA = "CAIXA"
 
-
-
-    def __init__(self):
+    def __init__(self, imoveis, plataformas, receitas, despesas, saques, aportes):
         self.__tela = TelaMenu()
+        self.__imoveis = imoveis
+        self.__plataformas = plataformas
 
+    @property
+    def imoveis(self):
+        return self.__imoveis
+
+    @property
+    def plataformas(self):
+        return self.__plataformas
+
+    @property
+    def receitas(self):
+        return self.__receitas
+
+    @property
+    def despesas(self):
+        return self.__despesas
+
+    @property
+    def saques(self):
+        return self.__saques
+
+    @property
+    def aportes(self):
+        return self.__aportes
+
+    def erro_imoveis_plataformas(self):
+        self.tela.erro_imoveis_plataformas()
 
     def abrir_menu(self):
-
-        match self.__tela.abrir_menu():
+        match self.tela.abrir_menu():
             case self.IMOVEIS:
                 return self.IMOVEIS
             case self.PLATAFORMAS:
@@ -42,3 +67,6 @@ class ControladorMenu:
             case self.SAIR:
                 return self.SAIR
 
+    @property
+    def tela(self):
+        return self.__tela

@@ -53,6 +53,9 @@ class DAOPlataforma(DAO):
     def read(self) -> list:
         return [plataforma for plataforma in self.conteudo if plataforma.habilitado]
 
+    def get_all(self) -> list:
+        return self.conteudo
+
     def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
         for i in range(len(self.conteudo)):
             if self.conteudo[i].id == id:

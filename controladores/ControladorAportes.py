@@ -31,3 +31,6 @@ class ControladorAportes:
 
     def listar_aportes_ano(self):
         pass
+
+    def get_all(self):
+        pass

@@ -13,6 +13,12 @@ from controladores.ControladorGeraIdDespesa import ControladorGeraIdDespesa
 
 class ControladorDespesas:
 
+    def __init__(self, imoveis: list):
+        self.__dao_despesa = DAODespesa("despesa.pkl")
+        self.__despesas = self.__dao_despesa.read()
+        self.__tela = TelaDespesas()
+        self.__imoveis = imoveis
+
 
     def cadastrar_despesa(self):
         pass
@@ -30,4 +36,7 @@ class ControladorDespesas:
         pass
 
     def listar_despesas_imovel(self):
+        pass
+
+    def get_all(self):
         pass

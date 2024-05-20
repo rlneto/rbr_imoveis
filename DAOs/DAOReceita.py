@@ -10,16 +10,59 @@
 import os, pickle
 from DAOs.DAO import DAO
 from entidades.Receita import Receita
+from entidades.Imovel import Imovel
+from entidades.Plataforma import Plataforma
+
 
 class DAOReceita(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self.__conteudo = []
+        if os.path.exists(self.__arquivo):
+            try:
+                self.__conteudo = self.__load()
+            except FileNotFoundError:
+                self.__dump()
+                self.__load()
 
-    def create(self):
-        pass
 
-    def delete(self):
-        pass
+    @property
+    def conteudo(self) -> list:
+        return self.__conteudo
+
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self.__conteudo = valor
+
+
+    def create(self, imovel: Imovel, plataforma: Plataforma, valor: float, data: str, tags: list(str), ) -> bool:
+        tamanho = len(self.__conteudo)
+        self.__conteudo.append(Receita(imovel, plataforma, valor, data, tags))
+        self.__dump()
+        self.__load()
+        if len(self.__conteudo) > tamanho:
+            return True
+        else:
+            return False
+
+
+    def delete(self, id: int) -> bool:
+        for i in range(len(self.__conteudo)):
+            if self.__conteudo[i].id == id:
+                self.__conteudo.pop(i)
+                self.__dump()
+                self.__load()
+                return True
+        return False
 
     def read(self):
-        pass
+        return [receita for receita in self.__conteudo]
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

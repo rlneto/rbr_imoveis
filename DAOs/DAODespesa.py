@@ -7,13 +7,22 @@
 # Original author: rlnet
 # 
 #######################################################
-import os, pickle
+import os
+import pickle
 from DAOs.DAO import DAO
 from entidades.Despesa import Despesa
 
 class DAODespesa(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self.__conteudo = []
+        if os.path.exists(self.__arquivo):
+            try:
+                self.__conteudo = self.__load()
+            except FileNotFoundError:
+                self.__dump()
+                self.__load()
+
 
     def create(self):
         pass
@@ -23,3 +32,12 @@ class DAODespesa(DAO):
 
     def read(self):
         pass
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

@@ -28,3 +28,6 @@ class ControladorSaques:
 
     def listar_saques_ano(self):
         pass
+
+    def get_all(self):
+        pass

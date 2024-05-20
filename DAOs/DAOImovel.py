@@ -7,7 +7,8 @@
 # Original author: rlnet
 # 
 #######################################################
-import os, pickle
+import os
+import pickle
 from DAOs.DAO import DAO
 from entidades.Imovel import Imovel
 
@@ -52,6 +53,9 @@ class DAOImovel(DAO):
 
     def read(self) -> list:
         return [imovel for imovel in self.conteudo if imovel.habilitado]
+
+    def get_all(self) -> list:
+        return self.conteudo
 
     def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
         for i in range(len(self.conteudo)):

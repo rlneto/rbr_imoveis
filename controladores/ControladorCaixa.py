@@ -12,12 +12,41 @@ from limites.TelaCaixa import TelaCaixa
 
 class ControladorCaixa:
 
-    def __init__(self):
+    def __init__(self, receitas: list, despesas: list, saques: list, aportes: list):
         self.__dao_caixa = DAOCaixa("caixa.pkl")
         self.__caixa = self.__dao_caixa.read()
         self.__tela = TelaCaixa()
+        self.__receitas = receitas
+        self.__despesas = despesas
+        self.__saques = saques
+        self.__aportes = aportes
 
-    def atualizar_caixa(self, despesas:list, receitas:list, aportes:list, saques:list):
+    @property
+    def caixa(self):
+        return self.__caixa
+
+    @property
+    def tela(self):
+        return self.__tela
+
+    @property
+    def receitas(self):
+        return self.__receitas
+
+    @property
+    def despesas(self):
+        return self.__despesas
+
+    @property
+    def saques(self):
+        return self.__saques
+
+    @property
+    def aportes(self):
+        return self.__aportes
+
+
+    def atualizar_caixa():
         total = 0
         for despesa in despesas:
             total -= despesa.valor
@@ -33,10 +62,4 @@ class ControladorCaixa:
         self.__tela.exibir_caixa()
 
 
-    @property
-    def caixa(self):
-        return self.__caixa
 
-    @property
-    def tela(self):
-        return self.__tela
