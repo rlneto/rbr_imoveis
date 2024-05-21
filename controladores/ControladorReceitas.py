@@ -12,8 +12,8 @@ from limites.TelaReceitas import TelaReceitas
 from DAOs.DAOReceita import DAOReceita
 from controladores.ControladorGeraIdReceita import ControladorGeraIdReceita
 
-class ControladorReceitas:
 
+class ControladorReceitas:
     C_RECEITAS = "C_RECEITAS"
     R_RECEITAS = "R_RECEITAS"
     D_RECEITAS = "D_RECEITAS"
@@ -37,8 +37,6 @@ class ControladorReceitas:
                     return
                 case None:
                     return
-
-
 
     def cadastrar_receita(self, ControladorImoveis, ControladorPlataformas):
         imoveis = ControladorImoveis.pegar_todos_imoveis()
@@ -93,7 +91,6 @@ class ControladorReceitas:
         else:
             self.__tela.mostra_popup("Erro ao excluir receita.")
 
-
     def listar_receitas(self):
         self.__tela.exibir_receitas(self.__dao.read())
 
@@ -102,11 +99,11 @@ class ControladorReceitas:
 
     def validar_campos_vazios(self, valor, obs, data, id_imovel, id_plataforma, tags):
         if (valor is None or
-            obs is None or
-            data is None or
-            id_imovel is None or
-            id_plataforma is None or
-            tags is None):
+                obs is None or
+                data is None or
+                id_imovel is None or
+                id_plataforma is None or
+                tags is None):
             self.__tela.mostra_popup("Preencha todos os campos.")
             return True
         return False
