@@ -53,18 +53,6 @@ class DAODespesa(DAO):
     def read(self) -> list:
         return [despesa for despesa in self.conteudo]
 
-    # def update(self, id: int, nova_obs: str, novo_valor: float, nova_data: str, novo_imovel, nova_tags: list[str]) -> bool:
-    #     for i in range(len(self.conteudo)):
-    #         if self.conteudo[i].id == id:
-    #             self.conteudo[i].obs = nova_obs
-    #             self.conteudo[i].valor = novo_valor
-    #             self.conteudo[i].data = nova_data
-    #             self.conteudo[i].imovel = novo_imovel
-    #             self.conteudo[i].tags = nova_tags
-    #             self.__dump()
-    #             self.__load()
-    #             return True
-    #     return False
 
     def __dump(self):
         with open(self.__arquivo, 'wb') as arquivo:

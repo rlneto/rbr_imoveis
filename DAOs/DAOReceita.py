@@ -12,14 +12,53 @@ from DAOs.DAO import DAO
 from entidades.Receita import Receita
 
 class DAOReceita(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self._DAOReceita__conteudo = []
+        if os.path.exists(self.__arquivo):
+            try:
+                self._DAOReceita__conteudo = self.__load()
+            except FileNotFoundError:
+                self.__dump()
+                self.__load()
 
-    def create(self):
-        pass
+    @property
+    def conteudo(self) -> list:
+        return self._DAOReceita__conteudo
 
-    def delete(self):
-        pass
+    @conteudo.setter
+    def conteudo(self, valor: list):
+        self._DAOReceita__conteudo = valor
 
-    def read(self):
-        pass
+    def create(self, id: int, obs: str, valor: float, data: str, imovel, plataforma, tags: list[str]) -> bool:
+        tamanho = len(self.conteudo)
+        nova_receita = Receita(ident=id, obs=obs, valor=valor, data=data, imovel=imovel, plataforma=plataforma, tags=tags)
+        self.conteudo.append(nova_receita)
+        self.__dump()
+        self.__load()
+        if len(self.conteudo) > tamanho:
+            return True
+        else:
+            return False
+
+
+    def delete(self, id: int) -> bool:
+        for i in range(len(self.conteudo)):
+            if self.conteudo[i].id == id:
+                del self.conteudo[i]
+                self.__dump()
+                self.__load()
+                return True
+        return False
+
+    def read(self) -> list:
+        return [receita for receita in self.conteudo]
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo

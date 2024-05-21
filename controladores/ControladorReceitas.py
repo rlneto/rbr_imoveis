@@ -7,7 +7,6 @@
 # Original author: rlnet
 # 
 #######################################################
-import datetime
 from limites.TelaReceitas import TelaReceitas
 from DAOs.DAOReceita import DAOReceita
 from controladores.ControladorGeraIdReceita import ControladorGeraIdReceita
@@ -30,7 +29,7 @@ class ControladorReceitas:
                 case self.C_RECEITAS:
                     self.cadastrar_receita(ControladorImoveis, ControladorPlataformas)
                 case self.R_RECEITAS:
-                    self.listar_receitas(ControladorImoveis, ControladorPlataformas)
+                    self.listar_receitas()
                 case self.D_RECEITAS:
                     self.excluir_receita(ControladorImoveis, ControladorPlataformas)
                 case self.VOLTAR:
@@ -57,7 +56,10 @@ class ControladorReceitas:
         if not self.validar_valor(valor):
             return
 
-        if not self.validar_existencia_imovel(id_imovel, imoveis, id_plataforma, plataformas):
+        if not self.validar_existencia_imovel(id_imovel, imoveis):
+            return
+
+        if not self.validar_existencia_plataforma(id_plataforma, plataformas):
             return
 
         if not self.validar_tags(tags):
@@ -108,6 +110,35 @@ class ControladorReceitas:
             return True
         return False
 
+    def validar_valor(self, valor):
+        try:
+            valor = float(valor)
+        except ValueError:
+            self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
+            return False
+        return True
+
+    def validar_id(self, id):
+        if id.strip() == "":
+            self.__tela.mostra_popup("ID não pode estar em branco.")
+            return False
+        if not id.isdigit():
+            self.__tela.mostra_popup("ID inválido. Deve ser um número inteiro.")
+            return False
+        return True
+
+    def validar_existencia_plataforma(self, id_plataforma, plataformas):
+        if not any(plataforma.id == id_plataforma for plataforma in plataformas):
+            self.__tela.mostra_popup("Plataforma não encontrada.")
+            return False
+        return True
+
+    def validar_existencia_imovel(self, id_imovel, imoveis):
+        if not any(imovel.id == id_imovel for imovel in imoveis):
+            self.__tela.mostra_popup("Imóvel não encontrado.")
+            return False
+        return True
+
     def validar_existencia_imoveis(self, imoveis):
         if imoveis == []:
             self.__tela.mostra_popup("Não há imóveis cadastrados.")
@@ -125,9 +156,3 @@ class ControladorReceitas:
             self.__tela.mostra_popup("Adicione ao menos uma tag.")
             return False
         return True
-
-    def excluir_receita(self, ControladorImoveis, ControladorPlataformas):
-        pass
-
-    def listar_receitas(self, ControladorImoveis, ControladorPlataformas):
-        pass

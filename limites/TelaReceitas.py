@@ -8,6 +8,23 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaReceitas(Tela):
-    pass
+
+    def __init__(self):
+        super().__init__()
+        self.init_components()
+
+
+
+    def init_components(self):
+        sg.ChangeLookAndFeel('Reddit')
+        layout = [
+            [sg.Text('Receitas')],
+            [sg.Button('Listar Receitas', key='listar_receitas')],
+            [sg.Button('Adicionar Receita', key='adicionar_receita')],
+            [sg.Button('Remover Receita', key='remover_receita')],
+            [sg.Button('Voltar', key='voltar')]
+        ]
+        self.__window = sg.Window('Receitas').Layout(layout)
