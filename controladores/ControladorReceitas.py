@@ -29,7 +29,7 @@ class ControladorReceitas:
                 case self.C_RECEITAS:
                     self.cadastrar_receita(ControladorImoveis, ControladorPlataformas)
                 case self.R_RECEITAS:
-                    self.listar_receitas()
+                    self.exibir_receitas()
                 case self.D_RECEITAS:
                     self.excluir_receita(ControladorImoveis, ControladorPlataformas)
                 case self.VOLTAR:
@@ -93,7 +93,7 @@ class ControladorReceitas:
         else:
             self.__tela.mostra_popup("Erro ao excluir receita.")
 
-    def listar_receitas(self):
+    def exibir_receitas(self):
         self.__tela.exibir_receitas(self.__dao.read())
 
     def find_receita(self, id):
