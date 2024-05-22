@@ -11,6 +11,7 @@ import os, pickle
 from DAOs.DAO import DAO
 from entidades.Receita import Receita
 
+
 class DAOReceita(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
@@ -30,9 +31,10 @@ class DAOReceita(DAO):
     def conteudo(self, valor: list):
         self._DAOReceita__conteudo = valor
 
-    def create(self, id: int, obs: str, valor: float, data: str, imovel, plataforma, tags: list[str]) -> bool:
+    def create(self, id_receita: int, obs: str, valor: float, data: str, imovel, plataforma, tags: list[str]) -> bool:
         tamanho = len(self.conteudo)
-        nova_receita = Receita(ident=id, obs=obs, valor=valor, data=data, imovel=imovel, plataforma=plataforma, tags=tags)
+        nova_receita = Receita(ident=id_receita, obs=obs, valor=valor, data=data, imovel=imovel, plataforma=plataforma,
+                               tags=tags)
         self.conteudo.append(nova_receita)
         self.__dump()
         self.__load()
@@ -40,7 +42,6 @@ class DAOReceita(DAO):
             return True
         else:
             return False
-
 
     def delete(self, id: int) -> bool:
         for i in range(len(self.conteudo)):

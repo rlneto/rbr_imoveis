@@ -68,3 +68,16 @@ class ControladorPlataformas:
 
     def listar_plataformas(self):
         self.__tela.exibir_plataformas(self.__dao.read())
+
+    def pegar_todas_plataformas(self):
+        plataformas = [plataforma for plataforma in self.__dao.read()]
+        return plataformas
+
+    def find_plataforma_por_id(self, id_plataforma):
+        try:
+            id_plataforma=int(id_plataforma)
+        except ValueError:
+            return None
+        encontrados = [plataforma for plataforma in self.__dao.read() if plataforma.id == id_plataforma]
+        return encontrados[0] if len(encontrados) > 0 else None
+

@@ -11,11 +11,6 @@ from limites.Tela import Tela
 import PySimpleGUI as sg
 
 class TelaDespesas(Tela):
-    C_DESPESAS = "C_DESPESAS"
-    R_DESPESAS = "R_DESPESAS"
-    D_DESPESAS = "D_DESPESAS"
-    PROSSEGUIR = "PROSSEGUIR"
-    VOLTAR = "VOLTAR"
     def __init__(self):
         super().__init__()
         self.__window = None
@@ -106,7 +101,8 @@ class TelaDespesas(Tela):
     def excluir_despesa(self, despesas):
         sg.theme('Reddit')
 
-        dados = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+        dados = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id]
+                 for despesa in despesas]
 
         colunas = ['Valor', 'Título do imóvel associado', 'Observação', 'Data', 'Tags', 'ID']
 

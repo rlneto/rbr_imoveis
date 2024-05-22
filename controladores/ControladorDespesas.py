@@ -12,6 +12,7 @@ from limites.TelaDespesas import TelaDespesas
 from DAOs.DAODespesa import DAODespesa
 from controladores.ControladorGeraIdDespesa import ControladorGeraIdDespesa
 
+
 class ControladorDespesas:
     C_DESPESAS = "C_DESPESAS"
     R_DESPESAS = "R_DESPESAS"
@@ -37,46 +38,44 @@ class ControladorDespesas:
                 case None:
                     return
 
-
     def cadastrar_despesa(self, controlador_imovel):
         imoveis = controlador_imovel.pegar_todos_imoveis()
         if not self.validar_existencia_imoveis(imoveis):
-            return 
+            return
 
         valor, id_imovel, obs, data, tags = self.__tela.cadastrar_despesa(imoveis)
-        
+
         if valor is None and id_imovel is None and obs is None and data is None and tags is None:
             return
 
         if self.validar_campos_vazios(valor, obs, data, id_imovel, tags):
             return
-        
+
         if not self.validar_valor(valor):
             return
-        
+
         if not self.validar_existencia_imovel(id_imovel, imoveis):
             return
-    
+
         if not self.validar_tags(tags):
             return
-        
+
         imovel = controlador_imovel.find_imovel_por_id(id_imovel)
         if imovel is None:
             self.__tela.mostra_popup("Imóvel não encontrado.")
             return
-        
+
         id = ControladorGeraIdDespesa().gera_id()
         self.__dao.create(id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
-
 
     def excluir_despesa(self):
         id_despesa = self.__tela.excluir_despesa(self.__dao.read())
         if id_despesa is None:
             return
-        
+
         if not self.validar_id(id_despesa):
             return
-        
+
         self.__dao.delete(int(id_despesa))
 
     def listar_despesas(self):
@@ -87,20 +86,19 @@ class ControladorDespesas:
 
     # Validações cadastrar Despesa
     def validar_campos_vazios(self, valor, obs, data, id_imovel, tags):
-        if (valor is None or 
-            obs is None or 
-            data is None or 
-            id_imovel is None or 
-            tags is None or
-            data.strip() == "" or 
-            valor.strip() == "" or 
-            obs.strip() == "" or 
-            len(tags) == 0):
-            
+        if (valor is None or
+                obs is None or
+                data is None or
+                id_imovel is None or
+                tags is None or
+                data.strip() == "" or
+                valor.strip() == "" or
+                obs.strip() == "" or
+                len(tags) == 0):
             self.__tela.mostra_popup("Todos os campos devem ser preenchidos.")
             return True
         return False
-    
+
     def validar_existencia_imoveis(self, imoveis):
         if not imoveis:
             self.__tela.mostra_popup("Você deve possuir imóveis cadastrados para prosseguir!")
@@ -124,14 +122,12 @@ class ControladorDespesas:
             return False
         return True
 
-
     def validar_tags(self, tags):
         if not isinstance(tags, list):
             self.__tela.mostra_popup("As tags da despesa devem ser uma lista.")
             return False
         return True
-    
-    
+
     # Validação excluir Despesa
     def validar_id(self, id_despesa):
         if not id_despesa.strip():
@@ -150,15 +146,16 @@ class ControladorDespesas:
 
         return True
 
-
     # Utilizar para os relatórios depois
     def listar_despesas_ano(self, ano):
         despesas = self.__dao.read()
-        despesas_ano = [despesa for despesa in despesas if datetime.datetime.strptime(despesa.data, '%d/%m/%Y').year == ano]
+        despesas_ano = [despesa for despesa in despesas if
+                        datetime.datetime.strptime(despesa.data, '%d/%m/%Y').year == ano]
         if despesas_ano:
             print(f"Despesas do ano {ano}:")
             for despesa in despesas_ano:
-                print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data} - Imóvel: {despesa.imovel.titulo}")
+                print(
+                    f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data} - Imóvel: {despesa.imovel.titulo}")
         else:
             print(f"Não há despesas registradas para o ano {ano}.")
 

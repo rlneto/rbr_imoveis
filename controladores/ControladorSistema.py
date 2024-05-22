@@ -23,6 +23,7 @@ class ControladorSistema:
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
     DESPESAS = "DESPESAS"
+    RECEITAS = "RECEITAS"
     C_IMOVEIS = "C_IMOVEIS"
     R_IMOVEIS = "R_IMOVEIS"
     U_IMOVEIS = "U_IMOVEIS"
@@ -94,13 +95,16 @@ class ControladorSistema:
                         case self.D_DESPESAS:
                             self.__ControladorDespesas.excluir_despesa()
                 case self.RECEITAS:
-                    match self.__ControladorReceitas.abrir_menu(self.__ControladorImoveis, self.__ControladorPlataformas):
+                    match self.__ControladorReceitas.abrir_menu(self.__ControladorImoveis,
+                                                                self.__ControladorPlataformas):
                         case self.C_RECEITAS:
-                            self.__ControladorReceitas.cadastrar_receita(self.__ControladorImoveis, self.__ControladorPlataformas)
+                            self.__ControladorReceitas.cadastrar_receita(self.__ControladorImoveis,
+                                                                         self.__ControladorPlataformas)
                         case self.R_RECEITAS:
-                            self.__ControladorReceitas.listar_receitas(self.__ControladorImoveis, self.__ControladorPlataformas)
+                            self.__ControladorReceitas.listar_receitas()
                         case self.D_RECEITAS:
-                            self.__ControladorReceitas.excluir_receita()
+                            self.__ControladorReceitas.excluir_receita(self.__ControladorImoveis,
+                                                                       self.__ControladorPlataformas)
 
                 case self.CAIXA:
                     self.__ControladorCaixa.exibir_caixa()
