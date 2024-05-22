@@ -45,6 +45,7 @@ class TelaImoveis(Tela):
                     return escolha
             self.__window.Close()
             return None
+        
     def selecionar_imovel(self, imoveis):
         sg.theme('Reddit')
 
@@ -63,14 +64,28 @@ class TelaImoveis(Tela):
 
         self.__window = sg.Window('RBR Imóveis').Layout(layout)
         button, values = self.__window.Read()
+        self.__window.Close()
         if button is None or button == 'Voltar':
             self.__window.Close()
             return None
-        else:
-            self.__window.Close()
-            for item in imoveis:
-                if item.id == int(values['id']):
-                    return self.alterar_imovel(item)
+        id_selecionado = values['id']
+        if not id_selecionado.strip():
+            sg.popup("Erro: ID não pode estar em branco.")
+            return None
+
+        if not id_selecionado.isdigit():
+            sg.popup("Erro: ID inválido. Deve ser um número inteiro.")
+            return None
+
+        id_selecionado = int(id_selecionado)
+
+        for item in imoveis:
+            if item.id == id_selecionado:
+                return self.alterar_imovel(item)
+
+        sg.popup("Erro: Imóvel com o ID fornecido não encontrado.")
+        return None
+                
     def alterar_imovel(self, imovel_selec):
         sg.theme('Reddit')
         layout = [

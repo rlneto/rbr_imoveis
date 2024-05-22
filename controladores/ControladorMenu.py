@@ -14,6 +14,8 @@ class ControladorMenu:
 
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
+    DESPESAS = "DESPESAS"
+    RECEITAS = "RECEITAS"
     U_SENHA = "U_SENHA"
     PROSSEGUIR = "PROSSEGUIR"
     VOLTAR = "VOLTAR"
@@ -27,12 +29,15 @@ class ControladorMenu:
 
 
     def abrir_menu(self):
-
         match self.__tela.abrir_menu():
             case self.IMOVEIS:
                 return self.IMOVEIS
             case self.PLATAFORMAS:
                 return self.PLATAFORMAS
+            case self.DESPESAS:
+                return self.DESPESAS
+            case self.RECEITAS:
+                return self.RECEITAS
             case self.CAIXA:
                 return self.CAIXA
             case self.U_SENHA:

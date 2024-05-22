@@ -26,50 +26,132 @@ class ControladorImoveis:
         self.__tela = TelaImoveis()
 
     def abrir_menu(self):
-        match self.__tela.abrir_menu():
-            case self.C_IMOVEIS:
-                self.cadastrar_imovel()
-            case self.R_IMOVEIS:
-                self.listar_imoveis()
-            case self.U_IMOVEIS:
-                self.alterar_imovel()
-            case self.D_IMOVEIS:
-                self.excluir_imovel()
-            case self.PROSSEGUIR:
-                return self.PROSSEGUIR
-            case self.VOLTAR:
-                return self.VOLTAR
-            case self.SAIR:
-                return self.SAIR
+        while True:
+            match self.__tela.abrir_menu():
+                case self.C_IMOVEIS:
+                    self.cadastrar_imovel()
+                case self.R_IMOVEIS:
+                    self.listar_imoveis()
+                case self.U_IMOVEIS:
+                    self.alterar_imovel()
+                case self.D_IMOVEIS:
+                    self.excluir_imovel()
+                case self.PROSSEGUIR:
+                    return self.PROSSEGUIR
+                case self.VOLTAR:
+                    return self.VOLTAR
+                case self.VOLTAR:
+                    return
+                case None:
+                    return
+
+    # def alterar_imovel(self):
+    #     novo_imovel = self.__tela.selecionar_imovel(self.__dao.read())
+    #     if novo_imovel is None:
+    #         return
+    #     else:
+    #         self.__dao.update(id=novo_imovel[2], novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
 
     def alterar_imovel(self):
-        novo_imovel = self.__tela.selecionar_imovel(self.__dao.read())
-        if novo_imovel is None:
+        imoveis = self.__dao.read()
+        imovel_selecionado = self.__tela.selecionar_imovel(imoveis)
+
+        if imovel_selecionado is None:
             return
-        else:
-            self.__dao.update(id=novo_imovel[2], novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
+
+        novo_titulo, nova_desc, id_imovel = imovel_selecionado
+
+        if novo_titulo is None or novo_titulo.strip() == "":
+            self.__tela.mostra_popup("Erro: O título do imóvel não pode estar vazio.")
+            return
+
+        if nova_desc is None or nova_desc.strip() == "":
+            self.__tela.mostra_popup("Erro: A descrição do imóvel não pode estar vazia.")
+            return
+
+        # Verificar se o novo título já existe em outro imóvel
+        imovel_existente = self.find_imovel(novo_titulo)
+        if imovel_existente is not None and imovel_existente.id != id_imovel:
+            self.__tela.mostra_popup("Erro: Um imóvel com este título já existe.")
+            return
+
+        self.__dao.update(id=id_imovel, novo_titulo=novo_titulo, nova_desc=nova_desc)
 
     def cadastrar_imovel(self):
         titulo, desc = self.__tela.cadastrar_imovel()
-        if titulo is None:
+
+        if titulo is None and desc is None:
+            return
+        if titulo is None or titulo.strip() == "":
+            self.__tela.mostra_popup("Erro: O título do imóvel não pode estar vazio.")
+            return
+        if desc is None or desc.strip() == "":
+            self.__tela.mostra_popup("Erro: A descrição do imóvel não pode estar vazia.")
+            return
+        if self.find_imovel(titulo) is not None:
+            self.__tela.mostra_popup("Erro: Um imóvel com este título já existe.")
             return
         else:
             self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
+    # def excluir_imovel(self):
+    #     id_imovel = self.__tela.excluir_imovel(self.__dao.read())
+    #     if id_imovel is None:
+    #         return
+    #     else:
+    #         self.__dao.delete(int(id_imovel))
+
     def excluir_imovel(self):
-        id_imovel = self.__tela.excluir_imovel(self.__dao.read())
+        imoveis = self.__dao.read()
+        id_imovel = self.__tela.excluir_imovel(imoveis)
+        
         if id_imovel is None:
             return
-        else:
-            self.__dao.delete(int(id_imovel))
+        
+        if id_imovel.strip() == "":
+            self.__tela.mostra_popup("Erro: ID não pode estar em branco.")
+            return
+
+        if not id_imovel.isdigit():
+            self.__tela.mostra_popup("Erro: ID inválido. Deve ser um número inteiro.")
+            return
+
+        id_imovel = int(id_imovel)
+
+        # Verificar se o imóvel com o ID fornecido existe na lista de imóveis
+        if not any(imovel.id == id_imovel for imovel in imoveis):
+            self.__tela.mostra_popup("Erro: Imóvel com o ID fornecido não encontrado.")
+            return
+
+        # Se todas as validações passaram, proceda com a exclusão do imóvel
+        self.__dao.delete(id_imovel)
+
 
     def exibir_imovel(self):
         pass
 
+    # def find_imovel(self, nome_imovel):
+    #     return [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel][0]
+    
     def find_imovel(self, nome_imovel):
-        return [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel][0]
-
+        encontrados = [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel]
+        return encontrados[0] if encontrados else None
+    
+    def find_imovel_por_id(self, id_imovel):
+        try:
+            id_imovel = int(id_imovel)
+        except ValueError:
+            return None
+        encontrados = [imovel for imovel in self.__dao.read() if imovel.id == id_imovel]
+        return encontrados[0] if encontrados else None
 
     def listar_imoveis(self):
         self.__tela.exibir_imoveis(self.__dao.read())
+
+    def pegar_todos_imoveis(self):
+        imoveis = [imovel for imovel in self.__dao.read()]
+        return imoveis
+
+    
+    
 

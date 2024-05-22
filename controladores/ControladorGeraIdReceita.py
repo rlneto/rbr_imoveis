@@ -10,7 +10,15 @@
 from controladores.ControladorGeradorId import ControladorGeradorId
 from DAOs.DAOContadorReceita import DAOContadorReceita
 
+
 class ControladorGeraIdReceita(ControladorGeradorId):
 
-    def gera_id(self):
-        pass
+    def __init__(self):
+        self.__dao = DAOContadorReceita("contador_receita.pkl")
+
+    @property
+    def dao(self):
+        return self.__dao
+
+    def gera_id(self) -> int:
+        return self.dao.update()

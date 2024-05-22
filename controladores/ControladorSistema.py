@@ -22,6 +22,8 @@ class ControladorSistema:
 
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
+    DESPESAS = "DESPESAS"
+    RECEITAS = "RECEITAS"
     C_IMOVEIS = "C_IMOVEIS"
     R_IMOVEIS = "R_IMOVEIS"
     U_IMOVEIS = "U_IMOVEIS"
@@ -30,6 +32,12 @@ class ControladorSistema:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    C_DESPESAS = "C_DESPESAS"
+    R_DESPESAS = "R_DESPESAS"
+    D_DESPESAS = "D_DESPESAS"
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
     CAIXA = "CAIXA"
     U_SENHA = "U_SENHA"
     PROSSEGUIR = "PROSSEGUIR"
@@ -53,29 +61,6 @@ class ControladorSistema:
             self.autenticado = self.__ControladorSenha.verificar_senha()
             if not self.autenticado:
                 self.__ControladorSenha.erro_senha()
-
-        # while True:
-        #     match self.__ControladorMenu.abrir_menu():
-        #         case self.U_SENHA:
-        #             self.__ControladorSenha.alterar_senha()
-        #         case self.C_IMOVEIS:
-        #             self.__ControladorImoveis.cadastrar_imovel()
-        #         case self.R_IMOVEIS:
-        #             self.__ControladorImoveis.listar_imoveis()
-        #         case self.U_IMOVEIS:
-        #             self.__ControladorImoveis.alterar_imovel()
-        #         case self.D_IMOVEIS:
-        #             self.__ControladorImoveis.excluir_imovel()
-        #         case self.C_PLATAFORMAS:
-        #             self.__ControladorPlataformas.cadastrar_plataforma()
-        #         case self.R_PLATAFORMAS:
-        #             self.__ControladorPlataformas.listar_plataformas()
-        #         case self.U_PLATAFORMAS:
-        #             self.__ControladorPlataformas.alterar_plataforma()
-        #         case self.D_PLATAFORMAS:
-        #             self.__ControladorPlataformas.excluir_plataforma()
-        #         case self.SAIR:
-        #             exit()
 
         while True:
             match self.__ControladorMenu.abrir_menu():
@@ -101,6 +86,26 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.DESPESAS:
+                    match self.__ControladorDespesas.abrir_menu(self.__ControladorImoveis):
+                        case self.C_DESPESAS:
+                            self.__ControladorDespesas.cadastrar_despesa(self.__ControladorImoveis)
+                        case self.R_DESPESAS:
+                            self.__ControladorDespesas.listar_despesas()
+                        case self.D_DESPESAS:
+                            self.__ControladorDespesas.excluir_despesa()
+                case self.RECEITAS:
+                    match self.__ControladorReceitas.abrir_menu(self.__ControladorImoveis,
+                                                                self.__ControladorPlataformas):
+                        case self.C_RECEITAS:
+                            self.__ControladorReceitas.cadastrar_receita(self.__ControladorImoveis,
+                                                                         self.__ControladorPlataformas)
+                        case self.R_RECEITAS:
+                            self.__ControladorReceitas.listar_receitas()
+                        case self.D_RECEITAS:
+                            self.__ControladorReceitas.excluir_receita(self.__ControladorImoveis,
+                                                                       self.__ControladorPlataformas)
+
                 case self.CAIXA:
                     self.__ControladorCaixa.exibir_caixa()
                 case self.U_SENHA:

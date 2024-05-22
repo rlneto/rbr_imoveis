@@ -11,12 +11,26 @@
 from abc import ABC, abstractmethod
 import PySimpleGUI as sg
 class Tela(ABC):
-
+    IMOVEIS = "IMOVEIS"
+    PLATAFORMAS = "PLATAFORMAS"
+    DESPESAS = "DESPESAS"
+    RECEITAS = "RECEITAS"
+    U_SENHA = "U_SENHA"
+    C_DESPESAS = "C_DESPESAS"
+    R_DESPESAS = "R_DESPESAS"
+    D_DESPESAS = "D_DESPESAS"
+    C_RECEITAS = "C_RECEITAS"
+    R_RECEITAS = "R_RECEITAS"
+    D_RECEITAS = "D_RECEITAS"
+    PROSSEGUIR = "PROSSEGUIR"
+    ROXIMO = "PROXIMO"
+    VOLTAR = "VOLTAR"
+    SAIR = "SAIR"
     def __init__(self):
         self.__window = None
 
     def mostra_popup(self, mensagem):
-        sg.popup(mensagem)
+        sg.popup(mensagem, title="ERRO")
 
     def close(self):
         self.__window.Close()

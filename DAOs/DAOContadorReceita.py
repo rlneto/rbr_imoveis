@@ -7,32 +7,44 @@
 # Original author: rlnet
 # 
 #######################################################
-import os, pickle
+import pickle
 from DAOs.DAO import DAO
 from entidades.ContadorReceita import ContadorReceita
 
+
 class DAOContadorReceita(DAO):
-    class DAOContadorReceita(DAO):
-        def __init__(self, arquivo: str):
-            self.__arquivo = arquivo
-            self._DAOContadorReceita__conteudo = []
-            try:
-                self._DAOContadorReceita__conteudo = self.__load()
-            except FileNotFoundError:
-                self.__dump()
-                self.__load()
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        try:
+            self.__conteudo = self.__load()
+        except FileNotFoundError:
+            self.__conteudo = []
+            self.__conteudo.append(ContadorReceita())
+            self.__dump()
+            self.__load()
 
-        def read(self) -> int:
-            pass
+    @property
+    def conteudo(self):
+        return self.__conteudo
 
-        def update(self):
-            pass
+    @conteudo.setter
+    def conteudo(self, conteudo):
+        self.__conteudo = conteudo
 
-        def __dump(self):
-            with open(self.__arquivo, 'wb') as arquivo:
-                pickle.dump(self.conteudo, arquivo)
+    def read(self) -> int:
+        return self.conteudo[0].valor
 
-        def __load(self):
-            with open(self.__arquivo, 'rb') as arquivo:
-                self.conteudo = pickle.load(arquivo)
-            return self.conteudo
+    def update(self):
+        self.conteudo[0].valor += 1
+        self.__dump()
+        self.__load()
+        return self.conteudo[0].valor
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo
