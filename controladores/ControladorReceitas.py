@@ -25,7 +25,6 @@ class ControladorReceitas:
         self.__controlador_gera_id = ControladorGeraIdReceita()
 
     def abrir_menu(self, controlador_imoveis, controlador_plataformas):
-        print("Abrindo menu de receitas...", ControladorReceitas, controlador_plataformas)
         while True:
             match self.__tela.abrir_menu():
                 case self.C_RECEITAS:
@@ -85,7 +84,6 @@ class ControladorReceitas:
             self.__tela.mostra_popup("Erro ao cadastrar receita.")
 
     def excluir_receita(self):
-        print(self.__dao.read())
         id_receita = self.__tela.excluir_receita(self.__dao.read())
         if id_receita is None:
             return
