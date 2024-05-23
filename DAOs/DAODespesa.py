@@ -9,6 +9,7 @@
 #######################################################
 import os, pickle
 from DAOs.DAO import DAO
+from entidades import Imovel
 from entidades.Despesa import Despesa
 
 class DAODespesa(DAO):
@@ -30,7 +31,7 @@ class DAODespesa(DAO):
     def conteudo(self, valor: list):
         self._DAODespesa__conteudo = valor
 
-    def create(self, id: int, obs: str, valor: float, data: str, imovel, tags: list[str]) -> bool:
+    def create(self, id: int, obs: str, valor: float, data: str, imovel: Imovel, tags: list[str]) -> bool:
         tamanho = len(self.conteudo)
         nova_despesa = Despesa(ident=id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
         self.conteudo.append(nova_despesa)

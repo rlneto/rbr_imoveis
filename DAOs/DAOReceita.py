@@ -9,6 +9,7 @@
 #######################################################
 import os, pickle
 from DAOs.DAO import DAO
+from entidades import Imovel, Plataforma
 from entidades.Receita import Receita
 
 
@@ -31,7 +32,7 @@ class DAOReceita(DAO):
     def conteudo(self, valor: list):
         self._DAOReceita__conteudo = valor
 
-    def create(self, id_receita: int, obs: str, valor: float, data: str, imovel, plataforma, tags: list[str]) -> bool:
+    def create(self, id_receita: int, obs: str, valor: float, data: str, imovel: Imovel, plataforma: Plataforma, tags: list[str]) -> bool:
         tamanho = len(self.conteudo)
         nova_receita = Receita(ident=id_receita, obs=obs, valor=valor, data=data, imovel=imovel, plataforma=plataforma,
                                tags=tags)
