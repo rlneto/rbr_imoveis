@@ -24,11 +24,11 @@ class DAOPlataforma(DAO):
                 self.__load()
 
     @property
-    def conteudo(self) -> list:
+    def conteudo(self) -> list[Plataforma]:
         return self._DAOPlataforma__conteudo
 
     @conteudo.setter
-    def conteudo(self, valor: list):
+    def conteudo(self, valor: list[Plataforma]):
         self._DAOPlataforma__conteudo = valor
 
     def create(self, desc: str, titulo: str, id: int, habilitado=True) -> bool:

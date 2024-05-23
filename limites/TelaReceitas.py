@@ -9,6 +9,9 @@
 #######################################################
 from limites.Tela import Tela
 import PySimpleGUI as sg
+from entidades.Receita import Receita
+from entidades.Imovel import Imovel
+from entidades.Plataforma import Plataforma
 
 class TelaReceitas(Tela):
     def __init__(self):
@@ -42,7 +45,7 @@ class TelaReceitas(Tela):
             self.__window.Close()
             return None
 
-    def cadastrar_receita(self, imoveis, plataformas):
+    def cadastrar_receita(self, imoveis: list[Imovel], plataformas: list[Plataforma]):
         sg.theme('Reddit')
 
         opcoes_imoveis = [f'{imovel.id} - {imovel.titulo}' for imovel in imoveis]
@@ -79,7 +82,7 @@ class TelaReceitas(Tela):
         else:
             return None, None, None, None, None, None
 
-    def exibir_receitas(self, receitas):
+    def exibir_receitas(self, receitas: list[Receita]):
         sg.theme('Reddit')
 
         dados = [[receita.valor, receita.imovel.titulo, receita.plataforma.titulo, receita.obs, receita.data, receita.tags, receita.id] for receita in receitas]
@@ -100,7 +103,7 @@ class TelaReceitas(Tela):
         self.__window.Close()
         return None
 
-    def excluir_receita(self, receitas):
+    def excluir_receita(self, receitas: list[Receita]):
         sg.theme('Reddit')
 
         dados = [[receita.valor, receita.imovel.titulo, receita.plataforma.titulo, receita.obs, receita.data,

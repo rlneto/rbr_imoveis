@@ -7,7 +7,7 @@
 # Original author: rlnet
 # 
 #######################################################
-import os, pickle
+import pickle
 from DAOs.DAO import DAO
 from entidades import Imovel, Plataforma
 from entidades.Receita import Receita
@@ -17,19 +17,18 @@ class DAOReceita(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo
         self._DAOReceita__conteudo = []
-        if os.path.exists(self.__arquivo):
-            try:
-                self._DAOReceita__conteudo = self.__load()
-            except FileNotFoundError:
-                self.__dump()
-                self.__load()
+        try:
+            self._DAOReceita__conteudo = self.__load()
+        except FileNotFoundError:
+            self.__dump()
+            self.__load()
 
     @property
-    def conteudo(self) -> list:
+    def conteudo(self) -> list[Receita]:
         return self._DAOReceita__conteudo
 
     @conteudo.setter
-    def conteudo(self, valor: list):
+    def conteudo(self, valor: list[Receita]):
         self._DAOReceita__conteudo = valor
 
     def create(self, id_receita: int, obs: str, valor: float, data: str, imovel: Imovel, plataforma: Plataforma, tags: list[str]) -> bool:
@@ -53,14 +52,14 @@ class DAOReceita(DAO):
                 return True
         return False
 
-    def read(self) -> list:
+    def read(self) -> list[Receita]:
         return [receita for receita in self.conteudo]
 
-    def __dump(self):
+    def __dump(self) -> None:
         with open(self.__arquivo, 'wb') as arquivo:
             pickle.dump(self.conteudo, arquivo)
 
-    def __load(self):
+    def __load(self) -> list[Receita]:
         with open(self.__arquivo, 'rb') as arquivo:
             self.conteudo = pickle.load(arquivo)
         return self.conteudo

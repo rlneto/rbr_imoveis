@@ -12,12 +12,7 @@ import PySimpleGUI as sg
 
 class TelaPlataformas(Tela):
 
-    C_PLATAFORMAS = "C_PLATAFORMAS"
-    R_PLATAFORMAS = "R_PLATAFORMAS"
-    U_PLATAFORMAS = "U_PLATAFORMAS"
-    D_PLATAFORMAS = "D_PLATAFORMAS"
-    PROSSEGUIR = "PROSSEGUIR"
-    VOLTAR = "VOLTAR"
+
     def __init__(self):
         super().__init__()
         self.__window = None

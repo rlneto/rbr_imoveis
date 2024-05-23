@@ -10,6 +10,11 @@
 from limites.TelaReceitas import TelaReceitas
 from DAOs.DAOReceita import DAOReceita
 from controladores.ControladorGeraIdReceita import ControladorGeraIdReceita
+from controladores.ControladorImoveis import ControladorImoveis
+from controladores.ControladorPlataformas import ControladorPlataformas
+from entidades.Imovel import Imovel
+from entidades.Plataforma import Plataforma
+from entidades.Receita import Receita
 
 
 class ControladorReceitas:
@@ -24,7 +29,7 @@ class ControladorReceitas:
         self.__tela = TelaReceitas()
         self.__controlador_gera_id = ControladorGeraIdReceita()
 
-    def abrir_menu(self, controlador_imoveis, controlador_plataformas):
+    def abrir_menu(self, controlador_imoveis: ControladorImoveis, controlador_plataformas: ControladorPlataformas):
         while True:
             match self.__tela.abrir_menu():
                 case self.C_RECEITAS:
@@ -38,7 +43,8 @@ class ControladorReceitas:
                 case None:
                     return
 
-    def cadastrar_receita(self, controlador_imoveis, controlador_plataformas):
+    def cadastrar_receita(self, controlador_imoveis: ControladorImoveis,
+                          controlador_plataformas: ControladorPlataformas):
         imoveis = controlador_imoveis.pegar_todos_imoveis()
         plataformas = controlador_plataformas.pegar_todas_plataformas()
         if not self.validar_existencia_imoveis(imoveis):
@@ -96,10 +102,11 @@ class ControladorReceitas:
         else:
             self.__tela.mostra_popup("Erro ao excluir receita.")
 
-    def find_receita(self, id_receita):
+    def find_receita(self, id_receita: int) -> Receita:
         return [receita for receita in self.__dao.read() if receita.id == id_receita][0]
 
-    def validar_campos_vazios(self, valor, obs, data, id_imovel, id_plataforma, tags):
+    def validar_campos_vazios(self, valor: float, obs: str, data: str,
+                              id_imovel: int, id_plataforma: int, tags: list[str]) -> bool:
         if (valor is None or
                 obs is None or
                 data is None or
@@ -110,7 +117,7 @@ class ControladorReceitas:
             return True
         return False
 
-    def validar_valor(self, valor):
+    def validar_valor(self, valor: float) -> bool:
         try:
             float(valor)
         except ValueError:
@@ -118,7 +125,7 @@ class ControladorReceitas:
             return False
         return True
 
-    def validar_id(self, id_validacao):
+    def validar_id(self, id_validacao: str) -> bool:
         if id_validacao.strip() == "":
             self.__tela.mostra_popup("ID não pode estar em branco.")
             return False
@@ -127,31 +134,31 @@ class ControladorReceitas:
             return False
         return True
 
-    def validar_existencia_plataforma(self, id_plataforma, plataformas):
+    def validar_existencia_plataforma(self, id_plataforma: int, plataformas: list[Plataforma]) -> bool:
         if not any(plataforma.id == id_plataforma for plataforma in plataformas):
             self.__tela.mostra_popup("Plataforma não encontrada.")
             return False
         return True
 
-    def validar_existencia_imovel(self, id_imovel, imoveis):
+    def validar_existencia_imovel(self, id_imovel: int, imoveis: list[Imovel]) -> bool:
         if not any(imovel.id == id_imovel for imovel in imoveis):
             self.__tela.mostra_popup("Imóvel não encontrado.")
             return False
         return True
 
-    def validar_existencia_imoveis(self, imoveis):
+    def validar_existencia_imoveis(self, imoveis: list[Imovel]) -> bool:
         if not imoveis:
             self.__tela.mostra_popup("Não há imóveis cadastrados.")
             return False
         return True
 
-    def validar_existencia_plataformas(self, plataformas):
+    def validar_existencia_plataformas(self, plataformas: list[Plataforma]) -> bool:
         if not plataformas:
             self.__tela.mostra_popup("Não há plataformas cadastradas.")
             return False
         return True
 
-    def validar_tags(self, tags):
+    def validar_tags(self, tags: list[str]) -> bool:
         if len(tags) == 0:
             self.__tela.mostra_popup("Adicione ao menos uma tag.")
             return False

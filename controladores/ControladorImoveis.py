@@ -45,13 +45,6 @@ class ControladorImoveis:
                 case None:
                     return
 
-    # def alterar_imovel(self):
-    #     novo_imovel = self.__tela.selecionar_imovel(self.__dao.read())
-    #     if novo_imovel is None:
-    #         return
-    #     else:
-    #         self.__dao.update(id=novo_imovel[2], novo_titulo=novo_imovel[0], nova_desc=novo_imovel[1])
-
     def alterar_imovel(self):
         imoveis = self.__dao.read()
         imovel_selecionado = self.__tela.selecionar_imovel(imoveis)
@@ -94,13 +87,6 @@ class ControladorImoveis:
         else:
             self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
-    # def excluir_imovel(self):
-    #     id_imovel = self.__tela.excluir_imovel(self.__dao.read())
-    #     if id_imovel is None:
-    #         return
-    #     else:
-    #         self.__dao.delete(int(id_imovel))
-
     def excluir_imovel(self):
         imoveis = self.__dao.read()
         id_imovel = self.__tela.excluir_imovel(imoveis)
@@ -130,9 +116,6 @@ class ControladorImoveis:
     def exibir_imovel(self):
         pass
 
-    # def find_imovel(self, nome_imovel):
-    #     return [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel][0]
-    
     def find_imovel(self, nome_imovel):
         encontrados = [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel]
         return encontrados[0] if encontrados else None

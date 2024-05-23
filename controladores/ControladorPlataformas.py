@@ -10,6 +10,7 @@
 from limites.TelaPlataformas import TelaPlataformas
 from controladores.ControladorGeraIdPlataforma import ControladorGeraIdPlataforma
 from DAOs.DAOPlataforma import DAOPlataforma
+from entidades.Plataforma import Plataforma
 
 
 class ControladorPlataformas:
@@ -63,17 +64,17 @@ class ControladorPlataformas:
     def exibir_plataforma(self):
         pass
 
-    def find_plataforma(self, nome_plataforma):
+    def find_plataforma(self, nome_plataforma: str) -> list[Plataforma]:
         return [plataforma for plataforma in self.__dao.read() if plataforma.nome == nome_plataforma][0]
 
     def listar_plataformas(self):
         self.__tela.exibir_plataformas(self.__dao.read())
 
-    def pegar_todas_plataformas(self):
+    def pegar_todas_plataformas(self) -> list[Plataforma]:
         plataformas = [plataforma for plataforma in self.__dao.read()]
         return plataformas
 
-    def find_plataforma_por_id(self, id_plataforma):
+    def find_plataforma_por_id(self, id_plataforma: int) -> Plataforma:
         try:
             id_plataforma=int(id_plataforma)
         except ValueError:

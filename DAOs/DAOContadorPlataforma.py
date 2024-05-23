@@ -18,7 +18,7 @@ class DAOContadorPlataforma(DAO):
         self._DAOContadorPlataforma__conteudo = []
         try:
             self._DAOContadorPlataforma__conteudo = self.__load()
-        except FileNotFoundError:
+        except:
             self._DAOContadorPlataforma__conteudo.append(ContadorPlataforma())
             self.__dump()
             self.__load()
