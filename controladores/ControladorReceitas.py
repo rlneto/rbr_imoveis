@@ -94,9 +94,6 @@ class ControladorReceitas:
         if id_receita is None:
             return
 
-        if not self.validar_id(id_receita):
-            return
-
         if self.__dao.delete(int(id_receita)):
             self.__tela.mostra_popup("Receita excluída com sucesso.")
         else:
@@ -122,15 +119,6 @@ class ControladorReceitas:
             float(valor)
         except ValueError:
             self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
-            return False
-        return True
-
-    def validar_id(self, id_validacao: str) -> bool:
-        if id_validacao.strip() == "":
-            self.__tela.mostra_popup("ID não pode estar em branco.")
-            return False
-        if not id_validacao.isdigit():
-            self.__tela.mostra_popup("ID inválido. Deve ser um número inteiro.")
             return False
         return True
 

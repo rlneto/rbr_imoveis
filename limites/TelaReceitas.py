@@ -103,6 +103,39 @@ class TelaReceitas(Tela):
         self.__window.Close()
         return None
 
+    # def excluir_receita(self, receitas: list[Receita]):
+    #     sg.theme('Reddit')
+    #
+    #     dados = [[receita.valor, receita.imovel.titulo, receita.plataforma.titulo, receita.obs, receita.data,
+    #               receita.tags, receita.id] for receita in receitas]
+    #
+    #     colunas = ['Valor', 'Imóvel', 'Plataforma', 'Observação', 'Data', 'Tags', 'ID']
+    #
+    #     layout = [
+    #         [sg.Text('Lista Receitas:', font=("Helvetica", 20), pad=(30, 20))],
+    #         [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+    #                   auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30),
+    #                   col_widths=[10, 20, 20, 20, 15, 15, 15], key='-TABLE-', enable_events=True)],
+    #         [sg.Text('Digite o ID da receita que deseja excluir:', font=("Helvetica", 15), pad=(30, 20))],
+    #         [sg.Text('ID:', font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))],
+    #         [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Excluir', pad=(0, 30))]
+    #     ]
+    #
+    #     self.__window = sg.Window('RBR Imóveis').Layout(layout)
+    #
+    #     while True:
+    #         event, values = self.__window.Read()
+    #         if event is None or event == 'Voltar':
+    #             self.__window.Close()
+    #             return None
+    #         elif event == '-TABLE-':
+    #             selected_row_index = values['-TABLE-'][0]
+    #             selected_receita_id = dados[selected_row_index][6]
+    #             self.__window['id'].update(selected_receita_id)
+    #         elif event == 'Excluir':
+    #             self.__window.Close()
+    #             return values['id']
+
     def excluir_receita(self, receitas: list[Receita]):
         sg.theme('Reddit')
 
@@ -116,8 +149,6 @@ class TelaReceitas(Tela):
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
                       auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30),
                       col_widths=[10, 20, 20, 20, 15, 15, 15], key='-TABLE-', enable_events=True)],
-            [sg.Text('Digite o ID da receita que deseja excluir:', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Text('ID:', font=("Helvetica", 15), pad=(30, 20)), sg.Input(key='id', pad=(30, 20))],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Excluir', pad=(0, 30))]
         ]
 
@@ -131,10 +162,9 @@ class TelaReceitas(Tela):
             elif event == '-TABLE-':
                 selected_row_index = values['-TABLE-'][0]
                 selected_receita_id = dados[selected_row_index][6]
-                self.__window['id'].update(selected_receita_id)
             elif event == 'Excluir':
                 self.__window.Close()
-                return values['id']
+                return selected_receita_id
 
 
     def close(self):
