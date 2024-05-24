@@ -92,7 +92,7 @@ class ControladorReceitas:
     def excluir_receita(self):
         id_receita = self.__tela.excluir_receita(self.__dao.read())
         if id_receita is None:
-            return
+            self.tela.mostra_popup("Nenhuma receita selecionada.")
 
         if self.__dao.delete(int(id_receita)):
             self.__tela.mostra_popup("Receita excluída com sucesso.")
