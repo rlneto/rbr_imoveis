@@ -57,13 +57,7 @@ class ControladorDespesas:
         if not self.validar_existencia_imovel(id_imovel, imoveis):
             return
 
-        # if not self.validar_tags(tags):
-        #     return
-
         imovel = controlador_imovel.find_imovel_por_id(id_imovel)
-        # if imovel is None:
-        #     self.__tela.mostra_popup("Imóvel não encontrado.")
-        #     return
 
         id = ControladorGeraIdDespesa().gera_id()
         self.__dao.create(id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
@@ -86,12 +80,7 @@ class ControladorDespesas:
 
     # Validações cadastrar Despesa
     def validar_campos_vazios(self, valor, obs, data, id_imovel, tags):
-        if (valor is None or
-                obs is None or
-                data is None or
-                id_imovel is None or
-                tags is None or
-                data.strip() == "" or
+        if (data.strip() == "" or
                 valor.strip() == "" or
                 obs.strip() == "" or
                 len(tags) == 0):
@@ -122,11 +111,6 @@ class ControladorDespesas:
             return False
         return True
 
-    # def validar_tags(self, tags):
-    #     if not isinstance(tags, list):
-    #         self.__tela.mostra_popup("As tags da despesa devem ser uma lista.")
-    #         return False
-    #     return True
 
     # Validação excluir Despesa
     def validar_id(self, id_despesa):
