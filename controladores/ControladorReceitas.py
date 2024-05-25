@@ -57,13 +57,12 @@ class ControladorReceitas:
         if self.validar_campos_vazios(valor, obs, data, id_imovel, id_plataforma, tags):
             return
 
-        if not isinstance(valor, float):
+        if not valor.isdigit():
             self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
             return
 
-
-        if not self.validar_tags(tags):
-            return
+        imovel = [imovel for imovel in imoveis if imovel.id == id_imovel][0]
+        plataforma = [plataforma for plataforma in plataformas if plataforma.id == id_plataforma][0]
 
         id_receita = self.__controlador_gera_id.gera_id()
         if self.__dao.create(id_receita, obs=obs, valor=valor, data=data, imovel=imovel,
@@ -75,7 +74,7 @@ class ControladorReceitas:
     def excluir_receita(self):
         id_receita = self.__tela.excluir_receita(self.__dao.read())
         if id_receita is None:
-            self.tela.mostra_popup("Nenhuma receita selecionada.")
+            self.__tela.mostra_popup("Nenhuma receita selecionada.")
 
         if self.__dao.delete(int(id_receita)):
             self.__tela.mostra_popup("Receita excluída com sucesso.")
@@ -97,17 +96,6 @@ class ControladorReceitas:
             return True
         return False
 
-    # def validar_valor(self, valor: float) -> bool:
-    #     try:
-    #         float(valor)
-    #     except ValueError:
-    #         self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
-    #         return False
-    #     return True
-
-
-
-
     def validar_existencia_imoveis(self, imoveis: list[Imovel]) -> bool:
         if not imoveis:
             self.__tela.mostra_popup("Não há imóveis cadastrados.")
@@ -117,12 +105,6 @@ class ControladorReceitas:
     def validar_existencia_plataformas(self, plataformas: list[Plataforma]) -> bool:
         if not plataformas:
             self.__tela.mostra_popup("Não há plataformas cadastradas.")
-            return False
-        return True
-
-    def validar_tags(self, tags: list[str]) -> bool:
-        if len(tags) == 0:
-            self.__tela.mostra_popup("Adicione ao menos uma tag.")
             return False
         return True
 
