@@ -21,6 +21,7 @@ class ControladorReceitas:
     C_RECEITAS = "C_RECEITAS"
     R_RECEITAS = "R_RECEITAS"
     D_RECEITAS = "D_RECEITAS"
+    PROSSEGUIR = "PROSSEGUIR"
     PROXIMO = "PROXIMO"
     VOLTAR = "VOLTAR"
 
@@ -52,9 +53,11 @@ class ControladorReceitas:
         elif not self.validar_existencia_plataformas(plataformas):
             return
 
-        valor, id_imovel, id_plataforma, obs, data, tags = self.__tela.cadastrar_receita(imoveis, plataformas)
+        valor, id_imovel, id_plataforma, obs, data, tags, action = self.__tela.cadastrar_receita(imoveis, plataformas)
 
-        if self.validar_campos_vazios(valor, obs, data, id_imovel, id_plataforma, tags):
+        if not (valor and id_imovel and id_plataforma and obs and data and tags):
+            if action == self.PROSSEGUIR:
+                self.__tela.mostra_popup("Preencha todos os campos.")
             return
 
         if not valor.isdigit():
@@ -84,17 +87,17 @@ class ControladorReceitas:
     def find_receita(self, id_receita: int) -> Receita:
         return [receita for receita in self.__dao.read() if receita.id == id_receita][0]
 
-    def validar_campos_vazios(self, valor: float, obs: str, data: str,
-                              id_imovel: int, id_plataforma: int, tags: list[str]) -> bool:
-        if (valor is None or
-                obs is None or
-                data is None or
-                id_imovel is None or
-                id_plataforma is None or
-                tags is None):
-            self.__tela.mostra_popup("Preencha todos os campos.")
-            return True
-        return False
+    # def validar_campos_vazios(self, valor: float, obs: str, data: str,
+    #                           id_imovel: int, id_plataforma: int, tags: list[str]) -> bool:
+    #     if (valor is None or
+    #             obs is None or
+    #             data is None or
+    #             id_imovel is None or
+    #             id_plataforma is None or
+    #             tags is None):
+    #         self.__tela.mostra_popup("Preencha todos os campos.")
+    #         return True
+    #     return False
 
     def validar_existencia_imoveis(self, imoveis: list[Imovel]) -> bool:
         if not imoveis:

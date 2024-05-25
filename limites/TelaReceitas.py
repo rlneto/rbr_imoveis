@@ -79,9 +79,10 @@ class TelaReceitas(Tela):
             tags_list = [tag.strip() for tag in values['tags'].split(',') if tag.strip()]
             valor = values['valor'].replace(',', '.') if values['valor'] else None
             obs = values["obs"]
-            return valor, id_imovel, id_plataforma, obs, data, tags_list
+            action = button
+            return valor, id_imovel, id_plataforma, obs, data, tags_list, action
         else:
-            return None, None, None, None, None, None
+            return None, None, None, None, None, None, None
 
     def exibir_receitas(self, receitas: list[Receita]):
         sg.theme('Reddit')
