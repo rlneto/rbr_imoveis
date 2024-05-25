@@ -10,4 +10,5 @@
 from entidades.Fluxo import Fluxo
 
 class Saque(Fluxo):
-    pass
+    def __init__(self, ident: int, obs: str, valor: float, data: str):
+        super().__init__(ident, obs, valor, data)

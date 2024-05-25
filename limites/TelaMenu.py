@@ -30,7 +30,7 @@ class TelaMenu(Tela):
                    [sg.Radio('Despesas', font=('Helvetica', 15), group_id='menu', key='DESPESAS')],
                    [sg.Radio('Relatórios', font=('Helvetica', 15), group_id='menu', key='RELATORIOS', disabled=True)]]
         column2 = [[sg.Radio('Aportes', font=('Helvetica', 15), group_id='menu', key='APORTES', disabled=True)],
-                   [sg.Radio('Saques', font=('Helvetica', 15), group_id='menu', key='SAQUES', disabled=True)],
+                   [sg.Radio('Saques', font=('Helvetica', 15), group_id='menu', key='SAQUES')],
                    [sg.Radio('Plataformas', font=('Helvetica', 15), group_id='menu', key='PLATAFORMAS')],
                    [sg.Radio('Caixa', font=('Helvetica', 15), group_id='menu', key='CAIXA', disabled=False)],
                    [sg.Radio('Alterar chave de acesso', font=('Helvetica', 15), group_id='menu', key='U_SENHA')]]

@@ -9,22 +9,124 @@
 #######################################################
 from limites.TelaSaques import TelaSaques
 from DAOs.DAOSaque import DAOSaque
+from entidades.ContadorSaque import ContadorSaque
 from controladores.ControladorGeraIdSaque import ControladorGeraIdSaque
 
 class ControladorSaques:
+    C_SAQUES = "C_SAQUES"
+    R_SAQUES = "R_SAQUES"
+    D_SAQUES = "D_SAQUES"
+    SAQUES = "SAQUES"
+    VOLTAR = "VOLTAR"
 
+    def __init__(self):
+        self.__dao = DAOSaque("saques.pkl")
+        self.__tela = TelaSaques()
+
+    def abrir_menu(self):
+        while True:
+            escolha = self.__tela.abrir_menu()
+            if escolha is None or escolha == self.VOLTAR:
+                return
+            elif escolha == self.C_SAQUES:
+                self.cadastrar_saque()
+            elif escolha == self.R_SAQUES:
+                self.listar_saques()
+            elif escolha == self.D_SAQUES:
+                self.excluir_saque()
 
     def cadastrar_saque(self):
-        pass
+        valor, obs, data = self.__tela.cadastrar_saques()
+        if valor is None and obs is None and data is None:
+            return
+
+        if self.validar_campos_vazios(valor, obs, data):
+            return
+        
+        if not self.validar_valor(valor):
+            return
+        
+        id = ControladorGeraIdSaque().gera_id()
+        self.__dao.create(id, valor=valor, data=data, obs=obs)
 
     def excluir_saque(self):
-        pass
+        saques = self.__dao.read()
+        if not saques:
+            self.__tela.mostra_popup("Não há saques cadastrados.")
+            return
 
-    def exibir_saque(self):
-        pass
+        id_saques = self.__tela.excluir_saques(saques)
+        if id_saques is None:
+            return
+        
+        if not self.validar_id(id_saques):
+            return
+        
+        self.__dao.delete(int(id_saques))
 
     def listar_saques(self):
-        pass
+        saques = self.__dao.read()
+        if not saques:
+            self.__tela.mostra_popup("Não há saques cadastrados.")
+        else:
+            self.__tela.exibir_saques(saques)
 
-    def listar_saques_ano(self):
-        pass
+    def validar_campos_vazios(self, valor, obs, data):
+        if (valor is None or obs is None or data is None or
+            valor.strip() == "" or obs.strip() == "" or data.strip() == ""):
+            self.__tela.mostra_popup("Todos os campos devem ser preenchidos.")
+            return True
+        return False
+
+    def validar_valor(self, valor):
+        try:
+            valor = float(valor)
+            if valor <= 0:
+                self.__tela.mostra_popup("O valor do saque deve ser um número maior que zero.")
+                return False
+            return True
+        except ValueError:
+            self.__tela.mostra_popup("O valor do saque deve ser um número.")
+            return False
+
+    def validar_id(self, id_saque):
+        if not id_saque.strip():
+            self.__tela.mostra_popup("O campo ID não pode estar vazio.")
+            return False
+
+        try:
+            id_saque = int(id_saque)
+        except ValueError:
+            self.__tela.mostra_popup("O ID do saque deve ser um número inteiro.")
+            return False
+
+        if not any(saque.id == id_saque for saque in self.__dao.read()):
+            self.__tela.mostra_popup(f"Saque com ID {id_saque} não encontrado.")
+            return False
+
+        return True
+
+
+    # # Utilizar para os relatórios depois
+    # def listar_despesas_ano(self, ano):
+    #     despesas = self.__dao.read()
+    #     despesas_ano = [despesa for despesa in despesas if datetime.datetime.strptime(despesa.data, '%d/%m/%Y').year == ano]
+    #     if despesas_ano:
+    #         print(f"Despesas do ano {ano}:")
+    #         for despesa in despesas_ano:
+    #             print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data} - Imóvel: {despesa.imovel.titulo}")
+    #     else:
+    #         print(f"Não há despesas registradas para o ano {ano}.")
+
+    # def listar_despesas_imovel(self, id_imovel):
+    #     despesas_imovel = [despesa for despesa in self.__dao.read() if despesa.imovel.id == id_imovel]
+    #     if despesas_imovel:
+    #         print(f"Despesas do imóvel ID {id_imovel}:")
+    #         for despesa in despesas_imovel:
+    #             print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data}")
+    #     else:
+    #         print(f"Não há despesas registradas para o imóvel ID {id_imovel}.")
+
+
+
+    
