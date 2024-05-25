@@ -57,26 +57,13 @@ class ControladorReceitas:
         if self.validar_campos_vazios(valor, obs, data, id_imovel, id_plataforma, tags):
             return
 
-        if not self.validar_valor(valor):
+        if not isinstance(valor, float):
+            self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
             return
 
-        if not self.validar_existencia_imovel(id_imovel, imoveis):
-            return
-
-        if not self.validar_existencia_plataforma(id_plataforma, plataformas):
-            return
 
         if not self.validar_tags(tags):
             return
-
-        imovel = controlador_imoveis.find_imovel_por_id(id_imovel)
-        if imovel is None:
-            self.__tela.mostra_popup("Imóvel não encontrado.")
-            return
-
-        plataforma = controlador_plataformas.find_plataforma_por_id(id_plataforma)
-        if plataforma is None:
-            self.__tela.mostra_popup("Plataforma não encontrada.")
 
         id_receita = self.__controlador_gera_id.gera_id()
         if self.__dao.create(id_receita, obs=obs, valor=valor, data=data, imovel=imovel,
@@ -110,25 +97,16 @@ class ControladorReceitas:
             return True
         return False
 
-    def validar_valor(self, valor: float) -> bool:
-        try:
-            float(valor)
-        except ValueError:
-            self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
-            return False
-        return True
+    # def validar_valor(self, valor: float) -> bool:
+    #     try:
+    #         float(valor)
+    #     except ValueError:
+    #         self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
+    #         return False
+    #     return True
 
-    def validar_existencia_plataforma(self, id_plataforma: int, plataformas: list[Plataforma]) -> bool:
-        if not any(plataforma.id == id_plataforma for plataforma in plataformas):
-            self.__tela.mostra_popup("Plataforma não encontrada.")
-            return False
-        return True
 
-    def validar_existencia_imovel(self, id_imovel: int, imoveis: list[Imovel]) -> bool:
-        if not any(imovel.id == id_imovel for imovel in imoveis):
-            self.__tela.mostra_popup("Imóvel não encontrado.")
-            return False
-        return True
+
 
     def validar_existencia_imoveis(self, imoveis: list[Imovel]) -> bool:
         if not imoveis:
