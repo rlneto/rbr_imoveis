@@ -54,10 +54,6 @@ class ControladorReceitas:
 
         valor, id_imovel, id_plataforma, obs, data, tags = self.__tela.cadastrar_receita(imoveis, plataformas)
 
-        if (valor is None and id_imovel is None and id_plataforma is None
-                and obs is None and data is None and tags is None):
-            return
-
         if self.validar_campos_vazios(valor, obs, data, id_imovel, id_plataforma, tags):
             return
 
