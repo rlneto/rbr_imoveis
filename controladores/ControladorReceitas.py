@@ -21,6 +21,7 @@ class ControladorReceitas:
     C_RECEITAS = "C_RECEITAS"
     R_RECEITAS = "R_RECEITAS"
     D_RECEITAS = "D_RECEITAS"
+    EXCLUIR = "Excluir"
     PROSSEGUIR = "PROSSEGUIR"
     PROXIMO = "PROXIMO"
     VOLTAR = "VOLTAR"
@@ -71,33 +72,31 @@ class ControladorReceitas:
         if self.__dao.create(id_receita, obs=obs, valor=valor, data=data, imovel=imovel,
                              plataforma=plataforma, tags=tags):
             self.__tela.mostra_popup("Receita cadastrada com sucesso.")
+            return
         else:
             self.__tela.mostra_popup("Erro ao cadastrar receita.")
+            return
 
     def excluir_receita(self):
-        id_receita = self.__tela.excluir_receita(self.__dao.read())
+        leitura = self.__dao.read()
+        id_receita, action = self.__tela.excluir_receita(leitura)
         if id_receita is None:
-            self.__tela.mostra_popup("Nenhuma receita selecionada.")
-
-        if self.__dao.delete(int(id_receita)):
-            self.__tela.mostra_popup("Receita excluída com sucesso.")
+            return
+        elif action == self.EXCLUIR:
+            success = self.__dao.delete(id_receita)
+            if success:
+                self.__tela.mostra_popup("Receita excluída com sucesso.")
+                return
+            else:
+                self.__tela.mostra_popup("Erro ao excluir receita.")
+                return
         else:
             self.__tela.mostra_popup("Erro ao excluir receita.")
+            return
 
     def find_receita(self, id_receita: int) -> Receita:
         return [receita for receita in self.__dao.read() if receita.id == id_receita][0]
 
-    # def validar_campos_vazios(self, valor: float, obs: str, data: str,
-    #                           id_imovel: int, id_plataforma: int, tags: list[str]) -> bool:
-    #     if (valor is None or
-    #             obs is None or
-    #             data is None or
-    #             id_imovel is None or
-    #             id_plataforma is None or
-    #             tags is None):
-    #         self.__tela.mostra_popup("Preencha todos os campos.")
-    #         return True
-    #     return False
 
     def validar_existencia_imoveis(self, imoveis: list[Imovel]) -> bool:
         if not imoveis:
@@ -112,4 +111,6 @@ class ControladorReceitas:
         return True
 
     def listar_receitas(self):
-        self.__tela.exibir_receitas(self.__dao.read())
+        leitura = self.__dao.read()
+        self.__tela.exibir_receitas(leitura)
+        return

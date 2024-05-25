@@ -127,20 +127,18 @@ class TelaReceitas(Tela):
 
         while True:
             event, values = self.__window.Read()
-
-
             if event is None or event == 'Voltar':
                 self.__window.Close()
-                return None
+                return None, event
             elif event == '-TABLE-':
                 selected_row_index = values['-TABLE-'][0]
                 selected_receita_id = dados[selected_row_index][6]
             elif event == 'Excluir':
                 if selected_receita_id is None:
-                    sg.Popup('Selecione uma receita para excluir.')
+                    self.mostra_popup('Selecione uma receita para excluir.')
                 else:
                     self.__window.Close()
-                    return selected_receita_id
+                    return selected_receita_id, event
 
 
     def close(self):
