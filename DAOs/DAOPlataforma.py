@@ -42,6 +42,8 @@ class DAOPlataforma(DAO):
             return False
 
     def delete(self, id: int) -> bool:
+        self.__dump()
+        self.__load()
         for i in range(len(self.conteudo)):
             if self.conteudo[i].id == id:
                 self.conteudo[i].habilitado = False
@@ -52,6 +54,9 @@ class DAOPlataforma(DAO):
 
     def read(self) -> list:
         return [plataforma for plataforma in self.conteudo if plataforma.habilitado]
+
+    def get_all(self) -> list[Plataforma]:
+        return self.conteudo
 
     def update(self, id: int, novo_titulo: str, nova_desc: str) -> bool:
         for i in range(len(self.conteudo)):
@@ -71,3 +76,5 @@ class DAOPlataforma(DAO):
         with open(self.__arquivo, 'rb') as arquivo:
             self.conteudo = pickle.load(arquivo)
         return self.conteudo
+
+

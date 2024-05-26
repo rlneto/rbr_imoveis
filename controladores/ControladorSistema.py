@@ -117,12 +117,12 @@ class ControladorSistema:
 
 
     @property
-    def autenticado(self):
+    def autenticado(self) -> bool:
         return self.__autenticado
 
     @autenticado.setter
-    def autenticado(self, autenticado):
+    def autenticado(self, autenticado: bool):
         self.__autenticado = autenticado
 
-    def processar_operacao(self):
-        pass
+    # def processar_operacao(self):
+    #     pass
