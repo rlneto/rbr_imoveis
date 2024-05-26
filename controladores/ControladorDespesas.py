@@ -118,11 +118,11 @@ class ControladorDespesas:
             self.__tela.mostra_popup("O campo ID não pode estar vazio.")
             return False
 
-        try:
-            id_despesa = int(id_despesa)
-        except ValueError:
+        if not id_despesa.isdigit():
             self.__tela.mostra_popup("O ID da despesa deve ser um número inteiro.")
             return False
+
+        id_despesa = int(id_despesa)
 
         if not any(despesa.id == id_despesa for despesa in self.__dao.read()):
             self.__tela.mostra_popup(f"Despesa com ID {id_despesa} não encontrada.")
