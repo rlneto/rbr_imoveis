@@ -44,5 +44,5 @@ class Plataforma:
         return self.__habilitado
 
     @habilitado.setter
-    def habilitado(self, habilitado:bool):
+    def habilitado(self, habilitado: bool):
         self.__habilitado = habilitado

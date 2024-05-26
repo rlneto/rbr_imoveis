@@ -21,6 +21,8 @@ class ControladorReceitas:
     C_RECEITAS = "C_RECEITAS"
     R_RECEITAS = "R_RECEITAS"
     D_RECEITAS = "D_RECEITAS"
+    EXCLUIR = "Excluir"
+    PROSSEGUIR = "PROSSEGUIR"
     PROXIMO = "PROXIMO"
     VOLTAR = "VOLTAR"
 
@@ -52,87 +54,49 @@ class ControladorReceitas:
         elif not self.validar_existencia_plataformas(plataformas):
             return
 
-        valor, id_imovel, id_plataforma, obs, data, tags = self.__tela.cadastrar_receita(imoveis, plataformas)
+        valor, id_imovel, id_plataforma, obs, data, tags, action = self.__tela.cadastrar_receita(imoveis, plataformas)
 
-        if (valor is None and id_imovel is None and id_plataforma is None
-                and obs is None and data is None and tags is None):
+        if not (valor and id_imovel and id_plataforma and obs and data and tags):
+            if action == self.PROSSEGUIR:
+                self.__tela.mostra_popup("Preencha todos os campos.")
             return
 
-        if self.validar_campos_vazios(valor, obs, data, id_imovel, id_plataforma, tags):
+        if not valor.isdigit():
+            self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
             return
 
-        if not self.validar_valor(valor):
-            return
-
-        if not self.validar_existencia_imovel(id_imovel, imoveis):
-            return
-
-        if not self.validar_existencia_plataforma(id_plataforma, plataformas):
-            return
-
-        if not self.validar_tags(tags):
-            return
-
-        imovel = controlador_imoveis.find_imovel_por_id(id_imovel)
-        if imovel is None:
-            self.__tela.mostra_popup("Imóvel não encontrado.")
-            return
-
-        plataforma = controlador_plataformas.find_plataforma_por_id(id_plataforma)
-        if plataforma is None:
-            self.__tela.mostra_popup("Plataforma não encontrada.")
+        imovel = [imovel for imovel in imoveis if imovel.id == id_imovel][0]
+        plataforma = [plataforma for plataforma in plataformas if plataforma.id == id_plataforma][0]
 
         id_receita = self.__controlador_gera_id.gera_id()
         if self.__dao.create(id_receita, obs=obs, valor=valor, data=data, imovel=imovel,
                              plataforma=plataforma, tags=tags):
             self.__tela.mostra_popup("Receita cadastrada com sucesso.")
+            return
         else:
             self.__tela.mostra_popup("Erro ao cadastrar receita.")
+            return
 
     def excluir_receita(self):
-        id_receita = self.__tela.excluir_receita(self.__dao.read())
+        leitura = self.__dao.read()
+        id_receita, action = self.__tela.excluir_receita(leitura)
         if id_receita is None:
-            self.__tela.mostra_popup("Nenhuma receita selecionada.")
-
-        if self.__dao.delete(int(id_receita)):
-            self.__tela.mostra_popup("Receita excluída com sucesso.")
+            return
+        elif action == self.EXCLUIR:
+            success = self.__dao.delete(id_receita)
+            if success:
+                self.__tela.mostra_popup("Receita excluída com sucesso.")
+                return
+            else:
+                self.__tela.mostra_popup("Erro ao excluir receita.")
+                return
         else:
             self.__tela.mostra_popup("Erro ao excluir receita.")
+            return
 
     def find_receita(self, id_receita: int) -> Receita:
         return [receita for receita in self.__dao.read() if receita.id == id_receita][0]
 
-    def validar_campos_vazios(self, valor: float, obs: str, data: str,
-                              id_imovel: int, id_plataforma: int, tags: list[str]) -> bool:
-        if (valor is None or
-                obs is None or
-                data is None or
-                id_imovel is None or
-                id_plataforma is None or
-                tags is None):
-            self.__tela.mostra_popup("Preencha todos os campos.")
-            return True
-        return False
-
-    def validar_valor(self, valor: float) -> bool:
-        try:
-            float(valor)
-        except ValueError:
-            self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
-            return False
-        return True
-
-    def validar_existencia_plataforma(self, id_plataforma: int, plataformas: list[Plataforma]) -> bool:
-        if not any(plataforma.id == id_plataforma for plataforma in plataformas):
-            self.__tela.mostra_popup("Plataforma não encontrada.")
-            return False
-        return True
-
-    def validar_existencia_imovel(self, id_imovel: int, imoveis: list[Imovel]) -> bool:
-        if not any(imovel.id == id_imovel for imovel in imoveis):
-            self.__tela.mostra_popup("Imóvel não encontrado.")
-            return False
-        return True
 
     def validar_existencia_imoveis(self, imoveis: list[Imovel]) -> bool:
         if not imoveis:
@@ -146,11 +110,7 @@ class ControladorReceitas:
             return False
         return True
 
-    def validar_tags(self, tags: list[str]) -> bool:
-        if len(tags) == 0:
-            self.__tela.mostra_popup("Adicione ao menos uma tag.")
-            return False
-        return True
-
     def listar_receitas(self):
-        self.__tela.exibir_receitas(self.__dao.read())
+        leitura = self.__dao.read()
+        self.__tela.exibir_receitas(leitura)
+        return

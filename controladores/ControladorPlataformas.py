@@ -18,6 +18,8 @@ class ControladorPlataformas:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    EXCLUIR = "Excluir"
+    PROSSEGUIR = "PROSSEGUIR"
     PROXIMO = "PROXIMO"
     VOLTAR = "VOLTAR"
 
@@ -42,27 +44,58 @@ class ControladorPlataformas:
                     return
 
     def alterar_plataforma(self):
-        nova_plataforma = self.__tela.selecionar_plataforma(self.__dao.read())
-        if nova_plataforma is None:
+        nova_plataforma = list()
+        nova_plataforma_id, action = self.__tela.selecionar_plataforma(self.__dao.read())
+        if nova_plataforma_id is None or action is None:
+            if action == self.PROSSEGUIR:
+                self.__tela.mostra_popup("Erro: Selecione uma plataforma.")
             return
-        else:
-            self.__dao.update(id=nova_plataforma[2], novo_titulo=nova_plataforma[0], nova_desc=nova_plataforma[1])
+        elif action == self.PROSSEGUIR:
+            plataforma_atual = self.find_plataforma_por_id(nova_plataforma_id)
+            resultado = self.__tela.alterar_plataforma(plataforma_atual)
+            if len(resultado) == 0:
+                return
+            else:
+                nova_plataforma.append(resultado[0])
+                nova_plataforma.append(resultado[1])
+                new_action = resultado[2]
+            if new_action != self.PROSSEGUIR:
+                return
+            elif nova_plataforma[0] is None or nova_plataforma[1] is None:
+                self.__tela.mostra_popup("Erro: O título e a descrição da plataforma não podem estar vazios.")
+                return
+            else:
+                sucesso = self.__dao.update(id=nova_plataforma_id, novo_titulo=nova_plataforma[0],
+                                            nova_desc=nova_plataforma[1])
+                if sucesso:
+                    self.__tela.mostra_popup("Plataforma alterada com sucesso.")
+                    return
+                else:
+                    self.__tela.mostra_popup("Erro: Não foi possível alterar a plataforma.")
+                    return
+
 
     def cadastrar_plataforma(self):
-        titulo, desc = self.__tela.cadastrar_plataforma()
+        titulo, desc, action = self.__tela.cadastrar_plataforma()
         if titulo is None or desc is None:
+            if action == self.PROSSEGUIR:
+                self.__tela.mostra_popup("Erro: O título e a descrição da plataforma não podem estar vazios.")
             return
         else:
             self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdPlataforma().gera_id())
+            self.__tela.mostra_popup("Plataforma cadastrada com sucesso.")
+            return
 
     def excluir_plataforma(self):
-        id_plataforma = self.__tela.excluir_plataforma(self.__dao.read())
+        id_plataforma, action = self.__tela.excluir_plataforma(self.__dao.read())
         if id_plataforma is None:
+            if action == self.EXCLUIR:
+                self.__tela.mostra_popup("Erro: O ID da plataforma não pode estar vazio.")
             return
-        self.__dao.delete(id=int(id_plataforma))
-
-    def exibir_plataforma(self):
-        pass
+        else:
+            self.__dao.delete(id=id_plataforma)
+            self.__tela.mostra_popup("Plataforma excluída com sucesso.")
+            return
 
     def find_plataforma(self, nome_plataforma: str) -> list[Plataforma]:
         return [plataforma for plataforma in self.__dao.read() if plataforma.nome == nome_plataforma][0]
@@ -75,10 +108,6 @@ class ControladorPlataformas:
         return plataformas
 
     def find_plataforma_por_id(self, id_plataforma: int) -> Plataforma:
-        try:
-            id_plataforma=int(id_plataforma)
-        except ValueError:
-            return None
         encontrados = [plataforma for plataforma in self.__dao.read() if plataforma.id == id_plataforma]
         return encontrados[0] if len(encontrados) > 0 else None
 

@@ -52,43 +52,67 @@ class TelaPlataformas(Tela):
         layout = [
             [sg.Text('Lista Plataformas:', font=("Helvetica", 20), pad=(30, 20))],
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10])],
-            [sg.Text('Digite o ID da plataforma que deseja alterar:', pad=(30, 20))],
-            [[sg.Text('ID:', pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
-            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10],
+                      key='-TABLE-', enable_events=True)],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')),
+             sg.Button('Confirmar', pad=(0, 30), key=self.PROSSEGUIR)]
         ]
 
         self.__window = sg.Window('RBR Imóveis').Layout(layout)
-        button, values = self.__window.Read()
-        if button is None or button == 'Voltar':
-            self.__window.Close()
-            return None
-        else:
-            self.__window.Close()
-            for item in plataformas:
-                if item.id == int(values['id']):
-                    return self.alterar_plataforma(item)
 
-    def alterar_plataforma(self, plataforma_selec):
+        selected_plataforma_id = None
+
+        while True:
+            event, values = self.__window.Read()
+            if event is None or event == 'Voltar':
+                self.__window.Close()
+                return None, None
+            elif event == '-TABLE-':
+                selected_row_index = values['-TABLE-'][0]
+                selected_plataforma_id = dados[selected_row_index][2]
+            elif event == self.PROSSEGUIR:
+                if selected_plataforma_id is not None:
+                    self.__window.Close()
+                    return selected_plataforma_id, event
+                else:
+                    self.mostra_popup("Selecione uma plataforma para alterar.")
+                    self.__window.Close()
+                    return None, None
+
+    def alterar_plataforma(self, plataforma):
         sg.theme('Reddit')
+        column1 = [[sg.Text('Titulo:', font=("Helvetica", 15), ), sg.Input(key='titulo', pad=(45, 0), default_text=plataforma.titulo)],
+                   [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', default_text=plataforma.desc)],
+                   [sg.Text('Obs: Todos os campos são obrigatórios.', font=("Helvetica", 10), pad=(0, 20))]
+]
         layout = [
-            [sg.Text('Alterar Plataforma:', font=("Helvetica", 20), pad=(30, 20))],
-            [sg.Text('Título:', font=("Helvetica", 15), ), sg.Input(key='titulo', pad=(45, 0), default_text=plataforma_selec.titulo)],
-            [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', default_text=plataforma_selec.desc)],
-            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+            [sg.Column([[sg.Text('Alterar Plataforma:', font=("Helvetica", 20))]],
+                        pad=(30, 20))],
+            [sg.Column(column1, pad=(30, 30))],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'), key=self.VOLTAR),
+             sg.Button('Confirmar', pad=(0, 30), key=self.PROSSEGUIR)]
         ]
-        self.__window = sg.Window('Alterar plataforma:').Layout(layout)
+        self.__window = sg.Window('Alterar Plataforma').Layout(layout)
         button, values = self.__window.Read()
-        self.close()
-        if button == 'Confirmar':
-            return values['titulo'], values['descricao'], plataforma_selec.id
+        if button is None or button != self.PROSSEGUIR:
+            self.__window.Close()
+            return None, None, None
+        elif values['titulo'] == '' or values['descricao'] == '':
+            self.__window.Close()
+            return None, None, button
         else:
-            return None, None
+            self.__window.Close()
+            return values['titulo'], values['descricao'], button
+
+
+
 
     def cadastrar_plataforma(self):
         sg.theme('Reddit')
         column1 = [[sg.Text('Titulo:', font=("Helvetica", 15), ), sg.Input(key='titulo', pad=(45, 0) )],
-                   [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', )]]
+                   [sg.Text('Descrição:', font=("Helvetica", 15), ), sg.Input(key='descricao', )],
+                   [sg.Text('Obs: Todos os campos são obrigatórios.', font=("Helvetica", 10), pad=(0, 20))]
+]
         layout = [
             [sg.Column([[sg.Text('Cadastrar Plataforma:', font=("Helvetica", 20))]],
                        pad=(30, 20))],
@@ -100,9 +124,12 @@ class TelaPlataformas(Tela):
         button, values = self.__window.Read()
         self.close()
         if button == self.PROSSEGUIR:
-            return values['titulo'], values['descricao']
+            if values['titulo'] == '' or values['descricao'] == '':
+                return None, None, button
+            else:
+                return values['titulo'], values['descricao'], button
         else:
-            return None, None
+            return None, None, None
 
     def excluir_plataforma(self, plataformas):
         sg.theme('Reddit')
@@ -114,24 +141,37 @@ class TelaPlataformas(Tela):
         layout = [
             [sg.Text('Lista Plataformas:', font=("Helvetica", 20), pad=(30, 20))],
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10])],
-            [sg.Text('Digite o ID da plataforma que deseja excluir:', pad=(30, 20))],
-            [[sg.Text('ID:', pad=(30, 20)), sg.Input(key='id', pad=(30, 20))]],
-            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 10],
+                      key='-TABLE-', enable_events=True)],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')),
+             sg.Button('Excluir', pad=(0, 30), key='Excluir')]
         ]
 
         self.__window = sg.Window('RBR Imóveis').Layout(layout)
-        button, values = self.__window.Read()
-        if button is None or button == 'Voltar':
-            self.__window.Close()
-            return None
-        else:
-            self.__window.Close()
-            return values['id']
+        selected_plataforma_id = None
+
+        while True:
+            event, values = self.__window.Read()
+            if event is None or event == 'Voltar':
+                break
+            elif event == '-TABLE-':
+                selected_row_index = values['-TABLE-'][0]
+                selected_plataforma_id = dados[selected_row_index][2]
+                self.__window['Excluir'].update(disabled=False)
+            elif event == 'Excluir':
+                if selected_plataforma_id is not None:
+                    self.__window.Close()
+                    return selected_plataforma_id, event
+                else:
+                    self.mostra_popup("Selecione uma plataforma para excluir.")
+            else:
+                self.mostra_popup("Erro ao excluír plataforma.")
+
+        self.__window.Close()
+        return None, None
 
     def exibir_plataformas(self, plataformas):
         sg.theme('Reddit')
-
         dados = [[plataforma.titulo, plataforma.desc, plataforma.id] for plataforma in plataformas]
 
         colunas = ['Título', 'Descrição', 'ID']
