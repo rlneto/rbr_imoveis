@@ -12,7 +12,7 @@ from DAOs.DAOContadorSaque import DAOContadorSaque
 
 class ControladorGeraIdSaque(ControladorGeradorId):
 
-    def gera_id(self):
+    def __init__(self):
         self.__dao = DAOContadorSaque("./contadorSaque.pkl")
 
     def gera_id(self) -> int:

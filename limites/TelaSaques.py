@@ -52,7 +52,7 @@ class TelaSaques(Tela):
 
         layout = [
             [sg.Text('Valor:', font=("Helvetica", 15)), sg.InputText(key='valor')],
-            [sg.Text('Data:', font=("Helvetica", 15)), sg.InputText(key='data')],
+            [sg.Text('Data:', font=("Helvetica", 15)), sg.InputText('', key="data", size=(61, 1), disabled=True), sg.CalendarButton("Calendário", target="data", format="%d/%m/%Y")],
             [sg.Text('Observação:', font=("Helvetica", 15)), sg.InputText(key='obs')],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'), key=self.VOLTAR),
              sg.Button('Confirmar', pad=(0, 30), key=self.PROSSEGUIR)]
