@@ -107,26 +107,6 @@ class ControladorSaques:
         return True
 
 
-    # # Utilizar para os relatórios depois
-    # def listar_despesas_ano(self, ano):
-    #     despesas = self.__dao.read()
-    #     despesas_ano = [despesa for despesa in despesas if datetime.datetime.strptime(despesa.data, '%d/%m/%Y').year == ano]
-    #     if despesas_ano:
-    #         print(f"Despesas do ano {ano}:")
-    #         for despesa in despesas_ano:
-    #             print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data} - Imóvel: {despesa.imovel.titulo}")
-    #     else:
-    #         print(f"Não há despesas registradas para o ano {ano}.")
-
-    # def listar_despesas_imovel(self, id_imovel):
-    #     despesas_imovel = [despesa for despesa in self.__dao.read() if despesa.imovel.id == id_imovel]
-    #     if despesas_imovel:
-    #         print(f"Despesas do imóvel ID {id_imovel}:")
-    #         for despesa in despesas_imovel:
-    #             print(f"ID: {despesa.id} - Valor: {despesa.valor} - Data: {despesa.data}")
-    #     else:
-    #         print(f"Não há despesas registradas para o imóvel ID {id_imovel}.")
-
 
 
     
