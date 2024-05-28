@@ -63,17 +63,25 @@ class ControladorDespesas:
         self.__dao.create(id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
 
     def excluir_despesa(self):
-        id_despesa = self.__tela.excluir_despesa(self.__dao.read())
-        if id_despesa is None:
-            return
+        despesas = self.__dao.read()
+        if not despesas:
+            self.__tela.mostra_popup("Não há despesas cadastradas!")
+        else:
+            id_despesa = self.__tela.excluir_despesa(despesas)
+            if id_despesa is None:
+                return
 
-        if not self.validar_id(id_despesa):
-            return
+            if not self.validar_id(id_despesa):
+                return
 
-        self.__dao.delete(int(id_despesa))
+            self.__dao.delete(int(id_despesa))
 
     def listar_despesas(self):
-        self.__tela.exibir_despesas(self.__dao.read())
+        despesas = self.__dao.read()
+        if not despesas:
+            self.__tela.mostra_popup("Não há despesas cadastradas!")
+        else:
+            self.__tela.exibir_despesas(despesas)
 
     def find_despesa(self, id):
         return [despesa for despesa in self.__dao.read() if despesa.id == id][0]
