@@ -14,6 +14,7 @@ class ControladorMenu:
 
     IMOVEIS = "IMOVEIS"
     PLATAFORMAS = "PLATAFORMAS"
+    SAQUES = "SAQUES"
     DESPESAS = "DESPESAS"
     RECEITAS = "RECEITAS"
     U_SENHA = "U_SENHA"
@@ -34,6 +35,8 @@ class ControladorMenu:
                 return self.IMOVEIS
             case self.PLATAFORMAS:
                 return self.PLATAFORMAS
+            case self.SAQUES:
+                return self.SAQUES
             case self.DESPESAS:
                 return self.DESPESAS
             case self.RECEITAS:

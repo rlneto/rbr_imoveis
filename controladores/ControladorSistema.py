@@ -32,6 +32,10 @@ class ControladorSistema:
     R_PLATAFORMAS = "R_PLATAFORMAS"
     U_PLATAFORMAS = "U_PLATAFORMAS"
     D_PLATAFORMAS = "D_PLATAFORMAS"
+    C_SAQUES = "C_SAQUES"
+    R_SAQUES = "R_SAQUES"
+    D_SAQUES = "D_SAQUES"
+    SAQUES = "SAQUES"
     C_DESPESAS = "C_DESPESAS"
     R_DESPESAS = "R_DESPESAS"
     D_DESPESAS = "D_DESPESAS"
@@ -86,6 +90,14 @@ class ControladorSistema:
                             self.__ControladorPlataformas.alterar_plataforma()
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
+                case self.SAQUES:
+                    match self.__ControladorSaques.abrir_menu():
+                        case self.C_SAQUES:
+                            self.__ControladorSaques.cadastrar_saque()
+                        case self.R_SAQUES:
+                            self.__ControladorSaques.listar_saques()
+                        case self.D_SAQUES:
+                            self.__ControladorSaques.excluir_saque()
                 case self.DESPESAS:
                     match self.__ControladorDespesas.abrir_menu(self.__ControladorImoveis):
                         case self.C_DESPESAS:
