@@ -125,18 +125,17 @@ class ControladorDespesas:
         if not id_despesa.strip():
             self.__tela.mostra_popup("O campo ID não pode estar vazio.")
             return False
-
-        if not id_despesa.isdigit():
-            self.__tela.mostra_popup("O ID da despesa deve ser um número inteiro.")
-            return False
-
-        id_despesa = int(id_despesa)
-
-        if not any(despesa.id == id_despesa for despesa in self.__dao.read()):
-            self.__tela.mostra_popup(f"Despesa com ID {id_despesa} não encontrada.")
-            return False
-
-        return True
+        else:
+            if not id_despesa.isdigit():
+                self.__tela.mostra_popup("O ID da despesa deve ser um número inteiro.")
+                return False
+            else:
+                id_despesa = int(id_despesa)
+                if not any(despesa.id == id_despesa for despesa in self.__dao.read()):
+                    self.__tela.mostra_popup(f"Despesa com ID {id_despesa} não encontrada.")
+                    return False
+                else:
+                    return True
 
     # Utilizar para os relatórios depois
     def listar_despesas_ano(self, ano):
