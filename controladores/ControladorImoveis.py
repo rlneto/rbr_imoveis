@@ -54,12 +54,10 @@ class ControladorImoveis:
 
         novo_titulo, nova_desc, id_imovel = imovel_selecionado
 
-        if novo_titulo is None or novo_titulo.strip() == "":
-            self.__tela.mostra_popup("Erro: O título do imóvel não pode estar vazio.")
+        if novo_titulo is None and nova_desc is None and id_imovel is None:
             return
 
-        if nova_desc is None or nova_desc.strip() == "":
-            self.__tela.mostra_popup("Erro: A descrição do imóvel não pode estar vazia.")
+        if self.validar_campos_vazios(novo_titulo, nova_desc):
             return
 
         # Verificar se o novo título já existe em outro imóvel
@@ -75,39 +73,30 @@ class ControladorImoveis:
 
         if titulo is None and desc is None:
             return
-        if titulo is None or titulo.strip() == "":
-            self.__tela.mostra_popup("Erro: O título do imóvel não pode estar vazio.")
+        
+        if self.validar_campos_vazios(titulo, desc):
             return
-        if desc is None or desc.strip() == "":
-            self.__tela.mostra_popup("Erro: A descrição do imóvel não pode estar vazia.")
+        
+        if not self.validar_titulo(titulo):
             return
-        if self.find_imovel(titulo) is not None:
-            self.__tela.mostra_popup("Erro: Um imóvel com este título já existe.")
-            return
-        else:
-            self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
+
+        self.__dao.create(desc=desc, titulo=titulo, id=ControladorGeraIdImovel().gera_id())
 
     def excluir_imovel(self):
         imoveis = self.__dao.read()
+        if not imoveis:
+            self.__tela.mostra_popup("Não há imóveis cadastrados.")
+            return
+        
         id_imovel = self.__tela.excluir_imovel(imoveis)
         
         if id_imovel is None:
             return
         
-        if id_imovel.strip() == "":
-            self.__tela.mostra_popup("Erro: ID não pode estar em branco.")
-            return
-
-        if not id_imovel.isdigit():
-            self.__tela.mostra_popup("Erro: ID inválido. Deve ser um número inteiro.")
+        if not self.validar_id(id_imovel):
             return
 
         id_imovel = int(id_imovel)
-
-        # Verificar se o imóvel com o ID fornecido existe na lista de imóveis
-        if not any(imovel.id == id_imovel for imovel in imoveis):
-            self.__tela.mostra_popup("Erro: Imóvel com o ID fornecido não encontrado.")
-            return
 
         # Se todas as validações passaram, proceda com a exclusão do imóvel
         self.__dao.delete(id_imovel)
@@ -129,11 +118,47 @@ class ControladorImoveis:
         return encontrados[0] if encontrados else None
 
     def listar_imoveis(self):
-        self.__tela.exibir_imoveis(self.__dao.read())
+        imoveis = self.__dao.read()
+        if not imoveis:
+            self.__tela.mostra_popup("Não há imóveis cadastrados.")
+        else:
+            self.__tela.exibir_imoveis(imoveis)
 
     def pegar_todos_imoveis(self):
         imoveis = [imovel for imovel in self.__dao.read()]
         return imoveis
+    
+    def validar_campos_vazios(self, titulo, desc):
+        if (titulo is None or desc is None or
+            titulo.strip() == "" or desc.strip() == ""):
+            self.__tela.mostra_popup("Todos os campos devem ser preenchidos.")
+            return True
+        return False
+    
+
+    def validar_titulo(self, titulo):
+        if self.find_imovel(titulo) is not None:
+            self.__tela.mostra_popup("Erro: Um imóvel com este título já existe.")
+            return False
+        return True
+    
+    def validar_id(self, id_imovel):
+        if not id_imovel.strip():
+            self.__tela.mostra_popup("O campo ID não pode estar vazio.")
+            return False
+
+        try:
+            id_imovel = int(id_imovel)
+        except ValueError:
+            self.__tela.mostra_popup("O ID do imóvel deve ser um número inteiro.")
+            return False
+
+        if not any(imovel.id == id_imovel for imovel in self.__dao.read()):
+            self.__tela.mostra_popup(f"Imóvel com ID {id_imovel} não encontrado.")
+            return False
+
+        return True
+
 
     
     
