@@ -25,7 +25,7 @@ class TelaRelatorioImovel(Tela):
         layout = [
             [sg.Text('Selecione o imóvel que deseja ver o relatório:', font=("Helvetica", 20), pad=(30, 20))],
             [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 30, 5],
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 43, 5],
                       key='-TABLE-', enable_events=True)],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
         ]
@@ -53,27 +53,28 @@ class TelaRelatorioImovel(Tela):
     def exibir_relatorio(self, imovel, despesas, receitas, total_despesas, total_receitas, tags_mais_utilizadas, plataforma_mais_utilizada):
         sg.theme('Reddit')
 
-        dados_despesas = [[despesa.data, despesa.valor, despesa.obs] for despesa in despesas]
-        dados_receitas = [[receita.data, receita.valor, receita.obs] for receita in receitas]
-
-        # if not dados_despesas:
-        #     dados_despesas = [['Nenhuma despesa cadastrada para este imóvel', '', '']]
-        # if not dados_receitas:
-        #     dados_receitas = [['Nenhuma receita cadastrada para este imóvel', '', '']]
+        dados_despesas = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+        dados_receitas = [[receita.valor, receita.imovel.titulo, receita.plataforma.titulo, receita.obs, receita.data, receita.tags, receita.id] for receita in receitas]
 
         layout = [
-            [sg.Text(f'Relatório do Imóvel: {imovel.titulo}', font=("Helvetica", 20), pad=(30, 20))],
-            [sg.Text(f'Descrição: {imovel.desc}', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Text(f'Total de Despesas: R$ {total_despesas}', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Text(f'Total de Receitas: R$ {total_receitas}', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Text(f'Tag Mais Utilizada: {tags_mais_utilizadas[0][0]}', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Text(f'Plataforma Mais Utilizada: {plataforma_mais_utilizada[0][0] if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"}', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Text('Despesas:', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Table(values=dados_despesas, headings=['Data', 'Valor', 'Observação'], display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(10, len(dados_despesas)), pad=(30, 30), col_widths=[15, 15, 30])],
-            [sg.Text('Receitas:', font=("Helvetica", 15), pad=(30, 20))],
-            [sg.Table(values=dados_receitas, headings=['Data', 'Valor', 'Observação'], display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(10, len(dados_receitas)), pad=(30, 30), col_widths=[15, 15, 30])],
+            [sg.Text(f'Relatório do Imóvel: {imovel.titulo}', font=("Helvetica", 20), pad=(30, 10))],
+            [sg.Text(f'Descrição: {imovel.desc}', font=("Helvetica", 15), pad=(30, 5))],
+            [sg.Text(f'Total de Despesas: R$ {total_despesas}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Total de Receitas: R$ {total_receitas}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Tag Mais Utilizada: {tags_mais_utilizadas[0][0] if tags_mais_utilizadas else "Nenhuma tag cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Plataforma Mais Utilizada: {plataforma_mais_utilizada[0][0] if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text('Despesas:', font=("Helvetica", 15), pad=(30, 10))],
+            [sg.Table(values=dados_despesas, headings=['Valor', 'Imóvel', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados_despesas)), pad=(30, 30),
+                      col_widths=[10, 12, 20, 15, 15, 10], key='-TABLE-', enable_events=True)],
+            # [sg.Table(values=dados_despesas, headings=['Data', 'Valor', 'Observação'], display_row_numbers=False,
+            #           auto_size_columns=False, num_rows=min(10, len(dados_despesas)), pad=(30, 10), col_widths=[15, 15, 30])],
+            [sg.Text('Receitas:', font=("Helvetica", 15), pad=(30, 10))],
+            [sg.Table(values=dados_receitas, headings=['Valor', 'Imóvel', 'Plataforma', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados_receitas)), pad=(30, 30),
+                      col_widths=[10, 12, 15, 20, 15, 15, 10], key='-TABLE-', enable_events=True)],
+            # [sg.Table(values=dados_receitas, headings=['Data', 'Valor', 'Observação'], display_row_numbers=False,
+            #           auto_size_columns=False, num_rows=min(10, len(dados_receitas)), pad=(30, 10), col_widths=[15, 15, 30])],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'))]
         ]
 

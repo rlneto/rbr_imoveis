@@ -44,13 +44,7 @@ class ControladorRelatorios:
         plataformas_receitas = [receita.plataforma.titulo for receita in receitas]
         plataforma_mais_utilizada = Counter(plataformas_receitas).most_common(1)
 
-        # tags_mais_utilizadas = tags_mais_utilizadas[0][0] if tags_mais_utilizadas else "Nenhuma tag cadastrada para este imóvel"
-        # plataforma_mais_utilizada = plataforma_mais_utilizada[0][0] if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"
-
         self.__tela.exibir_relatorio(imovel_selecionado, despesas, receitas, total_despesas, total_receitas, tags_mais_utilizadas, plataforma_mais_utilizada)
-
-        # self.__tela.exibir_relatorio(imovel_selecionado, despesas, receitas)     
-
         
 
 
