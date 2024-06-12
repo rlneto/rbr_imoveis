@@ -22,6 +22,7 @@ class ControladorMenu:
     VOLTAR = "VOLTAR"
     SAIR = "SAIR"
     CAIXA = "CAIXA"
+    RELATORIOS = "RELATORIOS"
 
 
 
@@ -43,6 +44,8 @@ class ControladorMenu:
                 return self.RECEITAS
             case self.CAIXA:
                 return self.CAIXA
+            case self.RELATORIOS:
+                return self.RELATORIOS
             case self.U_SENHA:
                 return self.U_SENHA
             case self.PROSSEGUIR:

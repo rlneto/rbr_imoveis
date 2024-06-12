@@ -43,6 +43,7 @@ class ControladorSistema:
     R_RECEITAS = "R_RECEITAS"
     D_RECEITAS = "D_RECEITAS"
     CAIXA = "CAIXA"
+    RELATORIOS = "RELATORIOS"
     U_SENHA = "U_SENHA"
     PROSSEGUIR = "PROSSEGUIR"
     SAIR = "SAIR"
@@ -120,6 +121,8 @@ class ControladorSistema:
 
                 case self.CAIXA:
                     self.__ControladorCaixa.exibir_caixa()
+                case self.RELATORIOS: 
+                    self.__ControladorRelatorios.exibir_relatorio_imovel(self.__ControladorImoveis, self.__ControladorDespesas, self.__ControladorReceitas, self.__ControladorSaques, self.__ControladorAportes)
                 case self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
                 case self.SAIR:
