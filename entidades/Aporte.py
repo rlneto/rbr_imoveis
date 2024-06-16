@@ -10,4 +10,6 @@
 from entidades.Fluxo import Fluxo
 
 class Aporte(Fluxo):
-    pass
+    def __init__(self, ident:int, obs: str, valor: int, data: str):
+        super().__init__(ident, obs, valor, data)
+        

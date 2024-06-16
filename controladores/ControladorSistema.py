@@ -36,6 +36,10 @@ class ControladorSistema:
     R_SAQUES = "R_SAQUES"
     D_SAQUES = "D_SAQUES"
     SAQUES = "SAQUES"
+    C_APORTES = "C_APORTES"
+    R_APORTES = "R_APORTES"                
+    D_APORTES = "D_APORTES"
+    APORTES = "APORTES"
     C_DESPESAS = "C_DESPESAS"
     R_DESPESAS = "R_DESPESAS"
     D_DESPESAS = "D_DESPESAS"
@@ -65,7 +69,6 @@ class ControladorSistema:
             self.autenticado = self.__ControladorSenha.verificar_senha()
             if not self.autenticado:
                 self.__ControladorSenha.erro_senha()
-
         while True:
             match self.__ControladorMenu.abrir_menu():
                 case self.PROSSEGUIR, self.U_SENHA:
@@ -98,6 +101,14 @@ class ControladorSistema:
                             self.__ControladorSaques.listar_saques()
                         case self.D_SAQUES:
                             self.__ControladorSaques.excluir_saque()
+                case self.APORTES:
+                    match self.__ControladorAportes.abrir_menu():
+                        case self.C_APORTES:
+                            self.__ControladorAportes.cadastrar_aporte()
+                        case self.R_APORTES:
+                            self.__ControladorAportes.listar_aportes()
+                        case self.D_APORTES:
+                            self.__ControladorAportes.excluir_aporte()
                 case self.DESPESAS:
                     match self.__ControladorDespesas.abrir_menu(self.__ControladorImoveis):
                         case self.C_DESPESAS:

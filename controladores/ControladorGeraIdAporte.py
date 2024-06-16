@@ -13,5 +13,8 @@ from DAOs.DAOContadorAporte import DAOContadorAporte
 class ControladorGeraIdAporte(ControladorGeradorId):
 
 
-    def gera_id(self):
-        pass
+    def __init__(self):
+        self.__dao = DAOContadorAporte("./contadorAporte.pkl")
+
+    def gera_id(self) -> int:
+        return self.__dao.update()
