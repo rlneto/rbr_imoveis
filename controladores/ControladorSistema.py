@@ -58,7 +58,7 @@ class ControladorSistema:
         self.__ControladorRelatorios= ControladorRelatorios()
         self.__ControladorPlataformas= ControladorPlataformas()
         self.__ControladorImoveis= ControladorImoveis()
-        self.__ControladorCaixa= ControladorCaixa()
+        self.__ControladorCaixa= ControladorCaixa(saques = self.__ControladorSaques.dao, despesas = self.__ControladorDespesas.dao, receitas = self.__ControladorReceitas.dao)
 
     def inicializar(self):
         while not self.autenticado:
@@ -115,11 +115,10 @@ class ControladorSistema:
                         case self.R_RECEITAS:
                             self.__ControladorReceitas.listar_receitas()
                         case self.D_RECEITAS:
-                            self.__ControladorReceitas.excluir_receita(self.__ControladorImoveis,
-                                                                       self.__ControladorPlataformas)
+                            self.__ControladorReceitas.excluir_receita()
 
                 case self.CAIXA:
-                    self.__ControladorCaixa.exibir_caixa()
+                    self.__ControladorCaixa.exibir_caixa(saques = self.__ControladorSaques.dao.read(), despesas = self.__ControladorDespesas.dao.read(), receitas = self.__ControladorReceitas.dao.read())
                 case self.U_SENHA:
                     self.__ControladorSenha.alterar_senha()
                 case self.SAIR:

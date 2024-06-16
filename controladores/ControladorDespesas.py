@@ -24,6 +24,10 @@ class ControladorDespesas:
         self.__dao = DAODespesa("despesas.pkl")
         self.__tela = TelaDespesas()
 
+    @property
+    def dao(self):
+        return self.__dao
+
     def abrir_menu(self, controladorimoveis):
         while True:
             match self.__tela.abrir_menu():

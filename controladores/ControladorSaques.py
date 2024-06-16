@@ -23,6 +23,10 @@ class ControladorSaques:
         self.__dao = DAOSaque("saques.pkl")
         self.__tela = TelaSaques()
 
+    @property
+    def dao(self):
+        return self.__dao
+
     def abrir_menu(self):
         while True:
             escolha = self.__tela.abrir_menu()

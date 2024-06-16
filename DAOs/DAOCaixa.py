@@ -11,6 +11,7 @@ import os, pickle
 from entidades.Caixa import Caixa
 from DAOs.DAO import DAO
 
+
 class DAOCaixa(DAO):
     def __init__(self, arquivo: str):
         self.__arquivo = arquivo

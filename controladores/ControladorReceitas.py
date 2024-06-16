@@ -31,6 +31,10 @@ class ControladorReceitas:
         self.__tela = TelaReceitas()
         self.__controlador_gera_id = ControladorGeraIdReceita()
 
+    @property
+    def dao(self):
+        return self.__dao
+
     def abrir_menu(self, controlador_imoveis: ControladorImoveis, controlador_plataformas: ControladorPlataformas):
         while True:
             match self.__tela.abrir_menu():

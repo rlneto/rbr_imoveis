@@ -12,25 +12,42 @@ from limites.TelaCaixa import TelaCaixa
 
 class ControladorCaixa:
 
-    def __init__(self):
+    def __init__(self, receitas, saques, despesas):
         self.__dao_caixa = DAOCaixa("caixa.pkl")
-        self.__caixa = self.__dao_caixa.read()
+        self.__caixa = self.__dao_caixa
         self.__tela = TelaCaixa()
+        self.__receitas = receitas
+        self.__saques = saques
+        self.__despesas = despesas
 
-    def atualizar_caixa(self, despesas:list, receitas:list, aportes:list, saques:list):
+    @property
+    def despesas(self):
+        return self.__despesas
+
+    @property
+    def receitas(self):
+        return self.__receitas
+
+    @property
+    def saques(self):
+        return self.__saques
+
+    def atualizar_caixa(self, despesas:list, receitas:list, saques:list):
         total = 0
-        for despesa in despesas:
-            total -= despesa.valor
-        for receita in receitas:
-            total += receita.valor
-        for aporte in aportes:
-            total += aporte.valor
-        for saque in saques:
-            total -= saque.valor
+        if isinstance(despesas, list):
+            for despesa in despesas:
+                total -= float(despesa.valor)
+        if isinstance(receitas, list):
+            for receita in receitas:
+                total += float(receita.valor)
+        if isinstance(saques, list):
+            for saque in saques:
+                total -= float(saque.valor)
         self.__dao_caixa.update(total)
 
-    def exibir_caixa(self):
-        self.__tela.exibir_caixa()
+    def exibir_caixa(self, despesas:list, receitas:list, saques:list):
+        self.atualizar_caixa(despesas, receitas, saques)
+        self.__tela.exibir_caixa(self.__caixa.read())
 
 
     @property
