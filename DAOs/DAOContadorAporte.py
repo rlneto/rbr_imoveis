@@ -12,14 +12,38 @@ from DAOs.DAO import DAO
 from entidades.ContadorAporte import ContadorAporte
 
 class DAOContadorAporte(DAO):
-    def __init__(self):
-        pass
+    def __init__(self, arquivo: str):
+        self.__arquivo = arquivo
+        self._DAOContadorAporte__conteudo = []
+        try:
+            self._DAOContadorAporte__conteudo = self.__load()
+        except FileNotFoundError:
+            self._DAOContadorAporte__conteudo.append(ContadorAporte())
+            self.__dump()
+            self.__load()
 
-    def create(self):
-        pass
+    @property
+    def conteudo(self):
+        return self._DAOContadorAporte__conteudo
 
-    def read(self):
-        pass
+    @conteudo.setter
+    def conteudo(self, conteudo):
+        self._DAOContadorAporte__conteudo = conteudo
+        
+    def read(self) -> int:
+        return self.conteudo[0].valor
 
     def update(self):
-        pass
+        self.conteudo[0].valor += 1
+        self.__dump()
+        self.__load()
+        return self.conteudo[0].valor
+
+    def __dump(self):
+        with open(self.__arquivo, 'wb') as arquivo:
+            pickle.dump(self.conteudo, arquivo)
+
+    def __load(self):
+        with open(self.__arquivo, 'rb') as arquivo:
+            self.conteudo = pickle.load(arquivo)
+        return self.conteudo
