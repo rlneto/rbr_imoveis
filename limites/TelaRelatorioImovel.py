@@ -38,7 +38,7 @@ class TelaRelatorioImovel(Tela):
             if event is None or event == 'Voltar':
                 self.__window.Close()
                 return None
-            elif event == '-TABLE-':  # Evento disparado quando uma linha da tabela é selecionada
+            elif event == '-TABLE-': 
                 selected_row_index = values['-TABLE-'][0]
                 selected_imovel_id = dados[selected_row_index][2]
             elif event == 'Confirmar':
@@ -65,16 +65,12 @@ class TelaRelatorioImovel(Tela):
             [sg.Text(f'Plataforma Mais Utilizada: {plataforma_mais_utilizada[0][0] if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
             [sg.Text('Despesas:', font=("Helvetica", 15), pad=(30, 10))],
             [sg.Table(values=dados_despesas, headings=['Valor', 'Imóvel', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados_despesas)), pad=(30, 30),
-                      col_widths=[10, 12, 20, 15, 15, 10], key='-TABLE-', enable_events=True)],
-            # [sg.Table(values=dados_despesas, headings=['Data', 'Valor', 'Observação'], display_row_numbers=False,
-            #           auto_size_columns=False, num_rows=min(10, len(dados_despesas)), pad=(30, 10), col_widths=[15, 15, 30])],
+                      auto_size_columns=False, num_rows=min(25, len(dados_despesas)), pad=(30, 10),
+                      col_widths=[10, 12, 32, 15, 18, 10])],
             [sg.Text('Receitas:', font=("Helvetica", 15), pad=(30, 10))],
             [sg.Table(values=dados_receitas, headings=['Valor', 'Imóvel', 'Plataforma', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
-                      auto_size_columns=False, num_rows=min(25, len(dados_receitas)), pad=(30, 30),
-                      col_widths=[10, 12, 15, 20, 15, 15, 10], key='-TABLE-', enable_events=True)],
-            # [sg.Table(values=dados_receitas, headings=['Data', 'Valor', 'Observação'], display_row_numbers=False,
-            #           auto_size_columns=False, num_rows=min(10, len(dados_receitas)), pad=(30, 10), col_widths=[15, 15, 30])],
+                      auto_size_columns=False, num_rows=min(25, len(dados_receitas)), pad=(30, 10),
+                      col_widths=[10, 12, 15, 20, 15, 15, 10])],
             [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'))]
         ]
 
