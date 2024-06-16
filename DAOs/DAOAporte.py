@@ -25,7 +25,7 @@ class DAOAporte(DAO):
 
     @property
     def conteudo(self) -> list:
-        return self._DAOSaque__conteudo
+        return self._DAOAporte__conteudo
     
     @conteudo.setter
     def conteudo(self, valor: list):

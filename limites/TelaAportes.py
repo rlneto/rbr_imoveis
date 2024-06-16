@@ -47,7 +47,7 @@ class TelaAportes(Tela):
             self.__window.Close()
             return None
 
-    def cadastrar_aportes(self):
+    def cadastrar_aporte(self):
         sg.theme('Reddit')
 
         layout = [
