@@ -55,14 +55,17 @@ class TelaRelatorioImovel(Tela):
 
         dados_despesas = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
         dados_receitas = [[receita.valor, receita.imovel.titulo, receita.plataforma.titulo, receita.obs, receita.data, receita.tags, receita.id] for receita in receitas]
+        tags_mais_utilizadas_str = ", ".join([tag for tag, count in tags_mais_utilizadas])
+        plataforma_mais_utilizada_str = ", ".join([plataforma for plataforma, count in plataforma_mais_utilizada])
+
 
         layout = [
             [sg.Text(f'Relatório do Imóvel: {imovel.titulo}', font=("Helvetica", 20), pad=(30, 10))],
             [sg.Text(f'Descrição: {imovel.desc}', font=("Helvetica", 15), pad=(30, 5))],
             [sg.Text(f'Total de Despesas: R$ {total_despesas}', font=("Helvetica", 12), pad=(30, 5))],
             [sg.Text(f'Total de Receitas: R$ {total_receitas}', font=("Helvetica", 12), pad=(30, 5))],
-            [sg.Text(f'Tag Mais Utilizada: {tags_mais_utilizadas[0][0] if tags_mais_utilizadas else "Nenhuma tag cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
-            [sg.Text(f'Plataforma Mais Utilizada: {plataforma_mais_utilizada[0][0] if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Tag(s) Mais Utilizada(s): {tags_mais_utilizadas_str if tags_mais_utilizadas else "Nenhuma tag cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Plataforma(s) Mais Utilizada(s): {plataforma_mais_utilizada_str if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
             [sg.Text('Despesas:', font=("Helvetica", 15), pad=(30, 10))],
             [sg.Table(values=dados_despesas, headings=['Valor', 'Imóvel', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
                       auto_size_columns=False, num_rows=min(25, len(dados_despesas)), pad=(30, 10),

@@ -29,24 +29,33 @@ class ControladorRelatorios:
         despesas = controlador_despesa.pegar_despesas_por_imovel(imovel_selecionado.id)
         receitas = controlador_receita.pegar_receitas_por_imovel(imovel_selecionado.id)
 
-        # Calcular o total do valor das despesas
         total_despesas = sum(float(despesa.valor) for despesa in despesas)
 
-        # Calcular o total do valor das receitas
         total_receitas = sum(float(receita.valor) for receita in receitas)
 
-        # Encontrar a tag mais utilizada
-        tags_despesas = [tag for despesa in despesas for tag in despesa.tags]
-        tags_receitas = [tag for receita in receitas for tag in receita.tags]
-        tags_mais_utilizadas = Counter(tags_despesas + tags_receitas).most_common(1)
+        # Tags mais utilizadas
+        contador_tags = Counter()
+        for despesa in despesas:
+            contador_tags.update(despesa.tags)
+        
+        for receita in receitas:
+            contador_tags.update(receita.tags)
+        
+        if contador_tags:
+            max_ocorrencias = max(contador_tags.values())
+            tags_mais_utilizadas = [(tag, count) for tag, count in contador_tags.items() if count == max_ocorrencias]
+        else:
+            tags_mais_utilizadas = []
 
-        # Encontrar a plataforma mais utilizada
-        plataformas_receitas = [receita.plataforma.titulo for receita in receitas]
-        plataforma_mais_utilizada = Counter(plataformas_receitas).most_common(1)
+        # Pataforma mais utilizada
+        contador_plataformas = Counter(receita.plataforma.titulo for receita in receitas)
+        if contador_plataformas:
+            max_ocorrencias_plataformas = max(contador_plataformas.values())
+            plataforma_mais_utilizada = [(plataforma, count) for plataforma, count in contador_plataformas.items() if count == max_ocorrencias_plataformas]
+        else:
+            plataforma_mais_utilizada = []
 
         self.__tela.exibir_relatorio(imovel_selecionado, despesas, receitas, total_despesas, total_receitas, tags_mais_utilizadas, plataforma_mais_utilizada)
-        
-
 
     def relatorio_anual(self):
         pass

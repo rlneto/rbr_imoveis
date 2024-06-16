@@ -109,10 +109,6 @@ class ControladorImoveis:
 
 
 
-    # def exibir_imovel(self):
-    #     pass
-
-
     def find_imovel(self, nome_imovel):
         encontrados = [imovel for imovel in self.__dao.read() if imovel.titulo == nome_imovel]
         return encontrados[0] if encontrados else None
