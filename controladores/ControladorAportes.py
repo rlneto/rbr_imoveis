@@ -12,6 +12,20 @@ from DAOs.DAOAporte import DAOAporte
 from controladores.ControladorGeraIdAporte import ControladorGeraIdAporte
 
 class ControladorAportes:
+ 
+    C_APORTES = "C_APORTES"
+    R_APORTES = "R_APORTES"                
+    D_APORTES = "D_APORTES"
+    APORTES = "APORTES"
+    VOLTAR = "VOLTAR"
+
+    def __init__(self):
+        self.__dao = DAOAporte("aportes.pkl")
+        self.__tela = TelaAportes()
+
+    @property
+    def dao(self):
+        return self.__dao
 
     def abrir_menu(self):
         while True:
@@ -45,7 +59,7 @@ class ControladorAportes:
             self.__tela.mostra_popup("Não há aportes cadastrados.")
             return
 
-        id_aportes = self.__tela.excluir_aportes(aportes)
+        id_aportes = self.__tela.excluir_aportes(aporte)
         if id_aportes is None:
             return
         
