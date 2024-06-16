@@ -140,6 +140,11 @@ class ControladorDespesas:
                     return False
                 else:
                     return True
+                
+    def pegar_despesas_por_imovel(self, id_imovel):
+        despesas = self.__dao.read()  # Lendo todas as despesas
+        despesas_imovel = [despesa for despesa in despesas if despesa.imovel.id == id_imovel]
+        return despesas_imovel
 
     # Utilizar para os relatórios depois
     def listar_despesas_ano(self, ano):

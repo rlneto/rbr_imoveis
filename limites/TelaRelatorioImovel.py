@@ -8,6 +8,78 @@
 # 
 #######################################################
 from limites.Tela import Tela
+import PySimpleGUI as sg
 
 class TelaRelatorioImovel(Tela):
-    pass
+    def __init__(self):
+        super().__init__()
+        self.__window = None
+
+
+    def selecionar_imovel(self, imoveis):
+        sg.theme('Reddit')
+
+        dados = [[imovel.titulo, imovel.desc, imovel.id] for imovel in imoveis]
+        colunas = ['Título', 'Descrição', 'ID']
+
+        layout = [
+            [sg.Text('Selecione o imóvel que deseja ver o relatório:', font=("Helvetica", 20), pad=(30, 20))],
+            [sg.Table(values=dados, headings=colunas, display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados)), pad=(30, 30), col_widths=[15, 43, 5],
+                      key='-TABLE-', enable_events=True)],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red')), sg.Button('Confirmar', pad=(0, 30))]
+        ]
+
+        self.__window = sg.Window('Selecionar Imóvel para Relatório').Layout(layout)
+        selected_imovel_id = None
+
+        while True:
+            event, values = self.__window.Read()
+            if event is None or event == 'Voltar':
+                self.__window.Close()
+                return None
+            elif event == '-TABLE-': 
+                selected_row_index = values['-TABLE-'][0]
+                selected_imovel_id = dados[selected_row_index][2]
+            elif event == 'Confirmar':
+                if selected_imovel_id is None:
+                    sg.popup("Erro: Selecione um imóvel para visualizar o relatório.")
+                else:
+                    for imovel in imoveis:
+                        if imovel.id == selected_imovel_id:
+                            self.__window.Close()
+                            return imovel
+
+    def exibir_relatorio(self, imovel, despesas, receitas, total_despesas, total_receitas, tags_mais_utilizadas, plataforma_mais_utilizada):
+        sg.theme('Reddit')
+
+        dados_despesas = [[despesa.valor, despesa.imovel.titulo, despesa.obs, despesa.data, despesa.tags, despesa.id] for despesa in despesas]
+        dados_receitas = [[receita.valor, receita.imovel.titulo, receita.plataforma.titulo, receita.obs, receita.data, receita.tags, receita.id] for receita in receitas]
+
+        layout = [
+            [sg.Text(f'Relatório do Imóvel: {imovel.titulo}', font=("Helvetica", 20), pad=(30, 10))],
+            [sg.Text(f'Descrição: {imovel.desc}', font=("Helvetica", 15), pad=(30, 5))],
+            [sg.Text(f'Total de Despesas: R$ {total_despesas}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Total de Receitas: R$ {total_receitas}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Tag Mais Utilizada: {tags_mais_utilizadas[0][0] if tags_mais_utilizadas else "Nenhuma tag cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text(f'Plataforma Mais Utilizada: {plataforma_mais_utilizada[0][0] if plataforma_mais_utilizada else "Nenhuma plataforma cadastrada para este imóvel"}', font=("Helvetica", 12), pad=(30, 5))],
+            [sg.Text('Despesas:', font=("Helvetica", 15), pad=(30, 10))],
+            [sg.Table(values=dados_despesas, headings=['Valor', 'Imóvel', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados_despesas)), pad=(30, 10),
+                      col_widths=[10, 12, 32, 15, 18, 10])],
+            [sg.Text('Receitas:', font=("Helvetica", 15), pad=(30, 10))],
+            [sg.Table(values=dados_receitas, headings=['Valor', 'Imóvel', 'Plataforma', 'Observação', 'Data', 'Tags', 'ID'], display_row_numbers=False,
+                      auto_size_columns=False, num_rows=min(25, len(dados_receitas)), pad=(30, 10),
+                      col_widths=[10, 12, 15, 20, 15, 15, 10])],
+            [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'))]
+        ]
+
+        self.__window = sg.Window('Relatório do Imóvel').Layout(layout)
+        button, values = self.__window.Read()
+        if button is None or button == 'Voltar':
+            self.__window.Close()
+            return None
+
+    def close(self):
+        if self.__window:
+            self.__window.Close()

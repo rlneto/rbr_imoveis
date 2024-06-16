@@ -9,8 +9,43 @@
 #######################################################
 from limites.TelaRelatorioAnual import TelaRelatorioAnual
 from limites.TelaRelatorioImovel import TelaRelatorioImovel
+from collections import Counter
 
 class ControladorRelatorios:
+    def __init__(self):
+        self.__tela = TelaRelatorioImovel()
+
+    def exibir_relatorio_imovel(self, controlador_imovel, controlador_despesa, controlador_receita, controlador_saque, controlador_aporte):
+        imoveis = controlador_imovel.pegar_todos_imoveis()
+
+        if not controlador_imovel.validar_existencia_imoveis(imoveis):
+            return
+        
+        imovel_selecionado = self.__tela.selecionar_imovel(imoveis)
+        
+        if imovel_selecionado is None:
+            return
+        
+        despesas = controlador_despesa.pegar_despesas_por_imovel(imovel_selecionado.id)
+        receitas = controlador_receita.pegar_receitas_por_imovel(imovel_selecionado.id)
+
+        # Calcular o total do valor das despesas
+        total_despesas = sum(float(despesa.valor) for despesa in despesas)
+
+        # Calcular o total do valor das receitas
+        total_receitas = sum(float(receita.valor) for receita in receitas)
+
+        # Encontrar a tag mais utilizada
+        tags_despesas = [tag for despesa in despesas for tag in despesa.tags]
+        tags_receitas = [tag for receita in receitas for tag in receita.tags]
+        tags_mais_utilizadas = Counter(tags_despesas + tags_receitas).most_common(1)
+
+        # Encontrar a plataforma mais utilizada
+        plataformas_receitas = [receita.plataforma.titulo for receita in receitas]
+        plataforma_mais_utilizada = Counter(plataformas_receitas).most_common(1)
+
+        self.__tela.exibir_relatorio(imovel_selecionado, despesas, receitas, total_despesas, total_receitas, tags_mais_utilizadas, plataforma_mais_utilizada)
+        
 
 
     def relatorio_anual(self):

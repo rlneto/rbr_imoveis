@@ -118,3 +118,8 @@ class ControladorReceitas:
         leitura = self.__dao.read()
         self.__tela.exibir_receitas(leitura)
         return
+    
+    def pegar_receitas_por_imovel(self, id_imovel):
+        receitas = self.__dao.read() 
+        receitas_imovel = [receita for receita in receitas if receita.imovel.id == id_imovel]
+        return receitas_imovel
