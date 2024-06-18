@@ -104,7 +104,7 @@ class ControladorSaques:
         if dinheiro > float(valor):
             return False
         else:
-            if not self.__tela.validacao_caixa(f"O saldo do caixa é de R$ 0,00. Tem certeza que deseja realizar o saque? "):
+            if not self.__tela.validacao_caixa(f"O saldo do caixa é de {dinheiro}. Tem certeza que deseja realizar um saque de {valor}? "):
                 return True
             return False
         
