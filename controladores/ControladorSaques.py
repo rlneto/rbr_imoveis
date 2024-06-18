@@ -56,9 +56,6 @@ class ControladorSaques:
         
         if self.validar_caixa(dinheiro, valor):
             return
-        #if dinheiro < float(valor):
-        #    if not self.__tela.validacao_caixa("O saldo do caixa é menor que o valor do saque. Tem certeza que deseja realizar o saque?"):
-         #       return
         
         id = ControladorGeraIdSaque().gera_id()
         self.__dao.create(id, valor=valor, data=data, obs=obs)
@@ -110,6 +107,7 @@ class ControladorSaques:
             if not self.__tela.validacao_caixa(f"O saldo do caixa é de R$ 0,00. Tem certeza que deseja realizar o saque? "):
                 return True
             return False
+        
     def validar_id(self, id_saque):
         if not id_saque.strip():
             self.__tela.mostra_popup("O campo ID não pode estar vazio.")
