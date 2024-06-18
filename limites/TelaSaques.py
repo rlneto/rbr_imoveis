@@ -80,10 +80,8 @@ class TelaSaques(Tela):
         self.__window = sg.Window('Cadastrar Saque').Layout(layout)
         button, values = self.__window.Read()
         self.close()
-        if button == self.PROSSEGUIR:
-            return True
-        else:
-            return False
+        return button == self.PROSSEGUIR
+            
 
     def exibir_saques(self, saques):
         sg.theme('Reddit')
