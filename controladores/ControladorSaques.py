@@ -10,12 +10,15 @@
 from limites.TelaSaques import TelaSaques
 from DAOs.DAOSaque import DAOSaque
 from entidades.ContadorSaque import ContadorSaque
+from controladores.ControladorCaixa import ControladorCaixa
 from controladores.ControladorGeraIdSaque import ControladorGeraIdSaque
+from DAOs.DAOCaixa import DAOCaixa
 
 class ControladorSaques:
     C_SAQUES = "C_SAQUES"
     R_SAQUES = "R_SAQUES"
     D_SAQUES = "D_SAQUES"
+    PROSSEGUIR = "PROSSEGUIR"
     SAQUES = "SAQUES"
     VOLTAR = "VOLTAR"
 
@@ -27,20 +30,21 @@ class ControladorSaques:
     def dao(self):
         return self.__dao
 
-    def abrir_menu(self):
+    def abrir_menu(self, controlador_caixa: ControladorCaixa):
         while True:
             escolha = self.__tela.abrir_menu()
             if escolha is None or escolha == self.VOLTAR:
                 return
             elif escolha == self.C_SAQUES:
-                self.cadastrar_saque()
+                self.cadastrar_saque(controlador_caixa)
             elif escolha == self.R_SAQUES:
                 self.listar_saques()
             elif escolha == self.D_SAQUES:
                 self.excluir_saque()
 
-    def cadastrar_saque(self):
+    def cadastrar_saque(self, controlador_caixa: ControladorCaixa):
         valor, obs, data = self.__tela.cadastrar_saques()
+        dinheiro = controlador_caixa.caixa.read()
         if valor is None and obs is None and data is None:
             return
 
@@ -48,6 +52,9 @@ class ControladorSaques:
             return
         
         if not self.validar_valor(valor):
+            return
+        
+        if self.validar_caixa(dinheiro):
             return
         
         id = ControladorGeraIdSaque().gera_id()
@@ -92,6 +99,14 @@ class ControladorSaques:
         except ValueError:
             self.__tela.mostra_popup("O valor do saque deve ser um número.")
             return False
+    
+    def validar_caixa(self, dinheiro):
+        if dinheiro > 0: 
+            return False
+        else:
+            self.__tela.validacao_caixa(f"O saldo do caixa é de R$ 0,00. Tem certeza que deseja realizar o saque? ")
+            
+            
 
     def validar_id(self, id_saque):
         if not id_saque.strip():

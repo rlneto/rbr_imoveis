@@ -49,7 +49,7 @@ class ControladorAportes:
         
         if not self.validar_valor(valor):
             return
-        
+
         id = ControladorGeraIdAporte().gera_id()
         self.__dao.create(id, valor=valor, data=data, obs=obs)
 
