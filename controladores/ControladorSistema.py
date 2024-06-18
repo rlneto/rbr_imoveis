@@ -95,7 +95,7 @@ class ControladorSistema:
                         case self.D_PLATAFORMAS:
                             self.__ControladorPlataformas.excluir_plataforma()
                 case self.SAQUES:
-                    match self.__ControladorSaques.abrir_menu():
+                    match self.__ControladorSaques.abrir_menu(self.__ControladorCaixa):
                         case self.C_SAQUES:
                             self.__ControladorSaques.cadastrar_saque()
                         case self.R_SAQUES:

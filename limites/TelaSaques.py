@@ -68,6 +68,22 @@ class TelaSaques(Tela):
             return valor, obs, data
         else:
             return None, None, None
+        
+    def validacao_caixa(self, mensagem):
+        sg.theme('Reddit')
+
+        layout = [
+        [sg.Text(mensagem)],
+        [sg.Button('Voltar', pad=(30, 30), button_color=('white', 'red'), key=self.VOLTAR),
+             sg.Button('Confirmar', pad=(0, 30), key=self.PROSSEGUIR)]
+        ]
+        self.__window = sg.Window('Cadastrar Saque').Layout(layout)
+        button, values = self.__window.Read()
+        self.close()
+        if button == self.PROSSEGUIR:
+            return True
+        else:
+            return False
 
     def exibir_saques(self, saques):
         sg.theme('Reddit')
