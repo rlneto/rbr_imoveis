@@ -63,7 +63,10 @@ class ControladorSistema:
         self.__ControladorRelatorios= ControladorRelatorios()
         self.__ControladorPlataformas= ControladorPlataformas()
         self.__ControladorImoveis= ControladorImoveis()
-        self.__ControladorCaixa= ControladorCaixa(saques = self.__ControladorSaques.dao, despesas = self.__ControladorDespesas.dao, receitas = self.__ControladorReceitas.dao)
+        self.__ControladorCaixa= ControladorCaixa(saques = self.__ControladorSaques.dao,
+                                                  despesas = self.__ControladorDespesas.dao,
+                                                  receitas = self.__ControladorReceitas.dao,
+                                                  aportes = self.__ControladorAportes.dao)
 
     def inicializar(self):
         while not self.autenticado:
