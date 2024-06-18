@@ -51,7 +51,9 @@ class ControladorAportes:
             return
 
         id = ControladorGeraIdAporte().gera_id()
-        self.__dao.create(id, valor=valor, data=data, obs=obs)
+        if self.__dao.create(id, valor=valor, data=data, obs=obs):
+            self.__tela.mostra_popup("Saque cadastrado com sucesso.")
+            return
 
     def excluir_aporte(self):
         aporte = self.__dao.read()
