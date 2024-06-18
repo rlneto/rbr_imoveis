@@ -133,7 +133,10 @@ class ControladorSistema:
                             self.__ControladorReceitas.excluir_receita()
 
                 case self.CAIXA:
-                    self.__ControladorCaixa.exibir_caixa(saques = self.__ControladorSaques.dao.read(), despesas = self.__ControladorDespesas.dao.read(), receitas = self.__ControladorReceitas.dao.read())
+                    self.__ControladorCaixa.exibir_caixa(saques = self.__ControladorSaques.dao.read(),
+                                                         despesas = self.__ControladorDespesas.dao.read(),
+                                                         receitas = self.__ControladorReceitas.dao.read(),
+                                                         aportes = self.__ControladorAportes.dao.read())
                 case self.RELATORIOS: 
                     self.__ControladorRelatorios.exibir_relatorio_imovel(self.__ControladorImoveis, self.__ControladorDespesas, self.__ControladorReceitas, self.__ControladorSaques, self.__ControladorAportes)
                 case self.U_SENHA:

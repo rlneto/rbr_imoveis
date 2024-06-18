@@ -53,8 +53,8 @@ class ControladorCaixa:
                 total += float(aporte.valor)
         self.__dao_caixa.update(total)
 
-    def exibir_caixa(self, despesas:list, receitas:list, saques:list):
-        self.atualizar_caixa(despesas, receitas, saques)
+    def exibir_caixa(self, despesas:list, receitas:list, saques:list, aportes:list):
+        self.atualizar_caixa(despesas, receitas, saques, aportes)
         self.__tela.exibir_caixa(self.__caixa.read())
 
 
