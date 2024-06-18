@@ -58,7 +58,9 @@ class ControladorSaques:
             return
         
         id = ControladorGeraIdSaque().gera_id()
-        self.__dao.create(id, valor=valor, data=data, obs=obs)
+        if self.__dao.create(id, valor=valor, data=data, obs=obs):
+            self.__tela.mostra_popup("Saque cadastrado com sucesso.")
+            return
 
     def excluir_saque(self):
         saques = self.__dao.read()
@@ -67,6 +69,7 @@ class ControladorSaques:
             return
 
         id_saques = self.__tela.excluir_saques(saques)
+        
         if id_saques is None:
             return
         
