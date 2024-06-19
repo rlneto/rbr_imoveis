@@ -59,7 +59,7 @@ class ControladorSaques:
         
         id = ControladorGeraIdSaque().gera_id()
         if self.__dao.create(id, valor=valor, data=data, obs=obs):
-            self.__tela.mostra_popup("Saque cadastrado com sucesso.")
+            self.__tela.mostra_popup("Saque cadastrado com sucesso!")
             return
 
     def excluir_saque(self):
@@ -107,7 +107,7 @@ class ControladorSaques:
         if dinheiro > float(valor):
             return False
         else:
-            if not self.__tela.validacao_caixa(f"O saldo do caixa é de {dinheiro}. Tem certeza que deseja realizar um saque de {valor}? "):
+            if not self.__tela.validacao_caixa(f"O saldo do caixa é de R${dinheiro}. Tem certeza que deseja realizar um saque de R${valor}? "):
                 return True
             return False
         
