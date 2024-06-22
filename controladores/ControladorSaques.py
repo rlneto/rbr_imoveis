@@ -124,8 +124,7 @@ class ControladorSaques:
             if not any(saque.id == id_saque for saque in self.__dao.read()):
                 self.__tela.mostra_popup(f"Saque com ID {id_saque} não encontrado.")
                 return False
-            else:
-                return True
+            return True
 
 
 
