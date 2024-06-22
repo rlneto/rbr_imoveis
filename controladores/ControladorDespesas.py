@@ -64,7 +64,9 @@ class ControladorDespesas:
         imovel = controlador_imovel.find_imovel_por_id(id_imovel)
 
         id = ControladorGeraIdDespesa().gera_id()
-        self.__dao.create(id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags)
+        if self.__dao.create(id, obs=obs, valor=valor, data=data, imovel=imovel, tags=tags):
+            self.__tela.mostra_popup("Despesa cadastrada com sucesso!")
+            return
 
     def excluir_despesa(self):
         despesas = self.__dao.read()
@@ -78,7 +80,10 @@ class ControladorDespesas:
             if not self.validar_id(id_despesa):
                 return
 
-            self.__dao.delete(int(id_despesa))
+            if self.__dao.delete(int(id_despesa)):
+                self.__tela.mostra_popup("Despesa excluída com sucesso!")
+                return
+
 
     def listar_despesas(self):
         despesas = self.__dao.read()
