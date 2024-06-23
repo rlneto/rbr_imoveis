@@ -48,7 +48,7 @@ class DAOSaque(DAO):
                 self.__dump()
                 self.__load()
                 return True
-        return False
+        
 
     def read(self) -> list:
         return [saque for saque in self.conteudo]

@@ -67,16 +67,15 @@ class ControladorSaques:
         if not saques:
             self.__tela.mostra_popup("Não há saques cadastrados.")
             return
-
-        id_saques = self.__tela.excluir_saques(saques)
-        
-        if id_saques is None:
-            return
-        
-        if not self.validar_id(id_saques):
-            return
-        
-        self.__dao.delete(int(id_saques))
+        else:
+            id_saques = self.__tela.excluir_saques(saques)
+            if id_saques is None:
+                return
+            else:
+                if not self.validar_id(id_saques):
+                    return
+                else:
+                    self.__dao.delete(int(id_saques))
 
     def listar_saques(self):
         saques = self.__dao.read()
@@ -115,18 +114,17 @@ class ControladorSaques:
         if not id_saque.strip():
             self.__tela.mostra_popup("O campo ID não pode estar vazio.")
             return False
+        else: 
+            try:
+                id_saque = int(id_saque)
+            except ValueError:
+                self.__tela.mostra_popup("O ID do saque deve ser um número inteiro.")
+                return False
 
-        try:
-            id_saque = int(id_saque)
-        except ValueError:
-            self.__tela.mostra_popup("O ID do saque deve ser um número inteiro.")
-            return False
-
-        if not any(saque.id == id_saque for saque in self.__dao.read()):
-            self.__tela.mostra_popup(f"Saque com ID {id_saque} não encontrado.")
-            return False
-
-        return True
+            if not any(saque.id == id_saque for saque in self.__dao.read()):
+                self.__tela.mostra_popup(f"Saque com ID {id_saque} não encontrado.")
+                return False
+            return True
 
 
 
