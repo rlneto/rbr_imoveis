@@ -60,10 +60,11 @@ class ControladorReceitas:
 
         valor, id_imovel, id_plataforma, obs, data, tags, action = self.__tela.cadastrar_receita(imoveis, plataformas)
 
-        if not (valor and id_imovel and id_plataforma and obs and data and tags):
+        if not self.validar_campos_vazios(valor, id_imovel, id_plataforma, obs, data, tags):
             if action == self.PROSSEGUIR:
                 self.__tela.mostra_popup("Preencha todos os campos.")
             return
+
 
         if not valor.isdigit():
             self.__tela.mostra_popup("Valor inválido. Deve ser um número.")
@@ -123,3 +124,8 @@ class ControladorReceitas:
         receitas = self.__dao.read() 
         receitas_imovel = [receita for receita in receitas if receita.imovel.id == id_imovel]
         return receitas_imovel
+
+    def validar_campos_vazios(self, valor: float, id_imovel: int, id_plataforma: int, obs: str, data: str, tags: str) -> bool:
+        if not (valor and id_imovel and id_plataforma and obs and data and tags):
+            return False
+        return True
