@@ -52,11 +52,7 @@ class ControladorAportes:
 
         id = ControladorGeraIdAporte().gera_id()
         if self.__dao.create(id, valor=valor, data=data, obs=obs):
-<<<<<<< HEAD
-            self.__tela.mostra_popup("Saque cadastrado com sucesso.")
-=======
             self.__tela.mostra_popup("Aporte cadastrado com sucesso.")
->>>>>>> rafa
             return
 
     def excluir_aporte(self):
