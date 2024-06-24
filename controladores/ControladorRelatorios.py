@@ -56,9 +56,3 @@ class ControladorRelatorios:
             plataforma_mais_utilizada = []
 
         self.__tela.exibir_relatorio(imovel_selecionado, despesas, receitas, total_despesas, total_receitas, tags_mais_utilizadas, plataforma_mais_utilizada)
-
-    def relatorio_anual(self):
-        pass
-
-    def relatorio_imovel(self):
-        pass
